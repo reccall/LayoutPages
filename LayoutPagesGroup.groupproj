@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{F298CA5F-0B4C-4896-8142-089DC9D952AE}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="LayoutPages.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="LayoutPages">
+        <MSBuild Projects="LayoutPages.dproj"/>
+    </Target>
+    <Target Name="LayoutPages:Clean">
+        <MSBuild Projects="LayoutPages.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LayoutPages:Make">
+        <MSBuild Projects="LayoutPages.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="LayoutPages"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="LayoutPages:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="LayoutPages:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,0 +1,72 @@
+object frmMainCte: TfrmMainCte
+  Left = 0
+  Top = 0
+  Align = alClient
+  BorderIcons = []
+  BorderStyle = bsNone
+  ClientHeight = 717
+  ClientWidth = 1040
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  WindowState = wsMaximized
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnlTop: TPanel
+    Left = 0
+    Top = 0
+    Width = 1040
+    Height = 113
+    Align = alTop
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 0
+    object pnlMenu: TPanel
+      Left = 87
+      Top = -8
+      Width = 817
+      Height = 129
+      TabOrder = 0
+    end
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Top = 685
+    Width = 1040
+    Height = 32
+    Align = alBottom
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 2
+    ExplicitLeft = -8
+  end
+  object pnlMain: TPanel
+    Left = 105
+    Top = 113
+    Width = 935
+    Height = 572
+    Align = alClient
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 1
+  end
+  object pnlLeft: TPanel
+    Left = 0
+    Top = 113
+    Width = 105
+    Height = 572
+    Align = alLeft
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 3
+  end
+end

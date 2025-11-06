@@ -1,0 +1,73 @@
+program LayoutPages;
+
+uses
+  Vcl.Forms,
+  LayoutPages.View.Forms.FormDefault in 'source\layoutpages\view\forms\LayoutPages.View.Forms.FormDefault.pas' {FormDefault},
+  LayoutPages.View.Forms.BackgroundLayout in 'source\layoutpages\view\forms\LayoutPages.View.Forms.BackgroundLayout.pas' {FormBackgroundLayout},
+  LayoutPages.View.Componentes.BotoesBarraClose in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraClose.pas' {CmpBotoesBarraClose},
+  LayoutPages.View.Componentes.TCheckbox in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TCheckbox.pas',
+  LayoutPages.View.Componentes.TComboboxTitulo in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TComboboxTitulo.pas',
+  LayoutPages.View.Componentes.TDateEditTitulo in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TDateEditTitulo.pas',
+  LayoutPages.View.Componentes.TEditPesquisa in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TEditPesquisa.pas',
+  LayoutPages.View.Componentes.TEditTitulo in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TEditTitulo.pas',
+  LayoutPages.View.Componentes.TLabelTitulo in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TLabelTitulo.pas',
+  ConhecFrete.Model.DAO.Cliente in 'source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.Cliente.pas',
+  ConhecFrete.Model.DAO.Regiao in 'source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.Regiao.pas',
+  ConhecFrete.Model.DAO.Simplificado in 'source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.Simplificado.pas',
+  ConhecFrete.Model.DAO.SituacaoCarregamento in 'source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.SituacaoCarregamento.pas',
+  ConhecFrete.Model.DAO.UFGlobalizado in 'source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.UFGlobalizado.pas',
+  ConhecFrete.Model.DTO.Cte in 'source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.Cte.pas',
+  ConhecFrete.Model.DTO.DadosClienteFrete in 'source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.DadosClienteFrete.pas',
+  ConhecFrete.Model.DTO.DadosColeta in 'source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.DadosColeta.pas',
+  ConhecFrete.Model.DTO.DadosPedagio in 'source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.DadosPedagio.pas',
+  ConhecFrete.Model.DTO.DadosTributacao in 'source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.DadosTributacao.pas',
+  ConhecFrete.Model.DTO.FiltrosSimulacaoCte in 'source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.FiltrosSimulacaoCte.pas',
+  ConhecFrete.Model.Types.Constantes in 'source\conhecimentofrete\model\types\ConhecFrete.Model.Types.Constantes.pas',
+  ConhecFrete.Forms.Cte.Cliente.DadosCte in 'source\conhecimentofrete\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas' {frmClienteDadosCte},
+  ConhecFrete.Controller.ClienteDadosCte in 'source\conhecimentofrete\controller\ConhecFrete.Controller.ClienteDadosCte.pas',
+  ConhecFrete.Controller.DadosPedagioSeguro in 'source\conhecimentofrete\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas',
+  ConhecFrete.Controller.Motorista in 'source\conhecimentofrete\controller\ConhecFrete.Controller.Motorista.pas',
+  ConhecFrete.Controller.Parametros in 'source\conhecimentofrete\controller\ConhecFrete.Controller.Parametros.pas',
+  ConhecFrete.Controller.Principal in 'source\conhecimentofrete\controller\ConhecFrete.Controller.Principal.pas',
+  ConhecFrete.Controller.RegiaoDadosCte in 'source\conhecimentofrete\controller\ConhecFrete.Controller.RegiaoDadosCte.pas',
+  ConhecFrete.Controller.SimplificadoDadosCte in 'source\conhecimentofrete\controller\ConhecFrete.Controller.SimplificadoDadosCte.pas',
+  ConhecFrete.Controller.SituacaoCarregamento in 'source\conhecimentofrete\controller\ConhecFrete.Controller.SituacaoCarregamento.pas',
+  ConhecFrete.Controller.Tomador in 'source\conhecimentofrete\controller\ConhecFrete.Controller.Tomador.pas',
+  ConhecFrete.Controller.UFGlobalizadoDadosCte in 'source\conhecimentofrete\controller\ConhecFrete.Controller.UFGlobalizadoDadosCte.pas',
+  ConhecFrete.Forms.Cte.RegiaoDadosCte in 'source\conhecimentofrete\view\forms\cte\regiao\ConhecFrete.Forms.Cte.RegiaoDadosCte.pas' {frmRegiaoDadosCte},
+  ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte in 'source\conhecimentofrete\view\forms\cte\ufglobalizado\ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte.pas' {frmUFGlobalizadoDadosCte},
+  ConhecFrete.Forms.Cte.DadosPedagioSeguro in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.DadosPedagioSeguro.pas' {frmDadosPedagioSeguro},
+  ConhecFrete.Forms.Cte.FormMainCte in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.FormMainCte.pas' {frmMainCte},
+  ConhecFrete.Forms.Cte.GridSimulacao in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.GridSimulacao.pas' {frmGridSimulacaoCte},
+  ConhecFrete.Forms.Cte.OpcoesItens in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesItens.pas' {FormOpcoesItensCte},
+  ConhecFrete.Forms.Cte.Motorista in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Motorista.pas' {frmCteMotorista},
+  ConhecFrete.Forms.Cte.OpcoesInicio in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesInicio.pas' {frmCteOpcoesInicio},
+  ConhecFrete.Forms.Cte.Parametros in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Parametros.pas' {frmCteParametros},
+  ConhecFrete.Forms.Cte.SubContratacao in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.SubContratacao.pas' {frmCteSimplificadoSubContratacao},
+  ConhecFrete.Forms.Cte.Tomador in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Tomador.pas' {frmTomador},
+  ConhecFrete.Forms.Cte.Simplificado.DadosCte in 'source\conhecimentofrete\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.DadosCte.pas' {frmSimplificadoDadosCte},
+  ConhecFrete.Forms.Cte.Simplificado.InfoRegrasCteSimplificado in 'source\conhecimentofrete\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.InfoRegrasCteSimplificado.pas' {frmCteSimplificadoInfoRegras},
+  LayoutPages.View.Forms.DefaultBoxTemplate in 'source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultBoxTemplate.pas' {FormDefaultBoxTemplate},
+  LayoutPages.View.Componentes.CardInfoUser in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.CardInfoUser.pas' {CmpCardInfoUser},
+  LayoutPages.View.Forms.DefaultTemplate in 'source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultTemplate.pas' {FormDefaultTemplate},
+  LayoutPages.View.Forms.TemplatePrincipal in 'source\layoutpages\view\forms\LayoutPages.View.Forms.TemplatePrincipal.pas' {FormTemplatePrincipal},
+  ConhecFrete.Forms.Cte.Principal in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Principal.pas' {frmCtePrincipal},
+  ConhecFrete.Forms.Cte.Background in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Background.pas' {FormCteBackground},
+  ConhecFrete.Forms.Cte.MenuPrincipal in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuPrincipal.pas' {FormMenuPrincipal},
+  ConhecFrete.Controller.MenuCte in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCte.pas',
+  ConhecFrete.Controller.BotoesBarraOpcoes in 'source\conhecimentofrete\controller\ConhecFrete.Controller.BotoesBarraOpcoes.pas',
+  LayoutPages.View.Componentes.BotoesBarraOpcoes in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraOpcoes.pas' {CmpBotoesBarra},
+  ConhecFrete.View.Componentes.OpcoesGerarCte in 'source\conhecimentofrete\view\componentes\ConhecFrete.View.Componentes.OpcoesGerarCte.pas' {CmpOpcoesGerarCte},
+  ConhecFrete.View.Componentes.CardInfoUserCte in 'source\conhecimentofrete\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas' {CmpCardInfoUserCte},
+  ConhecFrete.Controller.OpcoesItens in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesItens.pas',
+  ConhecFrete.Forms.Cte.MenuEmissaoFiscal in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas' {FormMenuEmissaoFiscal},
+  ConhecFrete.Forms.Cte.MenuCadastros in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFormCteBackground, FormCteBackground);
+  Application.Run;
+end.

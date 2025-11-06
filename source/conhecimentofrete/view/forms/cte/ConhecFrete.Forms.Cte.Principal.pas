@@ -1,0 +1,38 @@
+unit ConhecFrete.Forms.Cte.Principal;
+
+interface
+
+uses
+   Winapi.Windows
+  ,Winapi.Messages
+  ,System.SysUtils
+  ,System.Variants
+  ,System.Classes
+  ,Vcl.Graphics
+  ,Vcl.Controls
+  ,Vcl.Forms
+  ,Vcl.Dialogs
+  ,Vcl.ExtCtrls
+  ,dxGDIPlusClasses
+  ,LayoutPages.View.Forms.DefaultTemplate;
+
+type
+  TfrmCtePrincipal = class(TFormDefaultTemplate)
+    pnlTopLeft: TPanel;
+    pnlUserInfo: TPanel;
+    pnlConfig: TPanel;
+    pnlMainTopRight: TPanel;
+    pnlBotoes: TPanel;
+    pnlMenu: TPanel;
+    pnlLineMenu: TPanel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+implementation
+
+{$R *.dfm}
+
+end.
