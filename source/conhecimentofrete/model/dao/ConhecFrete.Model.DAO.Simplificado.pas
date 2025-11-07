@@ -53,7 +53,6 @@ uses
     function GetSqlSimularCteSimlificado(pParams :TFiltrosSimulacaoCte) :String;
     function GetDsDtFatCarregmamento(pNumCar :Double) :TOraQuery;
     function BuscarNFePorCarregamentoCteSimplificado(pParams :TFiltrosSimulacaoCte) :TOraQuery;
-    function BuscarNFePorCarregamentoCteSimplificado2(pNumCar :Double) :TOraQuery;
     function GetSqlQteUFCliente :String;
     function GetSqlQteClienteDest :String;
     function GetSqlQteUFFilial(pFilialNF :Boolean) :String;
@@ -68,7 +67,7 @@ uses
 
     procedure ValidacoesRegrasSimulacaoCteSimplificado(pOraQuery :TOraQuery);
     procedure SetDsNotasEnviadasSEFAZ(pParamsCte :TModelParamsCte; pOraQuery :TOraQuery);
-    procedure ExecutarScript(const pOraQuery: TOraQuery);
+
   public
     class function New(const pSession :TOraSession) :IConhecFreteDAOCte;
     constructor Create(const pSession :TOraSession);
@@ -89,19 +88,6 @@ destructor TConhecFreteDAOCte.Destroy;
 begin
   FreeAndNil(FOraQuery);
   inherited Destroy;
-end;
-
-procedure TConhecFreteDAOCte.ExecutarScript(const pOraQuery: TOraQuery);
-begin
-  try
-    pOraQuery.ExecSQL;
-  except
-    on E: Exception do
-    begin
-      raise Exception.Create('Erro ao habilitar os registros para reenvio -'+
-                             ' Favor entrar em contato com o suporte.');
-    end;
-  end;
 end;
 
 function TConhecFreteDAOCte.GetCNPJColeta(pParams: TFiltrosSimulacaoCte): String;
@@ -746,54 +732,6 @@ procedure TConhecFreteDAOCte.ValidacoesRegrasSimulacaoCteSimplificado(
 begin
 
 end;
-
-function TConhecFreteDAOCte.BuscarNFePorCarregamentoCteSimplificado2(pNumCar: Double): TOraQuery;
-var
-  DsOraQuery :TOraQuery;
-begin
-  DsOraQuery := GetDsOraQuery;
-  try
-    DsOraQuery.SQL.Append('SELECT');
-    DsOraQuery.SQL.Append('       CODCLI');
-    DsOraQuery.SQL.Append('      ,CLIENTE');
-    DsOraQuery.SQL.Append('      ,CGCENT CGC');
-    DsOraQuery.SQL.Append('      ,IEENT');
-    DsOraQuery.SQL.Append('      ,ENDERENT');
-    DsOraQuery.SQL.Append('      ,BAIRROENT');
-    DsOraQuery.SQL.Append('      ,NUMEROENT');
-    DsOraQuery.SQL.Append('      ,ESTENT');
-    DsOraQuery.SQL.Append('      ,CODCIDADE');
-    DsOraQuery.SQL.Append('      ,CEPENT');
-    DsOraQuery.SQL.Append('      ,TIPOFJ');
-    DsOraQuery.SQL.Append('      ,CONSUMIDORFINAL');
-    DsOraQuery.SQL.Append('      ,TIPOEMPRESA');
-    DsOraQuery.SQL.Append('      ,CODATV1');
-    DsOraQuery.SQL.Append('      ,CLIENTEFONTEST');
-    DsOraQuery.SQL.Append('      ,SULFRAMA');
-    DsOraQuery.SQL.Append('      ,CODCLIPRINC');
-    DsOraQuery.SQL.Append('      ,TELENT');
-    DsOraQuery.SQL.Append('      ,EMAIL');
-    DsOraQuery.SQL.Append('      ,MUNICENT');
-    DsOraQuery.SQL.Append('      ,FANTASIA');
-    DsOraQuery.SQL.Append('      ,NVL(PERDESCFIN, 0) PERDESCFIN');
-    DsOraQuery.SQL.Append('      ,NUMNOTA');
-    DsOraQuery.SQL.Append('      ,NUMTRANSVENDA');
-    DsOraQuery.SQL.Append('      ,CHAVENFE');
-    DsOraQuery.SQL.Append('  FROM PCCLIENT');
-    DsOraQuery.SQL.Append('  INNER JOIN PCNFSAID ');
-    DsOraQuery.SQL.Append('    ON PCNFSAID.CODCLI = PCCLIENT.CODCLI');
-    DsOraQuery.SQL.Append(' WHERE 1=1');
-    DsOraQuery.SQL.Append('   AND PCNFSAID.NUMCAR = :NUMCAR');
-    DsOraQuery.SQL.Append('   AND NVL(PCNFSAID.NUMTRANSVENDACONHEC, 0) = 0 ');
-    DsOraQuery.SQL.Append('   AND ((NVL(PCNFSAID.TIPOVENDA,''  '') IN (''TR'',''DF'')) OR (PCNFSAID.CODFILIAL <> PCNFSAID.CODFILIALNF))');
-    DsOraQuery.SQL.Append('   AND NVL(PCNFSAID.TIPOVENDA,'''') NOT IN (''SR'')');
-    DsOraQuery.SQL.Append('   AND ((NVL(PCNFSAID.TIPOVENDA,''  '') =  (''TR'')) OR (PCPEDC.DTNFTRANSF IS NOT NULL))');
-    DsOraQuery.SQL.Append('   AND NVL(PCNFSAID.ESPECIE,''  '') = ''NF'' ');
-    DsOraQuery.SQL.Append('   AND PCNFSAID.DTCANCEL IS NULL');
-  finally
-    Result := DsOraQuery;
-  end;
-  end;
 
 function TConhecFreteDAOCte.BuscarNFePorCarregamentoCteSimplificado(pParams :TFiltrosSimulacaoCte) :TOraQuery;
 var

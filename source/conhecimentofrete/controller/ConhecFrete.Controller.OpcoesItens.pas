@@ -4,6 +4,7 @@ interface
 
 uses
    Forms
+  ,Math
   ,Graphics
   ,System.SysUtils
   ,Vcl.ExtCtrls
@@ -81,6 +82,14 @@ end;
 procedure TControllerOpcoesItens.SetItemActive(pParam :TPanel);
 begin
   FPanelActive := pParam;
+  with TFormOpcoesItensCte(FFormOwner) do
+  begin
+    pnlTomador.Color        := IfThen(FPanelActive = pnlTomador,TColor($FAE6E6), clWhite);
+    pnlDadosCte.Color       := IfThen(FPanelActive = pnlDadosCte,TColor($FAE6E6), clWhite);
+    pnlMotorista.Color      := IfThen(FPanelActive = pnlMotorista,TColor($FAE6E6), clWhite);
+    pnlParametrosCte.Color  := IfThen(FPanelActive = pnlParametrosCte,TColor($FAE6E6), clWhite);
+    pnlDadosSeguroCte.Color := IfThen(FPanelActive = pnlDadosSeguroCte,TColor($FAE6E6), clWhite);
+  end;
 end;
 
 end.

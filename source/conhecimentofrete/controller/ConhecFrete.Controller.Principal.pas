@@ -37,10 +37,6 @@ type
   TControllerPrincipal = class(TInterfacedObject, IControllerPrincipal)
   private
     FOpcaoCteAtive :TpOpcaoCte;
-    FItemMenuActive :TpMenuCte;
-    FItemRegraActive :TpRegra;
-    FItemSimularActive :TpSimular;
-
     FFormOwner: TForm;
     FOpcoesCte :TfrmCteOpcoesInicio;
     FCmpTituloOpcao :TCmpTLabelTitulo;
@@ -314,6 +310,10 @@ end;
 
 procedure TControllerPrincipal.OnClickInicioCte(Sender: TObject);
 begin
+  with FMenuPrincipal do
+  begin
+    FController.SetItemActive(pnlEmissor);
+  end;
   FMenuEmissaoFiscal.Close;
   with FCtePrincipal do
   begin
@@ -335,11 +335,7 @@ begin
   with FOpcoesCteItens do
   begin
     FController.SetItemActive(pnlDadosCte);
-    pnlDadosCte.Color          := clGradientInactiveCaption;
-    pnlTomador.Color           := clWhite;
-    pnlMotorista.Color         := clWhite;
-    pnlParametrosCte.Color     := clWhite;
-    pnlDadosSeguroCte.Color    := clWhite;
+   
     case FOpcaoCteAtive  of
       tpCteCliente:
       begin
@@ -405,11 +401,6 @@ begin
   with FOpcoesCteItens do
   begin
     FController.SetItemActive(pnlDadosSeguroCte);
-    pnlDadosCte.Color       := clWhite;
-    pnlTomador.Color        := clWhite;
-    pnlMotorista.Color      := clWhite;
-    pnlParametrosCte.Color  := clWhite;
-    pnlDadosSeguroCte.Color := clGradientInactiveCaption;
 
     case FOpcaoCteAtive of
       tpCteRegiao:        FDadosCteRegiao.Close;
@@ -456,11 +447,6 @@ begin
   with FOpcoesCteItens do
   begin
     FController.SetItemActive(pnlMotorista);
-    pnlDadosCte.Color       := clWhite;
-    pnlTomador.Color        := clWhite;
-    pnlMotorista.Color      := clGradientInactiveCaption;
-    pnlParametrosCte.Color  := clWhite;
-    pnlDadosSeguroCte.Color := clWhite;
 
     case FOpcaoCteAtive of
       tpCteRegiao:        FDadosCteRegiao.Close;
@@ -485,11 +471,6 @@ begin
   with FOpcoesCteItens do
   begin
     FController.SetItemActive(pnlParametrosCte);
-    pnlDadosCte.Color       := clWhite;
-    pnlTomador.Color        := clWhite;
-    pnlMotorista.Color      := clWhite;
-    pnlParametrosCte.Color  := clGradientInactiveCaption;
-    pnlDadosSeguroCte.Color := clWhite;
 
     case FOpcaoCteAtive of
       tpCteRegiao:        FDadosCteRegiao.Close;
@@ -514,11 +495,6 @@ begin
   with FOpcoesCteItens do
   begin
     FController.SetItemActive(pnlTomador);
-    pnlDadosCte.Color       := clWhite;
-    pnlTomador.Color        := clGradientInactiveCaption;
-    pnlMotorista.Color      := clWhite;
-    pnlParametrosCte.Color  := clWhite;
-    pnlDadosSeguroCte.Color := clWhite;
 
     case FOpcaoCteAtive of
       tpCteRegiao:        FDadosCteRegiao.Close;
@@ -533,18 +509,30 @@ end;
 
 procedure TControllerPrincipal.OnClickCadProdutos(Sender: TObject);
 begin
+  with FMenuPrincipal do
+  begin
+    FController.SetItemActive(pnlCadastros);
+  end;
   FCmpTituloOpcao.lblTitulo.Caption := FMenuCadastros.pnlProdutos.Caption;
   CloseFormsMenuCadastros;
 end;
 
 procedure TControllerPrincipal.OnClickCadClientes(Sender: TObject);
 begin
+  with FMenuPrincipal do
+  begin
+    FController.SetItemActive(pnlCadastros);
+  end;
   FCmpTituloOpcao.lblTitulo.Caption := FMenuCadastros.pnlClientes.Caption;
   CloseFormsMenuCadastros;
 end;
 
 procedure TControllerPrincipal.OnClickCadServicos(Sender: TObject);
 begin
+  with FMenuPrincipal do
+  begin
+    FController.SetItemActive(pnlCadastros);
+  end;
   FCmpTituloOpcao.lblTitulo.Caption := FMenuCadastros.pnlServicos.Caption;
   CloseFormsMenuCadastros;
 end;
@@ -557,18 +545,30 @@ end;
 
 procedure TControllerPrincipal.OnClickCadMarcas(Sender: TObject);
 begin
+  with FMenuPrincipal do
+  begin
+    FController.SetItemActive(pnlCadastros);
+  end;
   FCmpTituloOpcao.lblTitulo.Caption := FMenuCadastros.pnlMarcas.Caption;
   CloseFormsMenuCadastros;
 end;
 
 procedure TControllerPrincipal.OnClickCadTransportadoras(Sender: TObject);
 begin
+  with FMenuPrincipal do
+  begin
+    FController.SetItemActive(pnlCadastros);
+  end;
   FCmpTituloOpcao.lblTitulo.Caption := FMenuCadastros.pnlTransp.Caption;
   CloseFormsMenuCadastros;
 end;
 
 procedure TControllerPrincipal.OnClickCadUnidMedida(Sender: TObject);
 begin
+  with FMenuPrincipal do
+  begin
+    FController.SetItemActive(pnlCadastros);
+  end;
   FCmpTituloOpcao.lblTitulo.Caption := FMenuCadastros.pnlUnidMedida.Caption;
   CloseFormsMenuCadastros;
 end;

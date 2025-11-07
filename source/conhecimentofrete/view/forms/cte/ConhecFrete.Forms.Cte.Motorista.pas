@@ -61,8 +61,8 @@ begin
 end;
 
 procedure TfrmCteMotorista.psqCodVeiculoContratanteAfterPesquisarEdit(Sender: TObject);
-var
-  pFieldPlaca :TField;
+//var
+  //pFieldPlaca :TField;
 begin
   {pFieldPlaca := dmInterfaces.psqVeiculos.DataSet.FindField('PLACA');
   case Assigned(pFieldPlaca) of

@@ -2,3 +2,6 @@
 /Debug
 *.dcu
 *.exe
+/__history/
+/__history/*.~1~
+/*.local

@@ -53,6 +53,8 @@ function TDadosColeta.NecessitaDadosColeta(pNumCar, pCodProdPred: Double;
 var
   DsQuery :TOraQuery;
 begin
+  DsQuery := TOraQuery.Create(nil);
+
   DsQuery.Close;
   DsQuery.SQL.Clear;
   DsQuery.SQL.ADD(' SELECT PCPEDI.CODFILIALRETIRA, PCPEDC.CODFILIAL ');
