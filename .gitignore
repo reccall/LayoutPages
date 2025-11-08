@@ -5,3 +5,5 @@
 /__history/
 /__history/*.~1~
 /*.local
+/*.identcache
+/*.stat

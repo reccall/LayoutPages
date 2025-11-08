@@ -13,20 +13,11 @@ uses
   ,ConhecFrete.View.Componentes.CardInfoUserCte
   ,ConhecFrete.Forms.Cte.Principal
   ,ConhecFrete.Forms.Cte.OpcoesInicio
-  ,ConhecFrete.Forms.Cte.OpcoesItens
-  ,ConhecFrete.Forms.Cte.Motorista
-  ,ConhecFrete.Forms.Cte.Tomador
-  ,ConhecFrete.Forms.Cte.Parametros
-  ,ConhecFrete.Forms.Cte.RegiaoDadosCte
-  ,ConhecFrete.Forms.Cte.Cliente.DadosCte
-  ,ConhecFrete.Forms.Cte.DadosPedagioSeguro
-  ,ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte
-  ,ConhecFrete.Forms.Cte.Simplificado.DadosCte
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
   ,ConhecFrete.Model.Types.Constantes
-  ,ConhecFrete.View.Componentes.OpcoesGerarCte;
+  ,ConhecFrete.Controller.OpcoesInicio;
 
 type
   IControllerPrincipal = interface
@@ -41,22 +32,10 @@ type
     FOpcoesCte :TfrmCteOpcoesInicio;
     FCmpTituloOpcao :TCmpTLabelTitulo;
     FCmpCardInfoUser :TCmpCardInfoUserCte;
-    FOpcoesCteItens :TFormOpcoesItensCte;
-    FBotoesBarraCte :TCmpOpcoesGerarCte;
 
-    FMenuPrincipal :TFormMenuPrincipal;
+
     FMenuCadastros :TFormMenuCadastros;
-    FMenuEmissaoFiscal :TFormMenuEmissaoFiscal;
 
-    FDadosCteRegiao :TfrmRegiaoDadosCte;
-    FDadosCteCliente :TfrmClienteDadosCte;
-    FDadosCteSimplificado :TfrmSimplificadoDadosCte;
-    FDadosCteUFGlobalizado :TfrmUFGlobalizadoDadosCte;
-
-    FCteTomador :TfrmTomador;
-    FCteMotorista :TfrmCteMotorista;
-    FCteParametros :TfrmCteParametros;
-    FCteSeguroPedagio :TfrmDadosPedagioSeguro;
 
     //MenuCadastros
     procedure OnClickCadMarcas(Sender :TObject);
@@ -68,25 +47,14 @@ type
     procedure OnClickCadTransportadoras(Sender :TObject);
 
     procedure OnClickCardUserInfo(Sender :TObject);
-    procedure OnClickInicioCte(Sender :TObject);
-    procedure OnClickCteCliente(Sender :TObject);
-    procedure OnClickCteRegiao(Sender :TObject);
     procedure OnClickMenuCadastros(Sender :TObject);
     procedure OnClickMenuEmissaoFiscal(Sender :TObject);
-    procedure OnClickCteSimplificado(Sender :TObject);
-    procedure OnClickCteUFGlobalizado(Sender :TObject);
-    procedure OnClickCteSituacaoCarreg(Sender :TObject);
 
-    procedure OnClickDadosCte(Sender :TObject);
-    procedure OnClickTomadorCte(Sender :TObject);
-    procedure OnClickDadosSeguroCte(Sender :TObject);
-    procedure OnClickParamsGeraisCte(Sender :TObject);
-    procedure OnClickMotoristaCte(Sender :TObject);
-
-    procedure IniciarTelaItensCte(pTipoCte :TpOpcaoCte);
     procedure CloseFormsMenuCadastros;
   public
     FCtePrincipal :TfrmCtePrincipal;
+    FMenuPrincipal :TFormMenuPrincipal;
+    FMenuEmissaoFiscal :TFormMenuEmissaoFiscal;
 
     procedure Iniciar;
     procedure DestruirForms;
@@ -105,26 +73,24 @@ uses
 
 constructor TControllerPrincipal.Create(pFormOwner: TForm);
 begin
-  FFormOwner             := pFormOwner;
-  FOpcoesCte             := TfrmCteOpcoesInicio.Create(nil);
-  FCteTomador            := TfrmTomador.Create(nil);
-  FCteMotorista          := TfrmCteMotorista.Create(nil);
-  FCtePrincipal          := TfrmCtePrincipal.Create(nil);
-  FMenuPrincipal         := TFormMenuPrincipal.Create(nil);
-  FMenuCadastros         := TFormMenuCadastros.Create(nil);
-  FCteParametros         := TfrmCteParametros.Create(nil);
-  FBotoesBarraCte        := TCmpOpcoesGerarCte.Create(nil);;
-  FOpcoesCteItens        := TFormOpcoesItensCte.Create(nil);
-  FDadosCteRegiao        := TfrmRegiaoDadosCte.Create(nil);
-  FDadosCteCliente       := TfrmClienteDadosCte.Create(nil);
-  FCmpCardInfoUser       := TCmpCardInfoUserCte.Create(nil);
-  FCteSeguroPedagio      := TfrmDadosPedagioSeguro.Create(nil);
-  FMenuEmissaoFiscal     := TFormMenuEmissaoFiscal.Create(nil);
-  FDadosCteSimplificado  := TfrmSimplificadoDadosCte.Create(nil);
-  FDadosCteUFGlobalizado := TfrmUFGlobalizadoDadosCte.Create(nil);
+  SetLength(aFormsCte,5);
+  FFormOwner := pFormOwner;
+
+  FCtePrincipal      := TfrmCtePrincipal.Create(nil);
+  FMenuPrincipal     := TFormMenuPrincipal.Create(nil);
+  FMenuCadastros     := TFormMenuCadastros.Create(nil);
+  FCmpCardInfoUser   := TCmpCardInfoUserCte.Create(nil);
+  FMenuEmissaoFiscal := TFormMenuEmissaoFiscal.Create(nil);
 
   FCmpTituloOpcao := TCmpTLabelTitulo.Create(nil);
   FCmpTituloOpcao.lblTitulo.Caption := 'Opções de emissão do CT-e';
+
+  aFormsCte[IndexOwner]             := FCtePrincipal;
+  aFormsCte[IndexMenuPrincipal]     := FMenuPrincipal;
+  aFormsCte[IndexCmpTituloOpcao]    := FCmpTituloOpcao;
+  aFormsCte[IndexMenuEmissaoFiscal] := FMenuEmissaoFiscal;
+
+  FOpcoesCte := TfrmCteOpcoesInicio.Create(aFormsCte);
   with FCtePrincipal do
   begin
     pnlMainTopRight.Visible := False;
@@ -142,27 +108,12 @@ end;
 procedure TControllerPrincipal.DestruirForms;
 begin
   TFormCteBackground(FFormOwner).Close;
-  FCteTomador.FController.DestroyComponents;
-  FCteMotorista.FController.DestroyComponents;
-  FCteParametros.FController.DestroyComponents;
-  FDadosCteRegiao.FController.DestroyComponents;
-  FDadosCteCliente.FController.DestroyComponents;
-  FCteSeguroPedagio.FController.DestroyComponents;
-  FDadosCteSimplificado.FController.DestroyComponents;
-  FDadosCteUFGlobalizado.FController.DestroyComponents;
+  FOpcoesCte.FController.DestruirForms;
+  FreeAndNil(FOpcoesCte);
 
-  FreeAndNil(FCteTomador);
-  FreeAndNil(FCteMotorista);
   FreeAndNil(FMenuPrincipal);
   FreeAndNil(FMenuCadastros);
-  FreeAndNil(FCteParametros);
-  FreeAndNil(FBotoesBarraCte);
-  FreeAndNil(FDadosCteRegiao);
-  FreeAndNil(FDadosCteCliente);
-  FreeAndNil(FCteSeguroPedagio);
-  FreeAndNil(FDadosCteSimplificado);
-  FreeAndNil(FDadosCteUFGlobalizado);
-  FreeAndNil(FOpcoesCteItens);
+
   FreeAndNil(FCmpTituloOpcao);
   FreeAndNil(FMenuEmissaoFiscal);
   FCmpCardInfoUser.Close;
@@ -181,24 +132,6 @@ begin
   FCmpCardInfoUser.lblUserName.Caption := 'KAMAYURI NUNES-SAAD';
   FCmpCardInfoUser.pnlUser.OnClick := OnClickCardUserInfo;
 
-  with FOpcoesCteItens do
-  begin
-    pnlTomador.OnClick        := OnClickTomadorCte;
-    pnlDadosCte.OnClick       := OnClickDadosCte;
-    pnlMotorista.OnClick      := OnClickMotoristaCte;
-    pnlParametrosCte.OnClick  := OnClickParamsGeraisCte;
-    pnlDadosSeguroCte.OnClick := OnClickDadosSeguroCte;
-  end;
-
-  with FOpcoesCte do
-  begin
-    pnlBtnRegiao.OnClick       := OnClickCteRegiao;
-    pnlBtnUFGlob.OnClick       := OnClickCteUFGlobalizado;
-    pnlBtnCliente.OnClick      := OnClickCteCliente;
-    pnlBtnSimplificado.OnClick := OnClickCteSimplificado;
-    pnlBtnSituCarreg.OnClick   := OnClickCteSituacaoCarreg;
-  end;
-
   with TFormCteBackground(FFormOwner)  do
   begin
     FCtePrincipal.Parent := pnlMain;
@@ -208,19 +141,18 @@ begin
   with FCtePrincipal do
   begin
     FMenuPrincipal.Parent  := pnlMenu;
-    FBotoesBarraCte.Parent := pnlBotoes;
-    FBotoesBarraCte.pnlInicio.OnClick := OnClickInicioCte;
   end;
 
   with FMenuPrincipal do
   begin
     pnlEmissor.OnClick   := OnClickMenuEmissaoFiscal;
     pnlCadastros.OnClick := OnClickMenuCadastros;
+    FController.SetItemActive(pnlEmissor);
   end;
 
   with FMenuEmissaoFiscal do
   begin
-    pnlCte.OnClick := OnClickInicioCte;
+    pnlCte.OnClick := FOpcoesCte.FController.OnClickInicioCte;
   end;
 
   with FMenuCadastros do
@@ -234,36 +166,11 @@ begin
     pnlUnidMedida.OnClick := OnClickCadUnidMedida;
   end;
 
-  FBotoesBarraCte.Show;
   FOpcoesCte.Show;
   FCtePrincipal.Show;
   FCmpCardInfoUser.Show;
   FCmpTituloOpcao.Show;
   FMenuPrincipal.Show;
-end;
-
-procedure TControllerPrincipal.IniciarTelaItensCte(pTipoCte :TpOpcaoCte);
-begin
-  FOpcoesCte.Close;
-  FOpcoesCteItens.pnlTomadorG.Visible := pTipoCte in [tpCteCliente, tpCteSimplificado];
-
-  case pTipoCte of
-    tpCteCliente:
-    begin
-      FCmpTituloOpcao.lblTitulo.Caption := 'Gerar conhecimento de Frete por Cliente';
-    end;
-    tpCteRegiao:        FCmpTituloOpcao.lblTitulo.Caption := 'Gerar conhecimento de Frete por Região';
-    tpCteSimplificado:  FCmpTituloOpcao.lblTitulo.Caption := 'Gerar conhecimento de Frete Simplificado';
-    tpCteUFGlobalizado: FCmpTituloOpcao.lblTitulo.Caption := 'Gerar conhecimento de Frete por UF(Globalizado)';
-  end;
-
-  with FCtePrincipal do
-  begin
-    pnlMainTopRight.Visible := True;
-    FOpcoesCteItens.Parent := pnlMain;
-    FOpcoesCteItens.Show;
-  end;
-  OnClickDadosCte(FOpcoesCteItens.pnlDadosCte);
 end;
 
 class function TControllerPrincipal.New(pFormOwner: TForm): IControllerPrincipal;
@@ -274,143 +181,6 @@ end;
 procedure TControllerPrincipal.OnClickCardUserInfo(Sender: TObject);
 begin
   DestruirForms;
-end;
-
-procedure TControllerPrincipal.OnClickCteCliente(Sender: TObject);
-begin
-  FOpcaoCteAtive := tpCteCliente;
-  IniciarTelaItensCte(FOpcaoCteAtive);
-end;
-
-procedure TControllerPrincipal.OnClickCteRegiao(Sender: TObject);
-begin
-  FOpcaoCteAtive := tpCteRegiao;
-  IniciarTelaItensCte(tpCteRegiao);
-end;
-
-procedure TControllerPrincipal.OnClickCteSimplificado(Sender: TObject);
-begin
-  FOpcaoCteAtive := tpCteSimplificado;
-  IniciarTelaItensCte(tpCteSimplificado);
-end;
-
-procedure TControllerPrincipal.OnClickCteSituacaoCarreg(Sender: TObject);
-begin
-  with FormCteBackground do
-  begin
-    WindowState := wsMinimized;
-  end;
-end;
-
-procedure TControllerPrincipal.OnClickCteUFGlobalizado(Sender: TObject);
-begin
-  FOpcaoCteAtive := tpCteUFGlobalizado;
-  IniciarTelaItensCte(tpCteUFGlobalizado);
-end;
-
-procedure TControllerPrincipal.OnClickInicioCte(Sender: TObject);
-begin
-  with FMenuPrincipal do
-  begin
-    FController.SetItemActive(pnlEmissor);
-  end;
-  FMenuEmissaoFiscal.Close;
-  with FCtePrincipal do
-  begin
-    pnlMainTopRight.Visible := False;
-    FCmpTituloOpcao.lblTitulo.Caption := 'Opções de emissão do CT-e';
-    FOpcoesCte.Close;
-  end;
-  FOpcoesCteItens.Close;
-  FOpcoesCte.Show;
-  FBotoesBarraCte.Show;
-end;
-
-procedure TControllerPrincipal.OnClickDadosCte(Sender: TObject);
-begin
-  FCteTomador.Close;
-  FCteMotorista.Close;
-  FCteParametros.Close;
-  FCteSeguroPedagio.Close;
-  with FOpcoesCteItens do
-  begin
-    FController.SetItemActive(pnlDadosCte);
-   
-    case FOpcaoCteAtive  of
-      tpCteCliente:
-      begin
-        FDadosCteRegiao.Close;
-        FDadosCteSimplificado.Close;
-        FDadosCteUFGlobalizado.Close;
-
-        if FDadosCteCliente.Showing then
-          Exit;
-
-        FDadosCteCliente.Parent := pnlMain;
-        FDadosCteCliente.Show;
-      end;
-
-      tpCteRegiao:
-      begin
-        FDadosCteCliente.Close;
-        FDadosCteSimplificado.Close;
-        FDadosCteUFGlobalizado.Close;
-
-        if FDadosCteCliente.Showing then
-          Exit;
-        FDadosCteRegiao.Parent := pnlMain;
-        FDadosCteRegiao.Show;
-      end;
-
-      tpCteSimplificado:
-      begin
-        FDadosCteRegiao.Close;
-        FDadosCteCliente.Close;
-        FDadosCteUFGlobalizado.Close;
-
-        if FDadosCteCliente.Showing then
-          Exit;
-        FDadosCteSimplificado.Parent := pnlMain;
-        FDadosCteSimplificado.Show;
-      end;
-
-      tpCteUFGlobalizado:
-      begin
-        FDadosCteRegiao.Close;
-        FDadosCteCliente.Close;
-        FDadosCteSimplificado.Close;
-
-        if FDadosCteCliente.Showing then
-          Exit;
-        FDadosCteUFGlobalizado.Parent := pnlMain;
-        FDadosCteUFGlobalizado.Show;
-      end;
-    end;
-  end;
-end;
-
-procedure TControllerPrincipal.OnClickDadosSeguroCte(Sender: TObject);
-begin
-  FCteTomador.Close;
-  FCteParametros.Close;
-  FCteMotorista.Close;
-
-  if FCteSeguroPedagio.Showing then
-    Exit;
-
-  with FOpcoesCteItens do
-  begin
-    FController.SetItemActive(pnlDadosSeguroCte);
-
-    case FOpcaoCteAtive of
-      tpCteRegiao:        FDadosCteRegiao.Close;
-      tpCteCliente:       FDadosCteCliente.Close;
-      tpCteSimplificado:  FDadosCteSimplificado.Close;
-      tpCteUFGlobalizado: FDadosCteUFGlobalizado.Close;
-    end;
-    FCteSeguroPedagio.Parent := pnlMain;
-    FCteSeguroPedagio.Show;
-  end;
 end;
 
 procedure TControllerPrincipal.OnClickMenuCadastros(Sender: TObject);
@@ -433,78 +203,6 @@ begin
   FMenuEmissaoFiscal.Left   := FCtePrincipal.pnlMenu.Left+FMenuPrincipal.pnlBackEmissor.Width + 20;
   FMenuEmissaoFiscal.BringToFront;
   FMenuEmissaoFiscal.Show;
-end;
-
-procedure TControllerPrincipal.OnClickMotoristaCte(Sender: TObject);
-begin
-  FCteTomador.Close;
-  FCteParametros.Close;
-  FCteSeguroPedagio.Close;
-
-  if FCteMotorista.Showing then
-    Exit;
-
-  with FOpcoesCteItens do
-  begin
-    FController.SetItemActive(pnlMotorista);
-
-    case FOpcaoCteAtive of
-      tpCteRegiao:        FDadosCteRegiao.Close;
-      tpCteCliente:       FDadosCteCliente.Close;
-      tpCteSimplificado:  FDadosCteSimplificado.Close;
-      tpCteUFGlobalizado: FDadosCteUFGlobalizado.Close;
-    end;
-    FCteMotorista.Parent := pnlMain;
-    FCteMotorista.Show;
-  end;
-end;
-
-procedure TControllerPrincipal.OnClickParamsGeraisCte(Sender: TObject);
-begin
-  FCteTomador.Close;
-  FCteSeguroPedagio.Close;
-  FCteMotorista.Close;
-
-   if FCteParametros.Showing then
-    Exit;
-
-  with FOpcoesCteItens do
-  begin
-    FController.SetItemActive(pnlParametrosCte);
-
-    case FOpcaoCteAtive of
-      tpCteRegiao:        FDadosCteRegiao.Close;
-      tpCteCliente:       FDadosCteCliente.Close;
-      tpCteSimplificado:  FDadosCteSimplificado.Close;
-      tpCteUFGlobalizado: FDadosCteUFGlobalizado.Close;
-    end;
-    FCteParametros.Parent := pnlMain;
-    FCteParametros.Show;
-  end;
-end;
-
-procedure TControllerPrincipal.OnClickTomadorCte(Sender: TObject);
-begin
-  FCteParametros.Close;
-  FCteSeguroPedagio.Close;
-  FCteMotorista.Close;
-
-  if FCteTomador.Showing then
-    Exit;
-
-  with FOpcoesCteItens do
-  begin
-    FController.SetItemActive(pnlTomador);
-
-    case FOpcaoCteAtive of
-      tpCteRegiao:        FDadosCteRegiao.Close;
-      tpCteCliente:       FDadosCteCliente.Close;
-      tpCteSimplificado:  FDadosCteSimplificado.Close;
-      tpCteUFGlobalizado: FDadosCteUFGlobalizado.Close;
-    end;
-    FCteTomador.Parent := pnlMain;
-    FCteTomador.Show;
-  end;
 end;
 
 procedure TControllerPrincipal.OnClickCadProdutos(Sender: TObject);
@@ -575,10 +273,12 @@ end;
 
 procedure TControllerPrincipal.CloseFormsMenuCadastros;
 begin
-  FBotoesBarraCte.Close;
+  with FOpcoesCte do
+  begin
+    FController.CloseFormsMenuCadastros;
+    Close;
+  end;
   FMenuCadastros.Close;
-  FOpcoesCte.Close;
-  FOpcoesCteItens.Close;
 end;
 
 end.

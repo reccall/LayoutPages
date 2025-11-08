@@ -61,7 +61,8 @@ uses
   ConhecFrete.View.Componentes.CardInfoUserCte in 'source\conhecimentofrete\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas' {CmpCardInfoUserCte},
   ConhecFrete.Controller.OpcoesItens in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesItens.pas',
   ConhecFrete.Forms.Cte.MenuEmissaoFiscal in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas' {FormMenuEmissaoFiscal},
-  ConhecFrete.Forms.Cte.MenuCadastros in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros};
+  ConhecFrete.Forms.Cte.MenuCadastros in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros},
+  ConhecFrete.Controller.OpcoesInicio in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesInicio.pas';
 
 {$R *.res}
 
