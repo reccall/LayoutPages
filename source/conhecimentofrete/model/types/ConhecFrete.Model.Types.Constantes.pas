@@ -12,12 +12,10 @@ type
   TpMenuCte  = (tpDadosCte, tpTomador, tpMotorista, tpDadosSegPedagio, tpDefinirRegra, tpParamsCte);
   TpOpcaoCte = (tpCteCliente, tpCteRegiao, tpCteSimplificado, tpCteUFGlobalizado, tpSituCarregamento);
 
-const
-  IndexOwner = 0;
-  IndexMenuPrincipal = 1;
-  IndexMenuEmissaoFiscal = 2;
-  IndexCmpTituloOpcao = 3;
-  IndexSelf  = 4;
+  TpForms = (tpOwner, tpMenuPrincipal, tpMenuEmissaoFiscal, tpMenuCadastros, tpCmpTitulo,
+             tpCertificadoDig, tpRelatorios, tpTutorial, tpFormCte, tpFormOpcoesItensCte,
+             tpFDefault);
+
 var
   aFormsCte :array of TForm;
 

@@ -2,8 +2,6 @@ inherited FormMenuCadastros: TFormMenuCadastros
   Caption = 'FormMenuCadastros'
   ClientHeight = 289
   ClientWidth = 128
-  OnCreate = FormCreate
-  OnMouseLeave = FormMouseLeave
   ExplicitWidth = 128
   ExplicitHeight = 289
   PixelsPerInch = 96
@@ -34,7 +32,6 @@ inherited FormMenuCadastros: TFormMenuCadastros
       Color = clMenu
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 110
     end
   end
   object pnlServicos: TPanel
@@ -63,7 +60,6 @@ inherited FormMenuCadastros: TFormMenuCadastros
       Color = clMenu
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 110
     end
   end
   object pnlMarcas: TPanel
@@ -92,7 +88,6 @@ inherited FormMenuCadastros: TFormMenuCadastros
       Color = clMenu
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 110
     end
   end
   object pnlUnidMedida: TPanel
@@ -121,7 +116,6 @@ inherited FormMenuCadastros: TFormMenuCadastros
       Color = clMenu
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 110
     end
   end
   object pnlClientes: TPanel
@@ -150,7 +144,6 @@ inherited FormMenuCadastros: TFormMenuCadastros
       Color = clMenu
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 110
     end
   end
   object pnlFornec: TPanel
@@ -179,7 +172,6 @@ inherited FormMenuCadastros: TFormMenuCadastros
       Color = clMenu
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 110
     end
   end
   object pnlTransp: TPanel
@@ -208,7 +200,6 @@ inherited FormMenuCadastros: TFormMenuCadastros
       Color = clMenu
       ParentBackground = False
       TabOrder = 0
-      ExplicitLeft = 110
     end
   end
 end

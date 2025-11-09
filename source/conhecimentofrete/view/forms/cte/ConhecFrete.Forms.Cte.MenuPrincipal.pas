@@ -14,6 +14,7 @@ uses
   ,Vcl.Dialogs
   ,Vcl.ExtCtrls
   ,ConhecFrete.Controller.MenuCte
+  ,ConhecFrete.Model.Types.Constantes
   ,LayoutPages.View.Forms.FormDefault;
 
 type
@@ -30,38 +31,28 @@ type
     pnlBackTutorial: TPanel;
     pnlTutorial: TPanel;
     procedure FormShow(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     FController :IControllerMenuCte;
+    constructor Create(pArrayForms :array of TForm);
   end;
 
 implementation
 
 {$R *.dfm}
 
-procedure TFormMenuPrincipal.FormCreate(Sender: TObject);
+constructor TFormMenuPrincipal.Create(pArrayForms :array of TForm);
 begin
-  inherited;
-  FController := TControllerMenuCte.New(Self);
+  pArrayForms[Ord(tpMenuPrincipal)] := Self;
+  Inherited Create(nil);
+  FController := TControllerMenuCte.New(pArrayForms);
 end;
 
 procedure TFormMenuPrincipal.FormShow(Sender: TObject);
 begin
   inherited;
-  MakeRounded(pnlCadastros,10);
-  MakeRounded(pnlBackCad,10);
-  MakeRounded(pnlEmissor,10);
-  MakeRounded(pnlBackEmissor,10);
-  MakeRounded(pnlTutorial,10);
-  MakeRounded(pnlBackTutorial,10);
-  MakeRounded(pnlRelatorios,10);
-  MakeRounded(pnlBackRelatorios,10);
-  MakeRounded(pnlCertificadoDig,10);
-  MakeRounded(pnlBackCertificadoDig,10);
-
   FController.Iniciar;
 end;
 

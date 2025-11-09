@@ -50,7 +50,7 @@ implementation
 
 constructor TfrmCteOpcoesInicio.Create(pArrayForms :array of TForm);
 begin
-  pArrayForms[IndexSelf] := Self;
+  pArrayForms[Ord(tpFormCte)] := Self;
   inherited Create(nil);
   FController := TControllerOpcoesCte.Create(pArrayForms);
 end;
@@ -58,16 +58,6 @@ end;
 procedure TfrmCteOpcoesInicio.FormShow(Sender: TObject);
 begin
   Inherited;
-  MakeRounded(pnlBtnCliente,10);
-  MakeRounded(pnlBtnClienteB,10);
-  MakeRounded(pnlBtnRegiao,10);
-  MakeRounded(pnlBtnRegiaoB,10);
-  MakeRounded(pnlBtnUFGlob,10);
-  MakeRounded(pnlBtnUFGlobB,10);
-  MakeRounded(pnlBtnSimplificado,10);
-  MakeRounded(pnlBtnSimplificadoB,10);
-  MakeRounded(pnlBtnSituCarreg,10);
-  MakeRounded(pnlBtnSituCarregB,10);
   FController.Iniciar;
 end;
 

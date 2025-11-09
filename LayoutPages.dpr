@@ -62,7 +62,9 @@ uses
   ConhecFrete.Controller.OpcoesItens in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesItens.pas',
   ConhecFrete.Forms.Cte.MenuEmissaoFiscal in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas' {FormMenuEmissaoFiscal},
   ConhecFrete.Forms.Cte.MenuCadastros in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros},
-  ConhecFrete.Controller.OpcoesInicio in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesInicio.pas';
+  ConhecFrete.Controller.OpcoesInicio in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesInicio.pas',
+  ConhecFrete.Controller.MenuCadastros in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCadastros.pas',
+  ConhecFrete.Controller.MenuEmissaoFiscal in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas';
 
 {$R *.res}
 

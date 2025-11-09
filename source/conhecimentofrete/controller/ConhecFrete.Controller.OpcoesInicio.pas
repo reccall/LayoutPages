@@ -29,7 +29,7 @@ type
 
   TControllerOpcoesCte = class(TInterfacedObject, IControllerOpcoesInicio)
   private
-    FFormSelf  :TForm;
+    FFormCte  :TForm;
     FFormOwner :TForm;
     FMenuPrincipal :TForm;
     FMenuEmissaoFiscal :TForm;
@@ -63,11 +63,11 @@ type
     procedure OnClickDadosSeguroCte(Sender :TObject);
     procedure OnClickParamsGeraisCte(Sender :TObject);
     procedure OnClickMotoristaCte(Sender :TObject);
-
-    procedure IniciarTelaItensCte(pTipoCte :TpOpcaoCte);
-  public
     procedure OnClickInicioCte(Sender :TObject);
 
+    procedure IniciarTelaItensCte(pTipoCte :TpOpcaoCte);
+
+  public
     procedure Iniciar;
     procedure DestruirForms;
     procedure CloseFormsMenuCadastros;
@@ -90,11 +90,11 @@ uses
 
 constructor TControllerOpcoesCte.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormSelf          := pArrayFormsCte[IndexSelf];
-  FFormOwner         := pArrayFormsCte[IndexOwner];
-  FMenuPrincipal     := pArrayFormsCte[IndexMenuPrincipal];
-  FCmpTituloOpcao    := pArrayFormsCte[IndexCmpTituloOpcao];
-  FMenuEmissaoFiscal := pArrayFormsCte[IndexMenuEmissaoFiscal];
+  FFormCte           := pArrayFormsCte[Ord(tpFormCte)];
+  FFormOwner         := pArrayFormsCte[Ord(tpOwner)];
+  FMenuPrincipal     := pArrayFormsCte[Ord(tpMenuPrincipal)];
+  FCmpTituloOpcao    := pArrayFormsCte[Ord(tpCmpTitulo)];
+  FMenuEmissaoFiscal := pArrayFormsCte[Ord(tpMenuEmissaoFiscal)];
 
   FCteTomador            := TfrmTomador.Create(nil);
   FCteMotorista          := TfrmCteMotorista.Create(nil);
@@ -108,16 +108,12 @@ begin
   FDadosCteSimplificado  := TfrmSimplificadoDadosCte.Create(nil);
   FDadosCteUFGlobalizado := TfrmUFGlobalizadoDadosCte.Create(nil);
 
-  with TCmpTLabelTitulo(FCmpTituloOpcao) do
-  begin
-    lblTitulo.Caption := 'Opções de emissão CT-e';
-    FBotoesBarraCte.Show;
-  end;
+  aFormsCte[Ord(tpFormOpcoesItensCte)] := FOpcoesCteItens;
 
   with TfrmCtePrincipal(FFormOwner) do
   begin
     pnlMainTopRight.Visible := False;
-    TfrmCteOpcoesInicio(FFormSelf).Parent := pnlMain;
+    TfrmCteOpcoesInicio(FFormCte).Parent := pnlMain;
   end;
 end;
 
@@ -155,6 +151,7 @@ begin
  begin
    FBotoesBarraCte.Parent := pnlBotoes;
    FBotoesBarraCte.pnlInicio.OnClick := OnClickInicioCte;
+   FBotoesBarraCte.Show;
  end;
 
   with FOpcoesCteItens do
@@ -166,8 +163,25 @@ begin
     pnlDadosSeguroCte.OnClick := OnClickDadosSeguroCte;
   end;
 
-  with TfrmCteOpcoesInicio(FFormSelf) do
+  with TfrmCtePrincipal(FFormOwner) do
   begin
+    pnlMainTopRight.Visible := False;
+    TfrmCteOpcoesInicio(FFormCte).Parent := pnlMain;
+  end;
+
+  with TfrmCteOpcoesInicio(FFormCte) do
+  begin
+    MakeRounded(pnlBtnCliente,10);
+    MakeRounded(pnlBtnClienteB,10);
+    MakeRounded(pnlBtnRegiao,10);
+    MakeRounded(pnlBtnRegiaoB,10);
+    MakeRounded(pnlBtnUFGlob,10);
+    MakeRounded(pnlBtnUFGlobB,10);
+    MakeRounded(pnlBtnSimplificado,10);
+    MakeRounded(pnlBtnSimplificadoB,10);
+    MakeRounded(pnlBtnSituCarreg,10);
+    MakeRounded(pnlBtnSituCarregB,10);
+
     pnlBtnRegiao.OnMouseMove        := OnMouseMoveItem;
     pnlBtnRegiao.OnMouseLeave       := OnMouseLeaveItem;
     pnlBtnUFGlob.OnMouseMove        := OnMouseMoveItem;
@@ -190,7 +204,7 @@ end;
 
 procedure TControllerOpcoesCte.IniciarTelaItensCte(pTipoCte :TpOpcaoCte);
 begin
-  with TfrmCteOpcoesInicio(FFormSelf) do
+  with TfrmCteOpcoesInicio(FFormCte) do
   begin
     Close;
   end;
@@ -259,6 +273,11 @@ end;
 
 procedure TControllerOpcoesCte.OnClickInicioCte(Sender: TObject);
 begin
+  if not Assigned(FMenuPrincipal) then
+  begin
+    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
+  end;
+
   with TFormMenuPrincipal(FMenuPrincipal) do
   begin
     FController.SetItemActive(pnlEmissor);
@@ -276,10 +295,9 @@ begin
   end;
 
   FOpcoesCteItens.Close;
-  FBotoesBarraCte.Show;
-  with TfrmCteOpcoesInicio(FFormSelf) do
+  with TfrmCteOpcoesInicio(FFormCte) do
   begin
-    Show;
+    FController.Iniciar;
   end;
 end;
 
@@ -446,7 +464,7 @@ procedure TControllerOpcoesCte.CloseFormsMenuCadastros;
 begin
   FBotoesBarraCte.Close;
   FOpcoesCteItens.Close;
-  with TfrmCteOpcoesInicio(FFormSelf) do
+  with TfrmCteOpcoesInicio(FFormCte) do
   begin
     Close;
   end;

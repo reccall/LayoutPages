@@ -2,8 +2,6 @@ inherited FormMenuEmissaoFiscal: TFormMenuEmissaoFiscal
   Align = alCustom
   ClientHeight = 167
   ClientWidth = 114
-  OnCreate = FormCreate
-  OnMouseLeave = FormMouseLeave
   ExplicitWidth = 114
   ExplicitHeight = 167
   PixelsPerInch = 96

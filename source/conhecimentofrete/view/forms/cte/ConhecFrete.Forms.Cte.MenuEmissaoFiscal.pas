@@ -13,6 +13,8 @@ uses
   ,Vcl.Forms
   ,Vcl.Dialogs
   ,Vcl.ExtCtrls
+  ,ConhecFrete.Controller.MenuEmissaoFiscal
+  ,ConhecFrete.Model.Types.Constantes
   ,LayoutPages.View.Forms.FormDefault;
 
 type
@@ -25,35 +27,30 @@ type
     pnlRightNFCe: TPanel;
     pnlRightCte: TPanel;
     pnlRightNFSe: TPanel;
-    procedure FormCreate(Sender: TObject);
-    procedure FormMouseLeave(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    FController :IControllerMenuEmissaoFiscal;
+    constructor Create(pArrayForms :array of TForm);
   end;
 
 implementation
 
 {$R *.dfm}
 
-procedure TFormMenuEmissaoFiscal.FormCreate(Sender: TObject);
+constructor TFormMenuEmissaoFiscal.Create(pArrayForms :array of TForm);
 begin
-  inherited;
-  pnlNFe.OnMouseMove  := OnMouseMoveItem;
-  pnlNFe.OnMouseLeave := OnMouseLeaveItem;
-  pnlCte.OnMouseMove  := OnMouseMoveItem;
-  pnlCte.OnMouseLeave := OnMouseLeaveItem;
-  pnlNFSe.OnMouseMove  := OnMouseMoveItem;
-  pnlNFSe.OnMouseLeave := OnMouseLeaveItem;
-  pnlNFCe.OnMouseMove  := OnMouseMoveItem;
-  pnlNFCe.OnMouseLeave := OnMouseLeaveItem;
+  pArrayForms[Ord(tpMenuEmissaoFiscal)] := Self;
+  Inherited Create(nil);
+  FController := TControllerMenuEmissaoFiscal.New(aFormsCte);
 end;
 
-procedure TFormMenuEmissaoFiscal.FormMouseLeave(Sender: TObject);
+procedure TFormMenuEmissaoFiscal.FormShow(Sender: TObject);
 begin
   inherited;
-  Close;
+  FController.Iniciar;
 end;
 
 end.
