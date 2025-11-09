@@ -49,8 +49,6 @@ type
     FCteParametros :TfrmCteParametros;
     FCteSeguroPedagio :TfrmDadosPedagioSeguro;
 
-    procedure OnClickCardUserInfo(Sender :TObject);
-
     procedure OnClickCteCliente(Sender :TObject);
     procedure OnClickCteRegiao(Sender :TObject);
 
@@ -99,7 +97,6 @@ begin
   FCteTomador            := TfrmTomador.Create(nil);
   FCteMotorista          := TfrmCteMotorista.Create(nil);
   FCteParametros         := TfrmCteParametros.Create(nil);
-  FBotoesBarraCte        := TCmpOpcoesGerarCte.Create(nil);;
   FOpcoesCteItens        := TFormOpcoesItensCte.Create(nil);
   FDadosCteRegiao        := TfrmRegiaoDadosCte.Create(nil);
   FDadosCteCliente       := TfrmClienteDadosCte.Create(nil);
@@ -107,6 +104,9 @@ begin
   FCteSeguroPedagio      := TfrmDadosPedagioSeguro.Create(nil);
   FDadosCteSimplificado  := TfrmSimplificadoDadosCte.Create(nil);
   FDadosCteUFGlobalizado := TfrmUFGlobalizadoDadosCte.Create(nil);
+
+  FBotoesBarraCte := TCmpOpcoesGerarCte.Create(nil);
+  aFormsCte[Ord(tpBarraBotoes)] := FBotoesBarraCte;
 
   aFormsCte[Ord(tpFormOpcoesItensCte)] := FOpcoesCteItens;
 
@@ -119,6 +119,11 @@ end;
 
 destructor TControllerOpcoesCte.Destroy;
 begin
+  with TfrmCteOpcoesInicio(FFormCte) do
+  begin
+    FController.DestruirForms;
+    FreeAndNil(FController);
+  end;
   inherited;
 end;
 
@@ -237,11 +242,6 @@ begin
   Result := Self.Create(pArrayFormsCte);
 end;
 
-procedure TControllerOpcoesCte.OnClickCardUserInfo(Sender: TObject);
-begin
-  DestruirForms;
-end;
-
 procedure TControllerOpcoesCte.OnClickCteCliente(Sender: TObject);
 begin
   FOpcaoCteAtive := tpCteCliente;
@@ -281,6 +281,11 @@ begin
   with TFormMenuPrincipal(FMenuPrincipal) do
   begin
     FController.SetItemActive(pnlEmissor);
+  end;
+
+  if not Assigned(FMenuEmissaoFiscal) then
+  begin
+    FMenuEmissaoFiscal := aFormsCte[Ord(tpMenuEmissaoFiscal)];
   end;
 
   with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do

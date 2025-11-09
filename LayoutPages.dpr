@@ -37,7 +37,6 @@ uses
   ConhecFrete.Forms.Cte.RegiaoDadosCte in 'source\conhecimentofrete\view\forms\cte\regiao\ConhecFrete.Forms.Cte.RegiaoDadosCte.pas' {frmRegiaoDadosCte},
   ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte in 'source\conhecimentofrete\view\forms\cte\ufglobalizado\ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte.pas' {frmUFGlobalizadoDadosCte},
   ConhecFrete.Forms.Cte.DadosPedagioSeguro in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.DadosPedagioSeguro.pas' {frmDadosPedagioSeguro},
-  ConhecFrete.Forms.Cte.FormMainCte in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.FormMainCte.pas' {frmMainCte},
   ConhecFrete.Forms.Cte.GridSimulacao in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.GridSimulacao.pas' {frmGridSimulacaoCte},
   ConhecFrete.Forms.Cte.OpcoesItens in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesItens.pas' {FormOpcoesItensCte},
   ConhecFrete.Forms.Cte.Motorista in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Motorista.pas' {frmCteMotorista},

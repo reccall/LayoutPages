@@ -12,12 +12,10 @@ uses
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.View.Componentes.CardInfoUserCte
   ,ConhecFrete.Forms.Cte.Principal
-  ,ConhecFrete.Forms.Cte.OpcoesInicio
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
-  ,ConhecFrete.Model.Types.Constantes
-  ,ConhecFrete.Controller.OpcoesInicio;
+  ,ConhecFrete.Model.Types.Constantes;
 
 type
   IControllerPrincipal = interface
@@ -29,12 +27,12 @@ type
   private
     FOpcaoCteAtive :TpOpcaoCte;
     FFormOwner: TForm;
-    FOpcoesCte :TfrmCteOpcoesInicio;
     FCmpTituloOpcao :TCmpTLabelTitulo;
     FCmpCardInfoUser :TCmpCardInfoUserCte;
     FMenuCadastros :TFormMenuCadastros;
 
     procedure OnClickCardUserInfo(Sender :TObject);
+    procedure OnClickLogoImage(Sender :TObject);
   public
     FCtePrincipal :TfrmCtePrincipal;
     FMenuPrincipal :TFormMenuPrincipal;
@@ -51,7 +49,8 @@ end;
 implementation
 
 uses
-   ConhecFrete.Forms.Cte.Background;
+    ConhecFrete.Forms.Cte.OpcoesInicio
+   ,ConhecFrete.Forms.Cte.Background;
 
 { ControllerPrincipal }
 
@@ -68,15 +67,12 @@ begin
 
   FCtePrincipal := TfrmCtePrincipal.Create(nil);
   aFormsCte[Ord(tpOwner)] := FCtePrincipal;
-  
+
   FCmpTituloOpcao := TCmpTLabelTitulo.Create(nil);
   aFormsCte[Ord(tpCmpTitulo)] := FCmpTituloOpcao;
 
   FMenuEmissaoFiscal := TFormMenuEmissaoFiscal.Create(aFormsCte);
   aFormsCte[Ord(tpMenuEmissaoFiscal)] := FMenuEmissaoFiscal;
-
-  FOpcoesCte := TfrmCteOpcoesInicio.Create(aFormsCte);
-  aFormsCte[Ord(tpFormCte)] := FOpcoesCte;
 
   FMenuCadastros  := TFormMenuCadastros.Create(aFormsCte);
   aFormsCte[Ord(tpMenuCadastros)] := FMenuCadastros;
@@ -101,10 +97,16 @@ end;
 procedure TControllerPrincipal.DestruirForms;
 begin
   TFormCteBackground(FFormOwner).Close;
+  if Assigned(aFormsCte[Ord(tpFormCte)]) then
+  begin
+    with TfrmCteOpcoesInicio(aFormsCte[Ord(tpFormCte)]) do
+    begin
+      FController.DestruirForms;
+      FreeAndNil(TfrmCteOpcoesInicio(aFormsCte[Ord(tpFormCte)]));
+    end;
+  end;
+
   aFormsCte := nil;
-  FOpcoesCte.FController.DestruirForms;
-  FreeAndNil(FOpcoesCte.FController);
-  FreeAndNil(FOpcoesCte);
   FreeAndNil(FMenuCadastros);
   FreeAndNil(FMenuEmissaoFiscal);
   FreeAndNil(FCmpTituloOpcao);
@@ -117,13 +119,12 @@ end;
 
 procedure TControllerPrincipal.Iniciar;
 begin
+  FCmpTituloOpcao.lblTitulo.Caption := 'SEDF - Início';
   with FCmpCardInfoUser do
   begin
     lblUserName.Caption := 'KAMAYURI NUNES-SAAD';
     pnlUser.OnClick := OnClickCardUserInfo;
   end;
-
-  FCmpTituloOpcao.lblTitulo.Caption := 'SEDF - Início';
 
   with TFormCteBackground(FFormOwner)  do
   begin
@@ -133,6 +134,7 @@ begin
 
   with FCtePrincipal do
   begin
+    Image1.OnClick := OnClickLogoImage;
     FMenuPrincipal.Parent := pnlMenu;
     Show;
   end;
@@ -149,6 +151,26 @@ end;
 procedure TControllerPrincipal.OnClickCardUserInfo(Sender: TObject);
 begin
   DestruirForms;
+end;
+
+procedure TControllerPrincipal.OnClickLogoImage(Sender: TObject);
+begin
+  if Assigned(aFormsCte[Ord(tpFormCte)]) then
+  begin
+    if aFormsCte[Ord(tpBarraBotoes)].Showing then
+      aFormsCte[Ord(tpBarraBotoes)].Close;
+
+    if aFormsCte[Ord(tpFormOpcoesItensCte)].Showing then
+      aFormsCte[Ord(tpFormOpcoesItensCte)].Close;
+
+    if aFormsCte[Ord(tpFormCte)].Showing then
+      aFormsCte[Ord(tpFormCte)].Close;
+  end;
+  with TFormMenuPrincipal(FMenuPrincipal) do
+  begin
+    FController.SetItemActive(pnlBackMenu);
+  end;
+  Iniciar;
 end;
 
 end.

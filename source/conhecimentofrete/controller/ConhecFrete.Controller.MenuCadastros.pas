@@ -52,10 +52,18 @@ uses
 
 procedure TControllerMenuCadastros.CloseFormsMenuCadastros;
 begin
-  with TfrmCteOpcoesInicio(FOpcoesCte) do
+  if not Assigned(FOpcoesCte) then
   begin
-    FController.CloseFormsMenuCadastros;
-    Close;
+    FOpcoesCte := aFormsCte[Ord(tpFormCte)];
+  end;
+
+  if Assigned(FOpcoesCte) then
+  begin
+    with TfrmCteOpcoesInicio(FOpcoesCte) do
+    begin
+      FController.CloseFormsMenuCadastros;
+      Close;
+    end;
   end;
   TFormMenuCadastros(FFormOwner).Close;
 end;

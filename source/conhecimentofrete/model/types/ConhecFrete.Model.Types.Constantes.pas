@@ -14,7 +14,7 @@ type
 
   TpForms = (tpOwner, tpMenuPrincipal, tpMenuEmissaoFiscal, tpMenuCadastros, tpCmpTitulo,
              tpCertificadoDig, tpRelatorios, tpTutorial, tpFormCte, tpFormOpcoesItensCte,
-             tpFDefault);
+             tpBarraBotoes, tpFDefault);
 
 var
   aFormsCte :array of TForm;

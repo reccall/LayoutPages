@@ -144,9 +144,6 @@
         <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.DadosPedagioSeguro.pas">
             <Form>frmDadosPedagioSeguro</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.FormMainCte.pas">
-            <Form>frmMainCte</Form>
-        </DCCReference>
         <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.GridSimulacao.pas">
             <Form>frmGridSimulacaoCte</Form>
         </DCCReference>
@@ -176,41 +173,32 @@
         </DCCReference>
         <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultBoxTemplate.pas">
             <Form>FormDefaultBoxTemplate</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.CardInfoUser.pas">
             <Form>CmpCardInfoUser</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultTemplate.pas">
             <Form>FormDefaultTemplate</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.TemplatePrincipal.pas">
             <Form>FormTemplatePrincipal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Principal.pas">
             <Form>frmCtePrincipal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Background.pas">
             <Form>FormCteBackground</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuPrincipal.pas">
             <Form>FormMenuPrincipal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCte.pas"/>
         <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.BotoesBarraOpcoes.pas"/>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraOpcoes.pas">
             <Form>CmpBotoesBarra</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\conhecimentofrete\view\componentes\ConhecFrete.View.Componentes.OpcoesGerarCte.pas">
             <Form>CmpOpcoesGerarCte</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\conhecimentofrete\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas">
             <Form>CmpCardInfoUserCte</Form>
@@ -218,11 +206,9 @@
         <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesItens.pas"/>
         <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas">
             <Form>FormMenuEmissaoFiscal</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas">
             <Form>FormMenuCadastros</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesInicio.pas"/>
         <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCadastros.pas"/>
@@ -649,6 +635,7 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

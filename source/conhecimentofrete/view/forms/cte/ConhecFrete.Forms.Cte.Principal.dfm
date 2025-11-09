@@ -2,7 +2,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
   Caption = 'frmCtePrincipal'
   ClientHeight = 511
   ClientWidth = 908
-  ExplicitLeft = -248
+  ExplicitLeft = 8
   ExplicitWidth = 908
   ExplicitHeight = 511
   PixelsPerInch = 96
@@ -103,6 +103,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
     inherited Image1: TImage
       Width = 180
       Height = 160
+      Cursor = crHandPoint
       ExplicitWidth = 180
       ExplicitHeight = 160
     end

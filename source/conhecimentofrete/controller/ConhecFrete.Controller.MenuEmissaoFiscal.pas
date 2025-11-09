@@ -47,7 +47,6 @@ uses
 
 constructor TControllerMenuEmissaoFiscal.Create(pArrayForms :array of TForm);
 begin
-  FFormCte           := pArrayForms[Ord(tpFormCte)];
   FCtePrincipal      := pArrayForms[Ord(tpOwner)];
   FMenuPrincipal     := pArrayForms[Ord(tpMenuPrincipal)];
   FCmpTituloOpcao    := pArrayForms[Ord(tpCmpTitulo)];
@@ -90,6 +89,12 @@ end;
 
 procedure TControllerMenuEmissaoFiscal.OnClickInicioCte(Sender: TObject);
 begin
+  if not Assigned(FFormCte) then
+  begin
+    FFormCte := TfrmCteOpcoesInicio.Create(aFormsCte);
+    aFormsCte[Ord(tpFormCte)] := FFormCte;
+  end;
+
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
@@ -113,6 +118,9 @@ begin
   if not Assigned(FOpcoesCteItens) then
   begin
     FOpcoesCteItens := aFormsCte[Ord(tpFormOpcoesItensCte)];
+
+    if not Assigned(FOpcoesCteItens) then
+      Exit;
   end;
 
   with TFormOpcoesItensCte(FOpcoesCteItens) do
