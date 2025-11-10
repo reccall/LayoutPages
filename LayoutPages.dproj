@@ -213,6 +213,15 @@
         <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesInicio.pas"/>
         <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCadastros.pas"/>
         <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas"/>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.MenuImage.pas">
+            <Form>CmpMenuImage</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas">
+            <Form>FormMenuItensImagens</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuItensImagens.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

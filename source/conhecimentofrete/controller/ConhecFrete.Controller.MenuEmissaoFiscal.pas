@@ -21,6 +21,7 @@ type
     FOpcoesCteItens :TForm;
     FMenuPrincipal :TForm;
     FCmpTituloOpcao :TForm;
+    FMenuItensImagens :TForm;
     FMenuEmissaoFiscal :TForm;
 
     procedure Iniciar;
@@ -41,17 +42,18 @@ uses
   ,ConhecFrete.Forms.Cte.OpcoesInicio
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
+  ,ConhecFrete.Forms.Cte.MenuItensImagens
   ,LayoutPages.View.Componentes.TLabelTitulo;
 
 { TControllerMenuEmissaoFiscal }
 
 constructor TControllerMenuEmissaoFiscal.Create(pArrayForms :array of TForm);
 begin
-  FCtePrincipal      := pArrayForms[Ord(tpOwner)];
-  FMenuPrincipal     := pArrayForms[Ord(tpMenuPrincipal)];
-  FCmpTituloOpcao    := pArrayForms[Ord(tpCmpTitulo)];
-  FOpcoesCteItens    := pArrayForms[Ord(tpFormOpcoesItensCte)];
-  FMenuEmissaoFiscal := pArrayForms[Ord(tpMenuEmissaoFiscal)];
+  FCtePrincipal     := pArrayForms[Ord(tpOwner)];
+  FMenuPrincipal    := pArrayForms[Ord(tpMenuPrincipal)];
+  FCmpTituloOpcao   := pArrayForms[Ord(tpCmpTitulo)];
+  FOpcoesCteItens   := pArrayForms[Ord(tpFormOpcoesItensCte)];
+  FMenuItensImagens := pArrayForms[Ord(tpMenuItensImagens)];
 end;
 
 destructor TControllerMenuEmissaoFiscal.Destroy;
@@ -93,6 +95,15 @@ begin
   begin
     FFormCte := TfrmCteOpcoesInicio.Create(aFormsCte);
     aFormsCte[Ord(tpFormCte)] := FFormCte;
+  end;
+
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgEmissaoFiscal);
   end;
 
   if not Assigned(FMenuPrincipal) then

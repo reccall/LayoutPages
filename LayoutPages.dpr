@@ -63,7 +63,10 @@ uses
   ConhecFrete.Forms.Cte.MenuCadastros in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros},
   ConhecFrete.Controller.OpcoesInicio in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesInicio.pas',
   ConhecFrete.Controller.MenuCadastros in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCadastros.pas',
-  ConhecFrete.Controller.MenuEmissaoFiscal in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas';
+  ConhecFrete.Controller.MenuEmissaoFiscal in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas',
+  LayoutPages.View.Componentes.MenuImage in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.MenuImage.pas' {CmpMenuImage},
+  ConhecFrete.Forms.Cte.MenuItensImagens in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas' {FormMenuItensImagens},
+  ConhecFrete.Controller.MenuItensImagens in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuItensImagens.pas';
 
 {$R *.res}
 

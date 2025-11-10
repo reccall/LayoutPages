@@ -21,6 +21,7 @@ type
     FCmpTitulo :TForm;
     FOpcoesCte :TForm;
     FMenuPrincipal :TForm;
+    FMenuItensImagens :TForm;
 
     procedure OnClickCadMarcas(Sender :TObject);
     procedure OnClickCadProdutos(Sender :TObject);
@@ -46,7 +47,8 @@ uses
    LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
-  ,ConhecFrete.Forms.Cte.OpcoesInicio;
+  ,ConhecFrete.Forms.Cte.OpcoesInicio
+  ,ConhecFrete.Forms.Cte.MenuItensImagens;
 
 { TControllerMenuCadastros }
 
@@ -74,6 +76,7 @@ begin
   FCmpTitulo     := pArrayFormsCte[Ord(tpCmpTitulo)];
   FOpcoesCte     := pArrayFormsCte[Ord(tpFormCte)];
   FMenuPrincipal := pArrayFormsCte[Ord(tpMenuPrincipal)];
+  FMenuItensImagens := pArrayFormsCte[Ord(tpMenuItensImagens)];
 end;
 
 destructor TControllerMenuCadastros.Destroy;
@@ -124,6 +127,14 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadClientes(Sender: TObject);
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
@@ -140,6 +151,14 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadFornecedores(Sender: TObject);
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
@@ -155,6 +174,14 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadMarcas(Sender: TObject);
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
@@ -170,6 +197,14 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
@@ -185,6 +220,14 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadServicos(Sender: TObject);
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
@@ -200,6 +243,14 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadTransportadoras(Sender: TObject);
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
@@ -215,6 +266,14 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadUnidMedida(Sender: TObject);
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];

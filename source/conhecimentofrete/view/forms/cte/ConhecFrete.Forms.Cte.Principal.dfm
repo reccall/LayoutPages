@@ -171,5 +171,15 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       ParentBackground = False
       TabOrder = 1
     end
+    object pnlTopMenu: TPanel
+      Left = 48
+      Top = 42
+      Width = 179
+      Height = 24
+      BevelOuter = bvNone
+      Color = clWhite
+      ParentBackground = False
+      TabOrder = 2
+    end
   end
 end

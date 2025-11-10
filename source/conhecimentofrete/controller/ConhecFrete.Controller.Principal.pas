@@ -10,11 +10,13 @@ uses
   ,Vcl.Graphics
   ,System.SysUtils
   ,LayoutPages.View.Componentes.TLabelTitulo
+  ,LayoutPages.View.Componentes.MenuImage
   ,ConhecFrete.View.Componentes.CardInfoUserCte
   ,ConhecFrete.Forms.Cte.Principal
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
+  ,ConhecFrete.Forms.Cte.MenuItensImagens
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -25,14 +27,17 @@ type
 
   TControllerPrincipal = class(TInterfacedObject, IControllerPrincipal)
   private
-    FOpcaoCteAtive :TpOpcaoCte;
+    FWidthTeste :Integer;
     FFormOwner: TForm;
+    FCmpMenuImg :TCmpMenuImage;
+    FMenuItensImagens :TFormMenuItensImagens;
     FCmpTituloOpcao :TCmpTLabelTitulo;
     FCmpCardInfoUser :TCmpCardInfoUserCte;
     FMenuCadastros :TFormMenuCadastros;
 
     procedure OnClickCardUserInfo(Sender :TObject);
     procedure OnClickLogoImage(Sender :TObject);
+    procedure OnClickMenuImage(Sender :TObject);
   public
     FCtePrincipal :TfrmCtePrincipal;
     FMenuPrincipal :TFormMenuPrincipal;
@@ -57,13 +62,13 @@ uses
 constructor TControllerPrincipal.Create(pFormOwner: TForm);
 var
   SetTyperForms:TpForms;
-  iIdx :Integer;
 begin
   FFormOwner := pFormOwner;
   SetTyperForms := High(TpForms);
   SetLength(aFormsCte, Ord(SetTyperForms));
 
-  FCmpCardInfoUser := TCmpCardInfoUserCte.Create(nil);
+  FCmpMenuImg       := TCmpMenuImage.Create(nil);
+  FCmpCardInfoUser  := TCmpCardInfoUserCte.Create(nil);
 
   FCtePrincipal := TfrmCtePrincipal.Create(nil);
   aFormsCte[Ord(tpOwner)] := FCtePrincipal;
@@ -77,11 +82,15 @@ begin
   FMenuCadastros  := TFormMenuCadastros.Create(aFormsCte);
   aFormsCte[Ord(tpMenuCadastros)] := FMenuCadastros;
 
+  FMenuItensImagens := TFormMenuItensImagens.Create(aFormsCte);
+  aFormsCte[Ord(tpMenuItensImagens)] := FMenuItensImagens;
+
   FMenuPrincipal := TFormMenuPrincipal.Create(aFormsCte);
   aFormsCte[Ord(tpMenuPrincipal)] := FMenuPrincipal;
 
   with FCtePrincipal do
   begin
+    FWidthTeste := pnlBackMenu.Width;
     pnlMainTopRight.Visible := False;
     FCmpCardInfoUser.Parent := pnlUserInfo;
     FCmpTituloOpcao.Parent  := pnlMainTop;
@@ -107,6 +116,8 @@ begin
   end;
 
   aFormsCte := nil;
+  FreeAndNil(FCmpMenuImg);
+  FreeAndNil(FMenuItensImagens);
   FreeAndNil(FMenuCadastros);
   FreeAndNil(FMenuEmissaoFiscal);
   FreeAndNil(FCmpTituloOpcao);
@@ -134,10 +145,13 @@ begin
 
   with FCtePrincipal do
   begin
+    FCmpMenuImg.Image1.OnClick := OnClickMenuImage;
+    FCmpMenuImg.Parent := pnlTopMenu;
     Image1.OnClick := OnClickLogoImage;
     FMenuPrincipal.Parent := pnlMenu;
     Show;
   end;
+  FCmpMenuImg.Show;
   FCmpCardInfoUser.Show;
   FCmpTituloOpcao.Show;
   FMenuPrincipal.Show;
@@ -171,6 +185,28 @@ begin
     FController.SetItemActive(pnlBackMenu);
   end;
   Iniciar;
+end;
+
+procedure TControllerPrincipal.OnClickMenuImage(Sender: TObject);
+begin
+  with FCtePrincipal do
+  begin
+    if FMenuPrincipal.Showing then
+    begin
+      pnlBackMenu.Width := 200;
+      FMenuPrincipal.Close;
+      FMenuItensImagens.Parent := pnlMenu;
+      FMenuItensImagens.Show;
+    end
+    else
+    if FMenuItensImagens.Showing then
+    begin
+      pnlBackMenu.Width := FWidthTeste;
+      FMenuItensImagens.Close;
+      FMenuPrincipal.Parent := pnlMenu;
+      FMenuPrincipal.Show;
+    end;
+  end;
 end;
 
 end.
