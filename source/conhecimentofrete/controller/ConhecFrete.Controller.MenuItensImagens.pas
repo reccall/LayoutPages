@@ -111,6 +111,11 @@ procedure TControllerMenuItensImagens.OnMouseLeaveImg(Sender: TObject);
 var
   bmp: TBitmap;
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
+
   if TImage(Sender) <> FActiveMenu then
   begin
     bmp := TBitmap.Create;
@@ -132,6 +137,10 @@ procedure TControllerMenuItensImagens.OnMouseMoveImg(Sender: TObject;
 var
   bmp: TBitmap;
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
   bmp := TBitmap.Create;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
@@ -148,6 +157,10 @@ procedure TControllerMenuItensImagens.SetActiveImage(pParam :TImage);
 var
   Shift: TShiftState; X, Y: Integer;
 begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
+  end;
   FActiveMenu := pParam;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
