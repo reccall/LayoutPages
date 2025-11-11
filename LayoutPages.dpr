@@ -37,7 +37,6 @@ uses
   ConhecFrete.Forms.Cte.RegiaoDadosCte in 'source\conhecimentofrete\view\forms\cte\regiao\ConhecFrete.Forms.Cte.RegiaoDadosCte.pas' {frmRegiaoDadosCte},
   ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte in 'source\conhecimentofrete\view\forms\cte\ufglobalizado\ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte.pas' {frmUFGlobalizadoDadosCte},
   ConhecFrete.Forms.Cte.DadosPedagioSeguro in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.DadosPedagioSeguro.pas' {frmDadosPedagioSeguro},
-  ConhecFrete.Forms.Cte.FormMainCte in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.FormMainCte.pas' {frmMainCte},
   ConhecFrete.Forms.Cte.GridSimulacao in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.GridSimulacao.pas' {frmGridSimulacaoCte},
   ConhecFrete.Forms.Cte.OpcoesItens in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesItens.pas' {FormOpcoesItensCte},
   ConhecFrete.Forms.Cte.Motorista in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Motorista.pas' {frmCteMotorista},
@@ -61,11 +60,18 @@ uses
   ConhecFrete.View.Componentes.CardInfoUserCte in 'source\conhecimentofrete\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas' {CmpCardInfoUserCte},
   ConhecFrete.Controller.OpcoesItens in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesItens.pas',
   ConhecFrete.Forms.Cte.MenuEmissaoFiscal in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas' {FormMenuEmissaoFiscal},
-  ConhecFrete.Forms.Cte.MenuCadastros in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros};
+  ConhecFrete.Forms.Cte.MenuCadastros in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros},
+  ConhecFrete.Controller.OpcoesInicio in 'source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesInicio.pas',
+  ConhecFrete.Controller.MenuCadastros in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCadastros.pas',
+  ConhecFrete.Controller.MenuEmissaoFiscal in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas',
+  LayoutPages.View.Componentes.MenuImage in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.MenuImage.pas' {CmpMenuImage},
+  ConhecFrete.Forms.Cte.MenuItensImagens in 'source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas' {FormMenuItensImagens},
+  ConhecFrete.Controller.MenuItensImagens in 'source\conhecimentofrete\controller\ConhecFrete.Controller.MenuItensImagens.pas';
 
 {$R *.res}
 
 begin
+  //ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFormCteBackground, FormCteBackground);

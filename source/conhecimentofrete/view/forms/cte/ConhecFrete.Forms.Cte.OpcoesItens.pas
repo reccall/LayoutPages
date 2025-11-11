@@ -58,20 +58,6 @@ end;
 procedure TFormOpcoesItensCte.FormShow(Sender: TObject);
 begin
   inherited;
-  MakeRounded(pnlTomador,10);
-  MakeRounded(pnlTomadorB,10);
-  MakeRounded(pnlTomadorG,10);
-  MakeRounded(pnlDadosCte,10);
-  MakeRounded(pnlDadosCteB,10);
-  MakeRounded(pnlDadosCteG,10);
-  MakeRounded(pnlMotorista,10);
-  MakeRounded(pnlMotoristaB,10);
-  MakeRounded(pnlMotoristaG,10);
-  MakeRounded(pnlParametrosCte,10);
-  MakeRounded(pnlParametrosCteB,10);
-  MakeRounded(pnlDadosSeg,10);
-  MakeRounded(pnlDadosSeguroCte,10);
-  MakeRounded(pnlDadosSeguroCteB,10);
   FController.Iniciar;
 end;
 

@@ -2,7 +2,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
   Caption = 'frmCtePrincipal'
   ClientHeight = 511
   ClientWidth = 908
-  ExplicitLeft = -248
+  ExplicitLeft = 8
   ExplicitWidth = 908
   ExplicitHeight = 511
   PixelsPerInch = 96
@@ -103,6 +103,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
     inherited Image1: TImage
       Width = 180
       Height = 160
+      Cursor = crHandPoint
       ExplicitWidth = 180
       ExplicitHeight = 160
     end
@@ -169,6 +170,16 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       Color = clMenu
       ParentBackground = False
       TabOrder = 1
+    end
+    object pnlTopMenu: TPanel
+      Left = 48
+      Top = 42
+      Width = 179
+      Height = 24
+      BevelOuter = bvNone
+      Color = clWhite
+      ParentBackground = False
+      TabOrder = 2
     end
   end
 end

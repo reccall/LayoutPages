@@ -13,6 +13,8 @@ uses
   ,Vcl.Forms
   ,Vcl.Dialogs
   ,Vcl.ExtCtrls
+  ,ConhecFrete.Model.Types.Constantes
+  ,ConhecFrete.Controller.MenuCadastros
   ,LayoutPages.View.Forms.FormDefault;
 
 type
@@ -31,12 +33,14 @@ type
     Panel4: TPanel;
     pnlTransp: TPanel;
     Panel6: TPanel;
-    procedure FormCreate(Sender: TObject);
-    procedure FormMouseLeave(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     FControl :Integer;
+    FController :IControllerMenuCadastros;
+
+    constructor Create(pArrayForms :array of TForm);
     { Public declarations }
   end;
 
@@ -44,35 +48,17 @@ implementation
 
 {$R *.dfm}
 
-procedure TFormMenuCadastros.FormCreate(Sender: TObject);
+constructor TFormMenuCadastros.Create(pArrayForms: array of TForm);
 begin
-  FControl := 0;
-  inherited;
-  pnlMarcas.OnMouseMove      := OnMouseMoveItem;
-  pnlMarcas.OnMouseLeave     := OnMouseLeaveItem;
-  pnlFornec.OnMouseMove      := OnMouseMoveItem;
-  pnlFornec.OnMouseLeave     := OnMouseLeaveItem;
-  pnlTransp.OnMouseMove      := OnMouseMoveItem;
-  pnlTransp.OnMouseLeave     := OnMouseLeaveItem;
-  pnlProdutos.OnMouseMove    := OnMouseMoveItem;
-  pnlProdutos.OnMouseLeave   := OnMouseLeaveItem;
-  pnlServicos.OnMouseMove    := OnMouseMoveItem;
-  pnlServicos.OnMouseLeave   := OnMouseLeaveItem;
-  pnlClientes.OnMouseMove    := OnMouseMoveItem;
-  pnlClientes.OnMouseLeave   := OnMouseLeaveItem;
-  pnlUnidMedida.OnMouseMove  := OnMouseMoveItem;
-  pnlUnidMedida.OnMouseLeave := OnMouseLeaveItem;
+  pArrayForms[Ord(tpMenuCadastros)] := Self;
+  inherited Create(nil);
+  FController := TControllerMenuCadastros.New(pArrayForms);
 end;
 
-procedure TFormMenuCadastros.FormMouseLeave(Sender: TObject);
+procedure TFormMenuCadastros.FormShow(Sender: TObject);
 begin
   inherited;
-  if FControl = 1 then
-  begin
-    Close;
-    FControl := 0;
-  end;
-  Inc(FControl);
+  FController.Iniciar;
 end;
 
 end.

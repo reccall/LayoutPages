@@ -25,6 +25,7 @@ type
     pnlBotoes: TPanel;
     pnlMenu: TPanel;
     pnlLineMenu: TPanel;
+    pnlTopMenu: TPanel;
   private
     { Private declarations }
   public

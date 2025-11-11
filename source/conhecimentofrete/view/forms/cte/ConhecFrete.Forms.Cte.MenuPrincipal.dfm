@@ -3,7 +3,6 @@ inherited FormMenuPrincipal: TFormMenuPrincipal
   Caption = 'FormMenuPrincipal'
   ClientHeight = 242
   ClientWidth = 126
-  OnCreate = FormCreate
   ExplicitWidth = 126
   ExplicitHeight = 242
   PixelsPerInch = 96

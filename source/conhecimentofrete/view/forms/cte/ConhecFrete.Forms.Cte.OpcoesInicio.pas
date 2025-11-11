@@ -14,6 +14,9 @@ uses
   ,Vcl.Dialogs
   ,Vcl.StdCtrls
   ,Vcl.ExtCtrls
+  ,ConhecFrete.Forms.Cte.Principal
+  ,ConhecFrete.Model.Types.Constantes
+  ,ConhecFrete.Controller.OpcoesInicio
   ,LayoutPages.View.Forms.FormDefault;
 
 type
@@ -36,36 +39,26 @@ type
     { Private declarations }
   public
     { Public declarations }
+    FController :TControllerOpcoesCte;
+    constructor Create(pArrayForms :array of TForm);
+
   end;
 
 implementation
 
 {$R *.dfm}
 
+constructor TfrmCteOpcoesInicio.Create(pArrayForms :array of TForm);
+begin
+  pArrayForms[Ord(tpFormCte)] := Self;
+  inherited Create(nil);
+  FController := TControllerOpcoesCte.Create(pArrayForms);
+end;
+
 procedure TfrmCteOpcoesInicio.FormShow(Sender: TObject);
 begin
   Inherited;
-  MakeRounded(pnlBtnCliente,10);
-  MakeRounded(pnlBtnClienteB,10);
-  MakeRounded(pnlBtnRegiao,10);
-  MakeRounded(pnlBtnRegiaoB,10);
-  MakeRounded(pnlBtnUFGlob,10);
-  MakeRounded(pnlBtnUFGlobB,10);
-  MakeRounded(pnlBtnSimplificado,10);
-  MakeRounded(pnlBtnSimplificadoB,10);
-  MakeRounded(pnlBtnSituCarreg,10);
-  MakeRounded(pnlBtnSituCarregB,10);
-
-  pnlBtnRegiao.OnMouseMove        := OnMouseMoveItem;
-  pnlBtnRegiao.OnMouseLeave       := OnMouseLeaveItem;
-  pnlBtnUFGlob.OnMouseMove        := OnMouseMoveItem;
-  pnlBtnUFGlob.OnMouseLeave       := OnMouseLeaveItem;
-  pnlBtnCliente.OnMouseMove       := OnMouseMoveItem;
-  pnlBtnCliente.OnMouseLeave      := OnMouseLeaveItem;
-  pnlBtnSituCarreg.OnMouseMove    := OnMouseMoveItem;
-  pnlBtnSituCarreg.OnMouseLeave   := OnMouseLeaveItem;
-  pnlBtnSimplificado.OnMouseMove  := OnMouseMoveItem;
-  pnlBtnSimplificado.OnMouseLeave := OnMouseLeaveItem;
+  FController.Iniciar;
 end;
 
 end.

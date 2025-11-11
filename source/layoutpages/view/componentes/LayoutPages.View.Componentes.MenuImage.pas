@@ -1,4 +1,4 @@
-unit ConhecFrete.Forms.Cte.FormMainCte;
+unit LayoutPages.View.Componentes.MenuImage;
 
 interface
 
@@ -12,17 +12,15 @@ uses
   ,Vcl.Controls
   ,Vcl.Forms
   ,Vcl.Dialogs
+  ,Vcl.StdCtrls
   ,Vcl.ExtCtrls
+  ,dxGDIPlusClasses
   ,LayoutPages.View.Forms.FormDefault;
 
 type
-  TfrmMainCte = class(TFormDefault)
-    pnlTop: TPanel;
-    pnlBottom: TPanel;
-    pnlMain: TPanel;
-    pnlLeft: TPanel;
-    pnlMenu: TPanel;
-    procedure FormShow(Sender: TObject);
+  TCmpMenuImage = class(TFormDefault)
+    Image1: TImage;
+    lblMenu: TLabel;
   private
     { Private declarations }
   public
@@ -32,11 +30,5 @@ type
 implementation
 
 {$R *.dfm}
-
-procedure TfrmMainCte.FormShow(Sender: TObject);
-begin
-  inherited;
-  //
-end;
 
 end.

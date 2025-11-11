@@ -6,6 +6,7 @@ uses
    Winapi.Windows
   ,Winapi.Messages
   ,System.SysUtils
+  ,System.StrUtils
   ,System.Variants
   ,System.Classes
   ,Vcl.Graphics
@@ -23,7 +24,7 @@ type
     { Public declarations }
     procedure MakeRounded(Control :TWinControl; pSize :Integer);
     procedure OnMouseLeaveItem(Sender :TObject); overload;
-    procedure OnMouseMoveItem(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure OnMouseMoveItem(Sender: TObject; Shift: TShiftState; X, Y: Integer); overload;
   end;
 
 implementation
