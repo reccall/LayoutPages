@@ -23,6 +23,10 @@ type
   TControllerMenuItensImagens = class(TInterfacedObject, IControllerMenuItensImagens)
   private
     FActiveMenu :TImage;
+    FCtePrincipal      :TForm;
+    FMenuCadastros     :TForm;
+    FMenuPrincipal     :TForm;
+    FMenuEmissaoFiscal :TForm;
     FMenuItensImagens: TForm;
 
     procedure Iniciar;
@@ -30,6 +34,9 @@ type
     procedure SetActiveImage(pParam :TImage);
 
     function GetIdxImage(pParam :TImage; pEvent :String) :Integer;
+
+    procedure OnClickMenuCadastros(Sender :TObject);
+    procedure OnClickMenuEmissaoFiscal(Sender :TObject);
 
     procedure OnMouseLeaveImg(Sender: TObject);
     procedure OnMouseMoveImg(Sender: TObject; Shift: TShiftState; X, Y: Integer);
@@ -42,21 +49,24 @@ end;
 implementation
 
 uses
-  ConhecFrete.Forms.Cte.MenuItensImagens;
+   ConhecFrete.Forms.Cte.Principal
+  ,ConhecFrete.Forms.Cte.MenuCadastros
+  ,ConhecFrete.Forms.Cte.MenuPrincipal
+  ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
+  ,ConhecFrete.Forms.Cte.MenuItensImagens;
 
 { TControllerMenuItensImagens }
 
 constructor TControllerMenuItensImagens.Create(pArrayForms: array of TForm);
 begin
-  FMenuItensImagens := pArrayForms[Ord(tpMenuItensImagens)];
+  FCtePrincipal      := pArrayForms[Ord(tpOwner)];
+  FMenuPrincipal     := pArrayForms[Ord(tpMenuPrincipal)];
+  FMenuItensImagens  := pArrayForms[Ord(tpMenuItensImagens)];
 end;
 
 destructor TControllerMenuItensImagens.Destroy;
 begin
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    Close;
-  end;
+  FActiveMenu := nil;
   inherited;
 end;
 
@@ -85,12 +95,14 @@ begin
 
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
+    ImgCadastros.OnClick      := OnClickMenuCadastros;
     ImgCadastros.OnMouseMove  := OnMouseMoveImg;
     ImgCadastros.OnMouseLeave := OnMouseLeaveImg;
 
     ImgTutorial.OnMouseMove  := OnMouseMoveImg;
     ImgTutorial.OnMouseLeave := OnMouseLeaveImg;
 
+    ImgEmissaoFiscal.OnClick      := OnClickMenuEmissaoFiscal;
     ImgEmissaoFiscal.OnMouseMove  := OnMouseMoveImg;
     ImgEmissaoFiscal.OnMouseLeave := OnMouseLeaveImg;
 
@@ -105,6 +117,65 @@ end;
 class function TControllerMenuItensImagens.New(pArrayForms: array of TForm): IControllerMenuItensImagens;
 begin
   Result := Self.Create(pArrayForms);
+end;
+
+procedure TControllerMenuItensImagens.OnClickMenuCadastros(Sender: TObject);
+begin
+  if not Assigned(FMenuCadastros) then
+  begin
+    FMenuCadastros := aFormsCte[Ord(tpMenuCadastros)];
+    if not Assigned(FMenuCadastros) then
+    begin
+      FMenuCadastros  := TFormMenuCadastros.Create(aFormsCte);
+      aFormsCte[Ord(tpMenuCadastros)] := FMenuCadastros;
+    end;
+  end;
+
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Close;
+  end;
+
+  TFormMenuCadastros(FMenuCadastros).FControl := 0;
+
+  with TfrmCtePrincipal(FCtePrincipal), TFormMenuPrincipal(FMenuPrincipal) do
+  begin
+    TFormMenuCadastros(FMenuCadastros).Top    := pnlMain.Top+100;
+    TFormMenuCadastros(FMenuCadastros).Left   := pnlMenu.Left + TFormMenuItensImagens(FMenuItensImagens).Left + 130;
+    TFormMenuCadastros(FMenuCadastros).BringToFront;
+    TFormMenuCadastros(FMenuCadastros).Show;
+  end;
+end;
+
+procedure TControllerMenuItensImagens.OnClickMenuEmissaoFiscal(Sender: TObject);
+begin
+  if not Assigned(FMenuEmissaoFiscal) then
+  begin
+    FMenuEmissaoFiscal := aFormsCte[Ord(tpMenuEmissaoFiscal)];
+
+    if not Assigned(FMenuEmissaoFiscal) then
+    begin
+      FMenuEmissaoFiscal := TFormMenuEmissaoFiscal.Create(aFormsCte);
+      aFormsCte[Ord(tpMenuEmissaoFiscal)] := FMenuEmissaoFiscal;
+    end;
+  end;
+
+  if Assigned(FMenuCadastros) then
+  begin
+    with TFormMenuCadastros(FMenuCadastros) do
+    begin
+      FControl := 0;
+      Close;
+    end;
+  end;
+
+  with TfrmCtePrincipal(FCtePrincipal), TFormMenuPrincipal(FMenuPrincipal) do
+  begin
+    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Top  := pnlMain.Top+170;
+    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Left := pnlMenu.Left + TFormMenuItensImagens(FMenuItensImagens).Left + 130;
+    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).BringToFront;
+    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Show;
+  end;
 end;
 
 procedure TControllerMenuItensImagens.OnMouseLeaveImg(Sender: TObject);

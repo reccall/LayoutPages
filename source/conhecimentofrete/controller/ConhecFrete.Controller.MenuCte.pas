@@ -37,9 +37,6 @@ type
     procedure OnClickCertificadoDig(Sender :TObject);
     procedure OnClickMenuEmissaoFiscal(Sender :TObject);
 
-    procedure OnClickMenuCadastrosImg(Sender :TObject);
-    procedure OnClickMenuEmissaoFiscalImg(Sender :TObject);
-
     procedure OnMouseLeaveItemN(Sender :TObject);
   public
   class function New(pArrayForms :array of TForm) :IControllerMenuCte overload;
@@ -60,15 +57,21 @@ uses
 
 constructor TControllerMenuCte.Create(pArrayForms :array of TForm);
 begin
-  FCtePrincipal      := pArrayForms[Ord(tpOwner)];
-  FMenuPrincipal     := pArrayForms[Ord(tpMenuPrincipal)];
-  FMenuCadastros     := pArrayForms[Ord(tpMenuCadastros)];
-  FMenuItensImagens  := pArrayForms[Ord(tpMenuItensImagens)];
-  FMenuEmissaoFiscal := pArrayForms[Ord(tpMenuEmissaoFiscal)];
+  FCtePrincipal  := pArrayForms[Ord(tpOwner)];
+  FMenuPrincipal := pArrayForms[Ord(tpMenuPrincipal)];
 end;
 
 destructor TControllerMenuCte.Destroy;
 begin
+  if Assigned(FMenuCadastros) then
+  begin
+    FreeAndNil(TFormMenuCadastros(FMenuCadastros));
+  end;
+
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    FreeAndNil(TFormMenuEmissaoFiscal(FMenuEmissaoFiscal));
+  end;
   with TFormMenuPrincipal(FMenuPrincipal) do
   begin
     FreeAndNil(FController);
@@ -109,12 +112,6 @@ begin
     pnlCertificadoDig.OnMouseMove  := OnMouseMoveItem;
     pnlCertificadoDig.OnMouseLeave := OnMouseLeaveItemN;
   end;
-
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    ImgCadastros.OnClick     := OnClickMenuCadastrosImg;
-    ImgEmissaoFiscal.OnClick := OnClickMenuEmissaoFiscalImg;
-  end;
 end;
 
 class function TControllerMenuCte.New(pArrayForms :array of TForm): IControllerMenuCte;
@@ -125,37 +122,6 @@ end;
 procedure TControllerMenuCte.OnClickCertificadoDig(Sender: TObject);
 begin
 
-end;
-
-procedure TControllerMenuCte.OnClickMenuCadastros(Sender: TObject);
-begin
-  TFormMenuCadastros(FMenuCadastros).FControl := 0;
-  TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Close;
-
-  with TfrmCtePrincipal(FCtePrincipal), TFormMenuPrincipal(FMenuPrincipal) do
-  begin
-    TFormMenuCadastros(FMenuCadastros).Top    := pnlMain.Top+100;
-    TFormMenuCadastros(FMenuCadastros).Left   := pnlMenu.Left+pnlBackEmissor.Width+20;
-    TFormMenuCadastros(FMenuCadastros).BringToFront;
-    TFormMenuCadastros(FMenuCadastros).Show;
-  end;
-end;
-
-procedure TControllerMenuCte.OnClickMenuEmissaoFiscal(Sender: TObject);
-begin
-  with TFormMenuCadastros(FMenuCadastros) do
-  begin
-    FControl := 0;
-    Close;
-  end;
-
-  with TfrmCtePrincipal(FCtePrincipal), TFormMenuPrincipal(FMenuPrincipal) do
-  begin
-    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Top  := pnlMain.Top+150;
-    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Left := pnlMenu.Left+ pnlBackEmissor.Width + 20;
-    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).BringToFront;
-    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Show;
-  end;
 end;
 
 procedure TControllerMenuCte.OnClickRelatorios(Sender: TObject);
@@ -170,7 +136,7 @@ end;
 
 procedure TControllerMenuCte.OnMouseLeaveItemN(Sender: TObject);
 begin
-   if FPanelActive <> TPanel(Sender) then
+  if FPanelActive <> TPanel(Sender) then
     TPanel(Sender).Color := clWhite;
 end;
 
@@ -187,32 +153,59 @@ begin
   end;
 end;
 
-procedure TControllerMenuCte.OnClickMenuCadastrosImg(Sender: TObject);
+procedure TControllerMenuCte.OnClickMenuCadastros(Sender: TObject);
 begin
+  if not Assigned(FMenuCadastros) then
+  begin
+    FMenuCadastros := aFormsCte[Ord(tpMenuCadastros)];
+    if not Assigned(FMenuCadastros) then
+    begin
+      FMenuCadastros  := TFormMenuCadastros.Create(aFormsCte);
+      aFormsCte[Ord(tpMenuCadastros)] := FMenuCadastros;
+    end;
+  end;
+
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Close;
+  end;
+
   TFormMenuCadastros(FMenuCadastros).FControl := 0;
-  TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Close;
 
   with TfrmCtePrincipal(FCtePrincipal), TFormMenuPrincipal(FMenuPrincipal) do
   begin
     TFormMenuCadastros(FMenuCadastros).Top    := pnlMain.Top+100;
-    TFormMenuCadastros(FMenuCadastros).Left   := pnlMenu.Left + TFormMenuItensImagens(FMenuItensImagens).Left + 130;
+    TFormMenuCadastros(FMenuCadastros).Left   := pnlMenu.Left+pnlBackEmissor.Width+20;
     TFormMenuCadastros(FMenuCadastros).BringToFront;
     TFormMenuCadastros(FMenuCadastros).Show;
   end;
 end;
 
-procedure TControllerMenuCte.OnClickMenuEmissaoFiscalImg(Sender: TObject);
+procedure TControllerMenuCte.OnClickMenuEmissaoFiscal(Sender: TObject);
 begin
-  with TFormMenuCadastros(FMenuCadastros) do
+  if not Assigned(FMenuEmissaoFiscal) then
   begin
-    FControl := 0;
-    Close;
+    FMenuEmissaoFiscal := aFormsCte[Ord(tpMenuEmissaoFiscal)];
+    if not Assigned(FMenuEmissaoFiscal) then
+    begin
+      FMenuEmissaoFiscal := TFormMenuEmissaoFiscal.Create(aFormsCte);
+      aFormsCte[Ord(tpMenuEmissaoFiscal)] := FMenuEmissaoFiscal;
+    end;
+  end;
+
+  if Assigned(FMenuCadastros) then
+  begin
+    with TFormMenuCadastros(FMenuCadastros) do
+    begin
+      FControl := 0;
+      Close;
+    end;
   end;
 
   with TfrmCtePrincipal(FCtePrincipal), TFormMenuPrincipal(FMenuPrincipal) do
   begin
-    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Top  := pnlMain.Top+170;
-    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Left := pnlMenu.Left + TFormMenuItensImagens(FMenuItensImagens).Left + 130;
+    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Top  := pnlMain.Top+150;
+    TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Left := pnlMenu.Left+ pnlBackEmissor.Width + 20;
     TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).BringToFront;
     TFormMenuEmissaoFiscal(FMenuEmissaoFiscal).Show;
   end;

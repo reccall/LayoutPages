@@ -121,7 +121,6 @@ destructor TControllerOpcoesCte.Destroy;
 begin
   with TfrmCteOpcoesInicio(FFormCte) do
   begin
-    FController.DestruirForms;
     FreeAndNil(FController);
   end;
   inherited;

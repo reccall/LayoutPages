@@ -6,6 +6,7 @@ uses
    Forms
   ,Graphics
   ,System.SysUtils
+  ,System.UITypes
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -49,11 +50,17 @@ uses
 
 constructor TControllerMenuEmissaoFiscal.Create(pArrayForms :array of TForm);
 begin
+  FFormCte          := pArrayForms[Ord(tpFormCte)];
   FCtePrincipal     := pArrayForms[Ord(tpOwner)];
   FMenuPrincipal    := pArrayForms[Ord(tpMenuPrincipal)];
   FCmpTituloOpcao   := pArrayForms[Ord(tpCmpTitulo)];
   FOpcoesCteItens   := pArrayForms[Ord(tpFormOpcoesItensCte)];
   FMenuItensImagens := pArrayForms[Ord(tpMenuItensImagens)];
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := TFormMenuItensImagens.Create(aFormsCte);
+    aFormsCte[Ord(tpMenuItensImagens)] := FMenuItensImagens;
+  end;
 end;
 
 destructor TControllerMenuEmissaoFiscal.Destroy;
@@ -79,7 +86,6 @@ begin
     pnlNFCe.OnMouseMove  := OnMouseMoveItem;
     pnlNFCe.OnMouseLeave := OnMouseLeaveItem;
     OnMouseLeave := OnFormMouseLeave;
-    BringToFront;
     Show;
   end;
 end;
@@ -91,16 +97,18 @@ end;
 
 procedure TControllerMenuEmissaoFiscal.OnClickInicioCte(Sender: TObject);
 begin
+  Screen.Cursor := crHourGlass;
   if not Assigned(FFormCte) then
   begin
-    FFormCte := TfrmCteOpcoesInicio.Create(aFormsCte);
-    aFormsCte[Ord(tpFormCte)] := FFormCte;
+    FFormCte := aFormsCte[Ord(tpFormCte)];
+
+    if not Assigned(FFormCte) then
+    begin
+      FFormCte := TfrmCteOpcoesInicio.Create(aFormsCte);
+      aFormsCte[Ord(tpFormCte)] := FFormCte;
+    end;
   end;
 
-  if not Assigned(FMenuItensImagens) then
-  begin
-    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
-  end;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgEmissaoFiscal);
@@ -115,10 +123,7 @@ begin
     FController.SetItemActive(pnlEmissor);
   end;
 
-  with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-  begin
-    Close;
-  end;
+  FMenuEmissaoFiscal.Close;
 
   with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
   begin
@@ -134,20 +139,14 @@ begin
       Exit;
   end;
 
-  with TFormOpcoesItensCte(FOpcoesCteItens) do
-  begin
-    Close;
-  end;
-
+  FOpcoesCteItens.Close;
   if not Assigned(FFormCte) then
   begin
     FFormCte := aFormsCte[Ord(tpFormCte)];
   end;
 
-  with TfrmCteOpcoesInicio(FFormCte) do
-  begin
-    FController.Iniciar;
-  end;
+  TfrmCteOpcoesInicio(FFormCte).FController.Iniciar;
+  Screen.Cursor := crDefault;
 end;
 
 procedure TControllerMenuEmissaoFiscal.OnFormMouseLeave(Sender: TObject);

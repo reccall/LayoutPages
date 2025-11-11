@@ -17,11 +17,12 @@ type
 
   TControllerMenuCadastros = class(TInterfacedObject, IControllerMenuCadastros)
   private
-    FFormOwner: TForm;
     FCmpTitulo :TForm;
     FOpcoesCte :TForm;
+    FMenuCadastros: TForm;
     FMenuPrincipal :TForm;
     FMenuItensImagens :TForm;
+    FormOpcoesItensCte :TForm;
 
     procedure OnClickCadMarcas(Sender :TObject);
     procedure OnClickCadProdutos(Sender :TObject);
@@ -48,12 +49,24 @@ uses
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
   ,ConhecFrete.Forms.Cte.OpcoesInicio
-  ,ConhecFrete.Forms.Cte.MenuItensImagens;
+  ,ConhecFrete.Forms.Cte.MenuItensImagens
+  ,ConhecFrete.Forms.Cte.OpcoesItens;
 
 { TControllerMenuCadastros }
 
 procedure TControllerMenuCadastros.CloseFormsMenuCadastros;
 begin
+  if not Assigned(FormOpcoesItensCte) then
+  begin
+    FormOpcoesItensCte := aFormsCte[Ord(tpFormOpcoesItensCte)];
+  end;
+
+  if Assigned(FormOpcoesItensCte) then
+  begin
+    if FormOpcoesItensCte.Showing then
+      TFormOpcoesItensCte(FormOpcoesItensCte).Close;
+  end;
+
   if not Assigned(FOpcoesCte) then
   begin
     FOpcoesCte := aFormsCte[Ord(tpFormCte)];
@@ -67,21 +80,28 @@ begin
       Close;
     end;
   end;
-  TFormMenuCadastros(FFormOwner).Close;
+  TFormMenuCadastros(FMenuCadastros).Close;
 end;
 
 constructor TControllerMenuCadastros.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormOwner     := pArrayFormsCte[Ord(tpMenuCadastros)];
-  FCmpTitulo     := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FOpcoesCte     := pArrayFormsCte[Ord(tpFormCte)];
-  FMenuPrincipal := pArrayFormsCte[Ord(tpMenuPrincipal)];
+  FMenuCadastros     := pArrayFormsCte[Ord(tpMenuCadastros)];
+  FCmpTitulo         := pArrayFormsCte[Ord(tpCmpTitulo)];
+  FOpcoesCte         := pArrayFormsCte[Ord(tpFormCte)];
+  FMenuPrincipal     := pArrayFormsCte[Ord(tpMenuPrincipal)];
+  FormOpcoesItensCte := pArrayFormsCte[Ord(tpFormOpcoesItensCte)];
+
   FMenuItensImagens := pArrayFormsCte[Ord(tpMenuItensImagens)];
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := TFormMenuItensImagens.Create(aFormsCte);
+    aFormsCte[Ord(tpMenuItensImagens)] := FMenuItensImagens;
+  end;
 end;
 
 destructor TControllerMenuCadastros.Destroy;
 begin
-  with TFormMenuCadastros(FFormOwner) do
+  with TFormMenuCadastros(FMenuCadastros) do
   begin
     Close;
     FreeAndNil(FController);
@@ -90,7 +110,7 @@ end;
 
 procedure TControllerMenuCadastros.Iniciar;
 begin
-  with TFormMenuCadastros(FFormOwner) do
+  with TFormMenuCadastros(FMenuCadastros) do
   begin
     FControl := 0;
     pnlMarcas.OnMouseMove      := OnMouseMoveItem;
@@ -127,10 +147,6 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadClientes(Sender: TObject);
 begin
-  if not Assigned(FMenuItensImagens) then
-  begin
-    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
-  end;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -144,17 +160,13 @@ begin
   begin
     FController.SetItemActive(pnlCadastros);
 
-    lblTitulo.Caption := TFormMenuCadastros(FFormOwner).pnlClientes.Caption;
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlClientes.Caption;
     CloseFormsMenuCadastros;
   end;
 end;
 
 procedure TControllerMenuCadastros.OnClickCadFornecedores(Sender: TObject);
 begin
-  if not Assigned(FMenuItensImagens) then
-  begin
-    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
-  end;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -167,17 +179,13 @@ begin
   begin
     FController.SetItemActive(pnlCadastros);
 
-    lblTitulo.Caption := TFormMenuCadastros(FFormOwner).pnlFornec.Caption;
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlFornec.Caption;
     CloseFormsMenuCadastros;
   end;
 end;
 
 procedure TControllerMenuCadastros.OnClickCadMarcas(Sender: TObject);
 begin
-  if not Assigned(FMenuItensImagens) then
-  begin
-    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
-  end;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -190,17 +198,13 @@ begin
   begin
     FController.SetItemActive(pnlCadastros);
 
-    lblTitulo.Caption := TFormMenuCadastros(FFormOwner).pnlMarcas.Caption;
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlMarcas.Caption;
     CloseFormsMenuCadastros;
   end;
 end;
 
 procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
-  if not Assigned(FMenuItensImagens) then
-  begin
-    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
-  end;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -213,17 +217,13 @@ begin
   begin
     FController.SetItemActive(pnlCadastros);
 
-    lblTitulo.Caption := TFormMenuCadastros(FFormOwner).pnlProdutos.Caption;
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlProdutos.Caption;
     CloseFormsMenuCadastros;
   end;
 end;
 
 procedure TControllerMenuCadastros.OnClickCadServicos(Sender: TObject);
 begin
-  if not Assigned(FMenuItensImagens) then
-  begin
-    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
-  end;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -236,17 +236,13 @@ begin
   begin
     FController.SetItemActive(pnlCadastros);
 
-    lblTitulo.Caption := TFormMenuCadastros(FFormOwner).pnlServicos.Caption;
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlServicos.Caption;
     CloseFormsMenuCadastros;
   end;
 end;
 
 procedure TControllerMenuCadastros.OnClickCadTransportadoras(Sender: TObject);
 begin
-  if not Assigned(FMenuItensImagens) then
-  begin
-    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
-  end;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -259,17 +255,13 @@ begin
   begin
     FController.SetItemActive(pnlCadastros);
 
-    lblTitulo.Caption := TFormMenuCadastros(FFormOwner).pnlTransp.Caption;
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlTransp.Caption;
     CloseFormsMenuCadastros;
   end;
 end;
 
 procedure TControllerMenuCadastros.OnClickCadUnidMedida(Sender: TObject);
 begin
-  if not Assigned(FMenuItensImagens) then
-  begin
-    FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];
-  end;
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -282,14 +274,14 @@ begin
   begin
     FController.SetItemActive(pnlCadastros);
 
-    lblTitulo.Caption := TFormMenuCadastros(FFormOwner).pnlUnidMedida.Caption;
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlUnidMedida.Caption;
     CloseFormsMenuCadastros;
   end;
 end;
 
 procedure TControllerMenuCadastros.OnFormMouseLeave(Sender: TObject);
 begin
-  with TFormMenuCadastros(FFormOwner) do
+  with TFormMenuCadastros(FMenuCadastros) do
   begin
     if FControl = 1 then
     begin
