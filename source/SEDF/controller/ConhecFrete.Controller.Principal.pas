@@ -193,6 +193,9 @@ end;
 procedure TControllerPrincipal.OnClickLogoImage(Sender: TObject);
 begin
   try
+    if FCmpTituloOpcao.lblTitulo.Caption = 'SEDF - Início' then
+      Exit;
+
     with TFormMenuPrincipal(FMenuPrincipal) do
     begin
       FController.SetItemActive(pnlBackMenu);

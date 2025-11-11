@@ -110,65 +110,65 @@
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.TEditPesquisa.pas"/>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.TEditTitulo.pas"/>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.TLabelTitulo.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.Cliente.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.Regiao.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.Simplificado.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.SituacaoCarregamento.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dao\ConhecFrete.Model.DAO.UFGlobalizado.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.Cte.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.DadosClienteFrete.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.DadosColeta.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.DadosPedagio.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.DadosTributacao.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\dto\ConhecFrete.Model.DTO.FiltrosSimulacaoCte.pas"/>
-        <DCCReference Include="source\conhecimentofrete\model\types\ConhecFrete.Model.Types.Constantes.pas"/>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas">
+        <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Cliente.pas"/>
+        <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Regiao.pas"/>
+        <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Simplificado.pas"/>
+        <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.SituacaoCarregamento.pas"/>
+        <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.UFGlobalizado.pas"/>
+        <DCCReference Include="source\SEDF\model\dto\ConhecFrete.Model.DTO.Cte.pas"/>
+        <DCCReference Include="source\SEDF\model\dto\ConhecFrete.Model.DTO.DadosClienteFrete.pas"/>
+        <DCCReference Include="source\SEDF\model\dto\ConhecFrete.Model.DTO.DadosColeta.pas"/>
+        <DCCReference Include="source\SEDF\model\dto\ConhecFrete.Model.DTO.DadosPedagio.pas"/>
+        <DCCReference Include="source\SEDF\model\dto\ConhecFrete.Model.DTO.DadosTributacao.pas"/>
+        <DCCReference Include="source\SEDF\model\dto\ConhecFrete.Model.DTO.FiltrosSimulacaoCte.pas"/>
+        <DCCReference Include="source\SEDF\model\types\ConhecFrete.Model.Types.Constantes.pas"/>
+        <DCCReference Include="source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas">
             <Form>frmClienteDadosCte</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.ClienteDadosCte.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.Motorista.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.Parametros.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.Principal.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.RegiaoDadosCte.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.SimplificadoDadosCte.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.SituacaoCarregamento.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.Tomador.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.UFGlobalizadoDadosCte.pas"/>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\regiao\ConhecFrete.Forms.Cte.RegiaoDadosCte.pas">
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.ClienteDadosCte.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Motorista.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Parametros.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Principal.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.RegiaoDadosCte.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.SimplificadoDadosCte.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.SituacaoCarregamento.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Tomador.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.UFGlobalizadoDadosCte.pas"/>
+        <DCCReference Include="source\SEDF\view\forms\cte\regiao\ConhecFrete.Forms.Cte.RegiaoDadosCte.pas">
             <Form>frmRegiaoDadosCte</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ufglobalizado\ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ufglobalizado\ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte.pas">
             <Form>frmUFGlobalizadoDadosCte</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.DadosPedagioSeguro.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.DadosPedagioSeguro.pas">
             <Form>frmDadosPedagioSeguro</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.GridSimulacao.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.GridSimulacao.pas">
             <Form>frmGridSimulacaoCte</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesItens.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesItens.pas">
             <Form>FormOpcoesItensCte</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Motorista.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Motorista.pas">
             <Form>frmCteMotorista</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesInicio.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesInicio.pas">
             <Form>frmCteOpcoesInicio</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Parametros.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Parametros.pas">
             <Form>frmCteParametros</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.SubContratacao.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.SubContratacao.pas">
             <Form>frmCteSimplificadoSubContratacao</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Tomador.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Tomador.pas">
             <Form>frmTomador</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.DadosCte.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.DadosCte.pas">
             <Form>frmSimplificadoDadosCte</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.InfoRegrasCteSimplificado.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.InfoRegrasCteSimplificado.pas">
             <Form>frmCteSimplificadoInfoRegras</Form>
         </DCCReference>
         <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultBoxTemplate.pas">
@@ -183,45 +183,44 @@
         <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.TemplatePrincipal.pas">
             <Form>FormTemplatePrincipal</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Principal.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Principal.pas">
             <Form>frmCtePrincipal</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.Background.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Background.pas">
             <Form>FormCteBackground</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuPrincipal.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuPrincipal.pas">
             <Form>FormMenuPrincipal</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCte.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.BotoesBarraOpcoes.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuCte.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.BotoesBarraOpcoes.pas"/>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraOpcoes.pas">
             <Form>CmpBotoesBarra</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\componentes\ConhecFrete.View.Componentes.OpcoesGerarCte.pas">
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.OpcoesGerarCte.pas">
             <Form>CmpOpcoesGerarCte</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas">
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas">
             <Form>CmpCardInfoUserCte</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesItens.pas"/>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas">
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.OpcoesItens.pas"/>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas">
             <Form>FormMenuEmissaoFiscal</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas">
             <Form>FormMenuCadastros</Form>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.OpcoesInicio.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuCadastros.pas"/>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.OpcoesInicio.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuCadastros.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas"/>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.MenuImage.pas">
             <Form>CmpMenuImage</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas">
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas">
             <Form>FormMenuItensImagens</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="source\conhecimentofrete\controller\ConhecFrete.Controller.MenuItensImagens.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuItensImagens.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
