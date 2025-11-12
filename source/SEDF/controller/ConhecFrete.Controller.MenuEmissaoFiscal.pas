@@ -98,55 +98,68 @@ end;
 procedure TControllerMenuEmissaoFiscal.OnClickInicioCte(Sender: TObject);
 begin
   Screen.Cursor := crHourGlass;
-  if not Assigned(FFormCte) then
-  begin
-    FFormCte := aFormsCte[Ord(tpFormCte)];
-
+  FMenuEmissaoFiscal.Close;
+  try
     if not Assigned(FFormCte) then
     begin
-      FFormCte := TfrmCteOpcoesInicio.Create(aFormsCte);
-      aFormsCte[Ord(tpFormCte)] := FFormCte;
+      FFormCte := aFormsCte[Ord(tpFormCte)];
+
+      if not Assigned(FFormCte) then
+      begin
+        FFormCte := TfrmCteOpcoesInicio.Create(aFormsCte);
+        aFormsCte[Ord(tpFormCte)] := FFormCte;
+      end;
     end;
-  end;
 
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgEmissaoFiscal);
-  end;
+    if (FFormCte.Showing) then
+    begin
+      Exit;
+    end
+    else
+    if Assigned(FOpcoesCteItens) then
+    begin
+      if FOpcoesCteItens.Showing then
+        Exit;
+    end;
 
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
-  with TFormMenuPrincipal(FMenuPrincipal) do
-  begin
-    FController.SetItemActive(pnlEmissor);
-  end;
+    with TFormMenuItensImagens(FMenuItensImagens) do
+    begin
+      FController.SetActiveImage(ImgEmissaoFiscal);
+    end;
 
-  FMenuEmissaoFiscal.Close;
+    if not Assigned(FMenuPrincipal) then
+    begin
+      FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
+    end;
+    with TFormMenuPrincipal(FMenuPrincipal) do
+    begin
+      FController.SetItemActive(pnlEmissor);
+    end;
 
-  with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
-  begin
-    pnlMainTopRight.Visible := False;
-    lblTitulo.Caption := 'Opções de emissão do CT-e';
-  end;
-
-  if not Assigned(FOpcoesCteItens) then
-  begin
-    FOpcoesCteItens := aFormsCte[Ord(tpFormOpcoesItensCte)];
+    with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
+    begin
+      pnlMainTopRight.Visible := False;
+      lblTitulo.Caption := 'Opções de emissão do CT-e';
+    end;
 
     if not Assigned(FOpcoesCteItens) then
-      Exit;
-  end;
+    begin
+      FOpcoesCteItens := aFormsCte[Ord(tpFormOpcoesItensCte)];
 
-  FOpcoesCteItens.Close;
-  if not Assigned(FFormCte) then
-  begin
-    FFormCte := aFormsCte[Ord(tpFormCte)];
-  end;
+      if not Assigned(FOpcoesCteItens) then
+        Exit;
+    end;
 
-  TfrmCteOpcoesInicio(FFormCte).FController.Iniciar;
-  Screen.Cursor := crDefault;
+    FOpcoesCteItens.Close;
+    if not Assigned(FFormCte) then
+    begin
+      FFormCte := aFormsCte[Ord(tpFormCte)];
+    end;
+
+    TfrmCteOpcoesInicio(FFormCte).FController.Iniciar;
+  finally
+    Screen.Cursor := crDefault;
+  end;
 end;
 
 procedure TControllerMenuEmissaoFiscal.OnFormMouseLeave(Sender: TObject);

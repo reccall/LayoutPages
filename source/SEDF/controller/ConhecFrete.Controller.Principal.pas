@@ -36,8 +36,10 @@ type
     procedure OnClickCardUserInfo(Sender :TObject);
     procedure OnClickLogoImage(Sender :TObject);
     procedure OnClickMenuImage(Sender :TObject);
+
     procedure CloseForms;
     procedure CloseMenus;
+    procedure SetActiveDefaultImage;
   public
     FCtePrincipal :TfrmCtePrincipal;
     FMenuPrincipal :TFormMenuPrincipal;
@@ -192,35 +194,23 @@ end;
 
 procedure TControllerPrincipal.OnClickLogoImage(Sender: TObject);
 begin
-  try
-    if FCmpTituloOpcao.lblTitulo.Caption = 'SEDF - Início' then
-      Exit;
-
-    with TFormMenuPrincipal(FMenuPrincipal) do
-    begin
-      FController.SetItemActive(pnlBackMenu);
-    end;
-    if Assigned(FMenuItensImagens) then
-    begin
-      with TFormMenuItensImagens(FMenuItensImagens) do
-      begin
-        FImageDefault := TImage.Create(nil);
-        FImageDefault.Name := 'ImgDefault';
-        FController.SetActiveImage(FImageDefault);
-      end;
-    end;
-    Iniciar;
-  finally
-    if Assigned(FImageDefault) then
-    begin
-      FreeAndNil(FImageDefault);
-    end;
+  if FCmpTituloOpcao.lblTitulo.Caption = 'SEDF - Início' then
+    Exit;
+  with TFormMenuPrincipal(FMenuPrincipal) do
+  begin
+    FController.SetItemActive(pnlBackMenu);
   end;
+  SetActiveDefaultImage;
+  Iniciar;
 end;
 
 procedure TControllerPrincipal.OnClickMenuImage(Sender: TObject);
 begin
   CloseMenus;
+  if FCmpTituloOpcao.lblTitulo.Caption = 'SEDF - Início' then
+  begin
+    SetActiveDefaultImage;
+  end;
   with FCtePrincipal do
   begin
     if FMenuPrincipal.Showing then
@@ -247,6 +237,28 @@ begin
       FMenuItensImagens.Close;
       FMenuPrincipal.Parent := pnlMenu;
       FMenuPrincipal.Show;
+    end;
+  end;
+end;
+
+procedure TControllerPrincipal.SetActiveDefaultImage;
+begin
+  if not Assigned(FMenuItensImagens) then
+  begin
+    FMenuItensImagens := TFormMenuItensImagens(aFormsCte[Ord(tpMenuItensImagens)]);
+  end;
+
+  if Assigned(FMenuItensImagens) then
+  begin
+    with TFormMenuItensImagens(FMenuItensImagens) do
+    begin
+      try
+        FImageDefault := TImage.Create(nil);
+        FImageDefault.Name := 'ImgDefault';
+        FController.SetActiveImage(FImageDefault);
+      finally
+        FreeAndNil(FImageDefault);
+      end;
     end;
   end;
 end;
