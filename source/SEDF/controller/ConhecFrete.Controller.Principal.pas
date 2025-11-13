@@ -40,7 +40,7 @@ type
     procedure OnClickMenuImage(Sender :TObject);
 
     procedure CloseForms;
-    procedure CloseMenus;
+    procedure CloseMenus(pResetItemMenu :Boolean);
     procedure SetActiveDefaultImage;
   public
     FCtePrincipal :TfrmCtePrincipal;
@@ -73,17 +73,18 @@ begin
     aFormsCte[Ord(tpBarraBotoes)].Close;
     aFormsCte[Ord(tpFormOpcoesItensCte)].Close;
   end;
-  CloseMenus;
+  CloseMenus(True);
 end;
 
-procedure TControllerPrincipal.CloseMenus;
+procedure TControllerPrincipal.CloseMenus(pResetItemMenu :Boolean);
 begin
   FMenuCadasros := aFormsCte[Ord(tpMenuCadastros)];
   if Assigned(FMenuCadasros) then
   begin
     with TFormMenuCadastros(FMenuCadasros) do
     begin
-      FController.SetOpcaoMenuItemCad(pnlRightNFe);
+      if pResetItemMenu then
+        FController.SetOpcaoMenuItemCad(pnlRightNFe);
       Close;
     end;
   end;
@@ -93,7 +94,8 @@ begin
   begin
     with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
     begin
-      FController.SetOpcaoMenuItem(pnlRightNFe);
+      if pResetItemMenu then
+        FController.SetOpcaoMenuItem(pnlRightNFe);
       Close;
     end;
   end;
@@ -220,7 +222,7 @@ end;
 
 procedure TControllerPrincipal.OnClickMenuImage(Sender: TObject);
 begin
-  CloseMenus;
+  CloseMenus(False);
   if FCmpTituloOpcao.lblTitulo.Caption = 'SEDF - Início' then
   begin
     SetActiveDefaultImage;
