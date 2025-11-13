@@ -10,6 +10,12 @@ type
   TpRegra    = (tpDefault, tpRemetente, tpDestinatario);
   TpSimular  = (tpSimularCte, tpNovoCte);
   TpMenuImg  = (tpImgCadastro, tpImgEmissorFiscal, tpImgCertDigital, tpImgRelatorios, tpImgTutorial);
+
+  TpOpcaoMenuCad = (tpMenuProdutos, tpMenuServicos, tpMenuMarcas,
+                    tpMenuUnidMedida, tpMenuClientes, tpMenuFornec, tpMenuTransp);
+
+  TpOpcaoMenuEmissaoFis = (tpMenuNFe, tpMenuNFCe, tpOpcaoMenuCte, tpMenuNFSe);
+
   TpMenuCte  = (tpDadosCte, tpTomador, tpMotorista, tpDadosSegPedagio, tpDefinirRegra, tpParamsCte);
   TpOpcaoCte = (tpCteCliente, tpCteRegiao, tpCteSimplificado, tpCteUFGlobalizado, tpSituCarregamento);
 

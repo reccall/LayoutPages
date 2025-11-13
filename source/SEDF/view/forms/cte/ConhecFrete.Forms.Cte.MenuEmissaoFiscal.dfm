@@ -40,7 +40,7 @@ inherited FormMenuEmissaoFiscal: TFormMenuEmissaoFiscal
     Width = 113
     Height = 41
     Cursor = crHandPoint
-    Caption = 'NF-Ce'
+    Caption = 'NFC-e'
     Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = cl3DDkShadow
@@ -96,7 +96,7 @@ inherited FormMenuEmissaoFiscal: TFormMenuEmissaoFiscal
     Width = 113
     Height = 41
     Cursor = crHandPoint
-    Caption = 'NF-Se'
+    Caption = 'NFS-e'
     Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = cl3DDkShadow

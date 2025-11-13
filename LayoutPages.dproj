@@ -101,6 +101,15 @@
         <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.BackgroundLayout.pas">
             <Form>FormBackgroundLayout</Form>
         </DCCReference>
+        <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultBoxTemplate.pas">
+            <Form>FormDefaultBoxTemplate</Form>
+        </DCCReference>
+        <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultTemplate.pas">
+            <Form>FormDefaultTemplate</Form>
+        </DCCReference>
+        <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.CadastroPrincipal.pas">
+            <Form>FormCadastrosPrincipal</Form>
+        </DCCReference>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraClose.pas">
             <Form>CmpBotoesBarraClose</Form>
         </DCCReference>
@@ -110,6 +119,15 @@
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.TEditPesquisa.pas"/>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.TEditTitulo.pas"/>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.TLabelTitulo.pas"/>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraOpcoes.pas">
+            <Form>CmpBotoesBarra</Form>
+        </DCCReference>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.MenuImage.pas">
+            <Form>CmpMenuImage</Form>
+        </DCCReference>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.CardInfoUser.pas">
+            <Form>CmpCardInfoUser</Form>
+        </DCCReference>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Cliente.pas"/>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Regiao.pas"/>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Simplificado.pas"/>
@@ -122,8 +140,11 @@
         <DCCReference Include="source\SEDF\model\dto\ConhecFrete.Model.DTO.DadosTributacao.pas"/>
         <DCCReference Include="source\SEDF\model\dto\ConhecFrete.Model.DTO.FiltrosSimulacaoCte.pas"/>
         <DCCReference Include="source\SEDF\model\types\ConhecFrete.Model.Types.Constantes.pas"/>
-        <DCCReference Include="source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas">
-            <Form>frmClienteDadosCte</Form>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.OpcoesGerarCte.pas">
+            <Form>CmpOpcoesGerarCte</Form>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas">
+            <Form>CmpCardInfoUserCte</Form>
         </DCCReference>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.ClienteDadosCte.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas"/>
@@ -135,6 +156,16 @@
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.SituacaoCarregamento.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Tomador.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.UFGlobalizadoDadosCte.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuCte.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.BotoesBarraOpcoes.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.OpcoesItens.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.OpcoesInicio.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuCadastros.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuItensImagens.pas"/>
+        <DCCReference Include="source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas">
+            <Form>frmClienteDadosCte</Form>
+        </DCCReference>
         <DCCReference Include="source\SEDF\view\forms\cte\regiao\ConhecFrete.Forms.Cte.RegiaoDadosCte.pas">
             <Form>frmRegiaoDadosCte</Form>
         </DCCReference>
@@ -171,18 +202,6 @@
         <DCCReference Include="source\SEDF\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.InfoRegrasCteSimplificado.pas">
             <Form>frmCteSimplificadoInfoRegras</Form>
         </DCCReference>
-        <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultBoxTemplate.pas">
-            <Form>FormDefaultBoxTemplate</Form>
-        </DCCReference>
-        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.CardInfoUser.pas">
-            <Form>CmpCardInfoUser</Form>
-        </DCCReference>
-        <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultTemplate.pas">
-            <Form>FormDefaultTemplate</Form>
-        </DCCReference>
-        <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.TemplatePrincipal.pas">
-            <Form>FormTemplatePrincipal</Form>
-        </DCCReference>
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Principal.pas">
             <Form>frmCtePrincipal</Form>
         </DCCReference>
@@ -192,35 +211,15 @@
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuPrincipal.pas">
             <Form>FormMenuPrincipal</Form>
         </DCCReference>
-        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuCte.pas"/>
-        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.BotoesBarraOpcoes.pas"/>
-        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraOpcoes.pas">
-            <Form>CmpBotoesBarra</Form>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.OpcoesGerarCte.pas">
-            <Form>CmpOpcoesGerarCte</Form>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas">
-            <Form>CmpCardInfoUserCte</Form>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.OpcoesItens.pas"/>
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas">
             <Form>FormMenuEmissaoFiscal</Form>
         </DCCReference>
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas">
             <Form>FormMenuCadastros</Form>
         </DCCReference>
-        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.OpcoesInicio.pas"/>
-        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuCadastros.pas"/>
-        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas"/>
-        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.MenuImage.pas">
-            <Form>CmpMenuImage</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas">
             <Form>FormMenuItensImagens</Form>
         </DCCReference>
-        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuItensImagens.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -249,12 +248,27 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployClass Name="ProjectiOSDeviceResourceRules">
+                <DeployClass Name="DependencyModule">
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.dll;.bpl</Extensions>
+                    </Platform>
                     <Platform Name="iOSDevice64">
                         <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXResource">
@@ -608,27 +622,12 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <DeployClass Name="DependencyModule">
-                    <Platform Name="Win32">
-                        <Operation>0</Operation>
-                        <Extensions>.dll;.bpl</Extensions>
-                    </Platform>
+                <DeployClass Name="ProjectiOSDeviceResourceRules">
                     <Platform Name="iOSDevice64">
                         <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="iOSSimulator">
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
                     </Platform>
                 </DeployClass>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>

@@ -4,8 +4,10 @@ interface
 
 uses
    Forms
+  ,Math
   ,Graphics
   ,System.SysUtils
+  ,Vcl.ExtCtrls
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -13,6 +15,7 @@ type
   ['{8866F3F1-E545-4534-B300-02BC02893DF8}']
     procedure Iniciar;
     procedure CloseFormsMenuCadastros;
+    procedure SetOpcaoMenuItemCad(pPanel :TPanel);
   end;
 
   TControllerMenuCadastros = class(TInterfacedObject, IControllerMenuCadastros)
@@ -22,7 +25,9 @@ type
     FMenuCadastros: TForm;
     FMenuPrincipal :TForm;
     FMenuItensImagens :TForm;
+    FMenuEmissaoFiscal: TForm;
     FormOpcoesItensCte :TForm;
+    FSetOpcaoItemMenuCad :TPanel;
 
     procedure OnClickCadMarcas(Sender :TObject);
     procedure OnClickCadProdutos(Sender :TObject);
@@ -32,8 +37,12 @@ type
     procedure OnClickCadFornecedores(Sender :TObject);
     procedure OnClickCadTransportadoras(Sender :TObject);
 
+    procedure OnMouseLeaveItemN(Sender :TObject); overload;
     procedure OnFormMouseLeave(Sender :TObject);
     procedure CloseFormsMenuCadastros;
+    procedure SetOpcaoMenuItemCad(pPanel :TPanel);
+
+    function GetFormMenuEmissaoFiscal :TForm;
 
     procedure Iniciar;
     public
@@ -50,7 +59,8 @@ uses
   ,ConhecFrete.Forms.Cte.MenuCadastros
   ,ConhecFrete.Forms.Cte.OpcoesInicio
   ,ConhecFrete.Forms.Cte.MenuItensImagens
-  ,ConhecFrete.Forms.Cte.OpcoesItens;
+  ,ConhecFrete.Forms.Cte.OpcoesItens
+  ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal;
 
 { TControllerMenuCadastros }
 
@@ -108,25 +118,32 @@ begin
   end;
 end;
 
+function TControllerMenuCadastros.GetFormMenuEmissaoFiscal: TForm;
+begin
+  Result := FMenuEmissaoFiscal;
+  if not Assigned(FMenuEmissaoFiscal) then
+    Result := aFormsCte[Ord(tpMenuEmissaoFiscal)];
+end;
+
 procedure TControllerMenuCadastros.Iniciar;
 begin
   with TFormMenuCadastros(FMenuCadastros) do
   begin
     FControl := 0;
     pnlMarcas.OnMouseMove      := OnMouseMoveItem;
-    pnlMarcas.OnMouseLeave     := OnMouseLeaveItem;
+    pnlMarcas.OnMouseLeave     := OnMouseLeaveItemN;
     pnlFornec.OnMouseMove      := OnMouseMoveItem;
-    pnlFornec.OnMouseLeave     := OnMouseLeaveItem;
+    pnlFornec.OnMouseLeave     := OnMouseLeaveItemN;
     pnlTransp.OnMouseMove      := OnMouseMoveItem;
-    pnlTransp.OnMouseLeave     := OnMouseLeaveItem;
+    pnlTransp.OnMouseLeave     := OnMouseLeaveItemN;
     pnlProdutos.OnMouseMove    := OnMouseMoveItem;
-    pnlProdutos.OnMouseLeave   := OnMouseLeaveItem;
+    pnlProdutos.OnMouseLeave   := OnMouseLeaveItemN;
     pnlServicos.OnMouseMove    := OnMouseMoveItem;
-    pnlServicos.OnMouseLeave   := OnMouseLeaveItem;
+    pnlServicos.OnMouseLeave   := OnMouseLeaveItemN;
     pnlClientes.OnMouseMove    := OnMouseMoveItem;
-    pnlClientes.OnMouseLeave   := OnMouseLeaveItem;
+    pnlClientes.OnMouseLeave   := OnMouseLeaveItemN;
     pnlUnidMedida.OnMouseMove  := OnMouseMoveItem;
-    pnlUnidMedida.OnMouseLeave := OnMouseLeaveItem;
+    pnlUnidMedida.OnMouseLeave := OnMouseLeaveItemN;
 
     pnlMarcas.OnClick     := OnClickCadMarcas;
     pnlFornec.OnClick     := OnClickCadFornecedores;
@@ -147,6 +164,7 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadClientes(Sender: TObject);
 begin
+  SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -156,10 +174,18 @@ begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
 
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
   with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
   begin
     FController.SetItemActive(pnlCadastros);
-
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlClientes.Caption;
     CloseFormsMenuCadastros;
   end;
@@ -167,6 +193,7 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadFornecedores(Sender: TObject);
 begin
+  SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -175,10 +202,19 @@ begin
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
   with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
   begin
     FController.SetItemActive(pnlCadastros);
-
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlFornec.Caption;
     CloseFormsMenuCadastros;
   end;
@@ -186,6 +222,7 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadMarcas(Sender: TObject);
 begin
+  SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -194,10 +231,17 @@ begin
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
   begin
     FController.SetItemActive(pnlCadastros);
-
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlMarcas.Caption;
     CloseFormsMenuCadastros;
   end;
@@ -205,6 +249,7 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
+  SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -213,10 +258,19 @@ begin
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
   begin
     FController.SetItemActive(pnlCadastros);
-
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlProdutos.Caption;
     CloseFormsMenuCadastros;
   end;
@@ -224,6 +278,7 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadServicos(Sender: TObject);
 begin
+  SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -232,10 +287,19 @@ begin
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
   begin
     FController.SetItemActive(pnlCadastros);
-
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlServicos.Caption;
     CloseFormsMenuCadastros;
   end;
@@ -243,6 +307,7 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadTransportadoras(Sender: TObject);
 begin
+  SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -251,10 +316,19 @@ begin
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
   with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
   begin
     FController.SetItemActive(pnlCadastros);
-
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlTransp.Caption;
     CloseFormsMenuCadastros;
   end;
@@ -262,6 +336,7 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadUnidMedida(Sender: TObject);
 begin
+  SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -270,10 +345,19 @@ begin
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
   with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
   begin
     FController.SetItemActive(pnlCadastros);
-
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlUnidMedida.Caption;
     CloseFormsMenuCadastros;
   end;
@@ -289,6 +373,28 @@ begin
       FControl := 0;
     end;
     Inc(FControl);
+  end;
+end;
+
+procedure TControllerMenuCadastros.OnMouseLeaveItemN(Sender: TObject);
+begin
+  if FSetOpcaoItemMenuCad <> TPanel(Sender) then
+    TPanel(Sender).Color := clWhite;
+end;
+
+procedure TControllerMenuCadastros.SetOpcaoMenuItemCad(pPanel: TPanel);
+begin
+  FSetOpcaoItemMenuCad := pPanel;
+
+  with TFormMenuCadastros(FMenuCadastros) do
+  begin
+    pnlMarcas.Color     := IfThen(FSetOpcaoItemMenuCad = pnlMarcas,TColor($FAE6E6), clWhite);
+    pnlFornec.Color     := IfThen(FSetOpcaoItemMenuCad = pnlFornec,TColor($FAE6E6), clWhite);
+    pnlTransp.Color     := IfThen(FSetOpcaoItemMenuCad = pnlTransp,TColor($FAE6E6), clWhite);
+    pnlProdutos.Color   := IfThen(FSetOpcaoItemMenuCad = pnlProdutos,TColor($FAE6E6), clWhite);
+    pnlServicos.Color   := IfThen(FSetOpcaoItemMenuCad = pnlServicos,TColor($FAE6E6), clWhite);
+    pnlClientes.Color   := IfThen(FSetOpcaoItemMenuCad = pnlClientes,TColor($FAE6E6), clWhite);
+    pnlUnidMedida.Color := IfThen(FSetOpcaoItemMenuCad = pnlUnidMedida,TColor($FAE6E6), clWhite);
   end;
 end;
 

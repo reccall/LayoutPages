@@ -1,0 +1,258 @@
+inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
+  ClientHeight = 424
+  ClientWidth = 685
+  ExplicitWidth = 685
+  ExplicitHeight = 424
+  PixelsPerInch = 96
+  TextHeight = 16
+  object pnlCadTop: TPanel
+    Left = 0
+    Top = 0
+    Width = 685
+    Height = 201
+    Align = alTop
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitTop = 8
+    ExplicitWidth = 652
+    object pnlCadTopRight: TPanel
+      Left = 561
+      Top = 0
+      Width = 124
+      Height = 201
+      Align = alRight
+      Caption = 'pnlCadTopRight'
+      Color = clWhite
+      ParentBackground = False
+      TabOrder = 0
+      ExplicitLeft = 528
+    end
+    object pnlCadTopRightBtns: TPanel
+      Left = 137
+      Top = 0
+      Width = 424
+      Height = 201
+      Align = alRight
+      Caption = 'pnlCadTopRightBtns'
+      TabOrder = 1
+      ExplicitLeft = 34
+      ExplicitTop = -6
+      object pnlConsulta: TPanel
+        Left = -9
+        Top = 0
+        Width = 433
+        Height = 89
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 0
+        object imgLupa: TImage
+          Left = 344
+          Top = 16
+          Width = 50
+          Height = 50
+          Picture.Data = {
+            0B546478504E47496D61676589504E470D0A1A0A0000000D4948445200000030
+            0000003008060000005702F98700000443494441547801EC9849681451108633
+            3142043D880B7A108DFB8A3B8A886150CCCA48F0A220A278F2A0620E2AB89008
+            A2B9B8DF0435A020084130CB04A34425485C1135EE0BB944098828822166C6AF
+            9A7EED63EC9EE965928C30A16AAA5EBDF7AAEAAF57DDE9EEDC9CFFFC2F0B60B0
+            0F307B02D913085801DF2DD4D8D838A5A9A9A90E8EDBF077E60F07CCCDD576CF
+            0048AC50120E8542EF885001DBD108E60FCA3AB83B1E8F87EC16A5C3E60900C9
+            779158ABC7C0A3A3D1680CDEE3719FABE5AE0150C938C98FD3BD323E9F9F9F3F
+            ACA4A424A433159FC3BAFBB045D86A0071DB32A449710540924F88572D091717
+            176F0B87C3BF12E6724A4B4B3B985FD6DEDE3E84B9CFB0418058C5299E340669
+            FA490980805FF558547D2EC955E93627BDAAAA2AC6DAF1EC89AA35E8BB1A1A1A
+            96A87150991400955F49C0912A485F5FDF14AAFE428DDD4AF694B0F6296C506E
+            6EEE034349C34F5200F8BF0B1BC4F1D79497977F30063E7E388905FA368AB34F
+            1FFBD51D01D03A6374A7F4753A02AED17C1ED574DFAA23005AE7B4F24AF52F28
+            3D88E4146E06D96FB7D711008B37C006F5F4F4541A4A7A7E9E2937F5F5F5654A
+            F72B9301B07C5654547CB30601154EF6AA72919797B742E97EA52B007E9DDBED
+            E34EF644D969CDF94AF72B071C0027305E258BFE45E97EE58003E07FC0422D59
+            EB7AD06C9E54470054A75379E29E1DC9C951A36092B6D9AE3C10E39CD2FD4A47
+            0004DAAF393DA5E969538B8A8A7E0675E608807BF625CDF9A496969651DAD897
+            CA49DED3365ED774DFAA2300F1C811B78B14EEEDED0D74C135373717E067396C
+            10058A184AC09FA4007808B30212670815FC84F445B1584C7F8E3AE3CB89CDA6
+            A400643DD7C22691264F044497A9BB12547E027BE2FA62AABF531F07D15302E0
+            21EE32AD74560B324E12E2616FAF66B35559F788CA5B7733B508BBE74772B537
+            51A604201B68A51DC82DB045803A4622715E137FC0B5E8BB918790D760E34B05
+            8B17C176349B0274D84D78B5B902204E39F65ADA69ACE83A631B0E6FC6761C59
+            8D5C0727521DFB43CC3F5713146016405FAAB15FE91A8004A09DBA251182CB1B
+            D66FB1A5E036792F66CF7A59C7FE7948EBCD0C7D26A71608842700043488968A
+            92D45038C4ED7522C6ADF009801D416EE47161B8CCC12BE5BD189B45D816B0EE
+            B132702A333989576AEC55FA02A0078944229D247511AE04D801E49554FF6159
+            B7181F0F61453300F15A0DBCC8C000BC04D3D702742963FDDBD1742EEC37D83C
+            D1A001902C01B10C693D5ED05AD33889B7D85CD3A002902C01B182EBA04D7493
+            A77A0131E8002469EE4EF2FDE98EE8260B08F9786C0E9D45460090F4B8B00B91
+            ADB022F97CFF5E0D9C64C600900469A730ED744B749327D34EFA43A069FE2B32
+            0A80A4453BADE662BE21BAC90580F868EAFF888C032019D24E6B91CDB0A2B052
+            12654602902469A76264235C80EEF81ED23F00889A0E22F132D831798991D100
+            24C1549C0590AA42FD3D9F3D81FEAE702AFF7F000000FFFF9B83E48100000006
+            494441540300332071700A90434A0000000049454E44AE426082}
+        end
+        object lblConsulta: TLabel
+          Left = 213
+          Top = 16
+          Width = 120
+          Height = 52
+          Caption = 'Consulta'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = cl3DDkShadow
+          Font.Height = -29
+          Font.Name = 'Bai Jamjuree'
+          Font.Style = []
+          ParentFont = False
+        end
+        object pnlRegiaoPesq: TPanel
+          Left = 22
+          Top = 24
+          Width = 179
+          Height = 41
+          Caption = 'pnlRegiaoPesq'
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 0
+        end
+      end
+      object pnlIncluirRegistro: TPanel
+        Left = -9
+        Top = 112
+        Width = 433
+        Height = 89
+        Color = clWhite
+        ParentBackground = False
+        TabOrder = 1
+        object lblInserir: TLabel
+          Left = 250
+          Top = 9
+          Width = 83
+          Height = 52
+          Caption = 'Inserir'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = cl3DDkShadow
+          Font.Height = -29
+          Font.Name = 'Bai Jamjuree'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Image1: TImage
+          Left = 339
+          Top = 11
+          Width = 50
+          Height = 50
+          Picture.Data = {
+            0B546478504E47496D61676589504E470D0A1A0A0000000D4948445200000030
+            0000003008060000005702F987000001A6494441547801EC585B6E8330102C5C
+            AC7CF2B84C7B8126E905DACBF0F8A41783EE447284D636125E034EB4112B3F98
+            B57776C2829CBF3DF94F099C2DA02AA00A0833A07F216102C5EE4E05BAAEBBF5
+            7D3FA764C330FCB8D85A0400CCB2ECCB053E736E9EE70F2496C7601100908352
+            19BB126B1158065B555596822D63E2FD55021C9CE258099CAD8A2AE05380DE21
+            45DBB65718FA3E9C747E3705A6692AF23CBFC0D09706EAF3DF8D806FC3D8F34A
+            207646B7AEB74181AD4B1F831713408541A5E1460FEFBBA1803EBF8F317C0D26
+            B415134085A100EFD566D952400599B91E15698981AF0184B66202A11BC7F213
+            13A08C8E94C91B370A7024339713035F03086DC504E8737B6C9AE6CA8D08FD99
+            A0D0E7F73186AFC184B66202A11BC7F25302B13219BA8E2AE0CB1C2A0C3DBCF7
+            EA84BE0F279DDF4D015418541A18FAD2407DFEBB11F06D187B5E09C4CEE8D6F5
+            5E5B01FADC4DE280774D154B013A7FFC5D7338F31E9DDB7EF3FD2D0265597EBA
+            80DCF1E831125BD7F585EF6B11000040AADD491CEC9A389058C4C6CD49808352
+            1EEF43E040C64AE0C0643BB752059C693970F2E915F8070000FFFFA4F05D2E00
+            00000649444154030081E6C270E721D2D20000000049454E44AE426082}
+          Stretch = True
+        end
+      end
+    end
+  end
+  object pnlMainCadastros: TPanel
+    Left = 0
+    Top = 201
+    Width = 685
+    Height = 223
+    Align = alClient
+    BevelOuter = bvNone
+    Caption = 'pnlMainCadastros'
+    TabOrder = 1
+    ExplicitLeft = 336
+    ExplicitTop = 272
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object pnlTopMainCad: TPanel
+      Left = 0
+      Top = 0
+      Width = 685
+      Height = 49
+      Align = alTop
+      Color = clMenu
+      ParentBackground = False
+      TabOrder = 0
+      ExplicitTop = 6
+      ExplicitWidth = 652
+      object lblCodigo: TLabel
+        Left = 19
+        Top = 14
+        Width = 56
+        Height = 29
+        Caption = 'C'#243'digo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -16
+        Font.Name = 'Bai Jamjuree'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lblDesc: TLabel
+        Left = 104
+        Top = 14
+        Width = 77
+        Height = 29
+        Caption = 'Descri'#231#227'o'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -16
+        Font.Name = 'Bai Jamjuree'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lblVl: TLabel
+        Left = 410
+        Top = 14
+        Width = 59
+        Height = 29
+        Caption = 'Vl. Unit'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -16
+        Font.Name = 'Bai Jamjuree'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lblAtivo: TLabel
+        Left = 600
+        Top = 14
+        Width = 40
+        Height = 29
+        Caption = 'Ativo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -16
+        Font.Name = 'Bai Jamjuree'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+    object scrlbxMain: TScrollBox
+      Left = 0
+      Top = 49
+      Width = 685
+      Height = 136
+      Align = alTop
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BorderStyle = bsNone
+      Color = clWhite
+      ParentColor = False
+      TabOrder = 1
+      ExplicitWidth = 652
+    end
+  end
+end
