@@ -27,6 +27,8 @@ type
   private
     FWidthMenuImg :Integer;
     FFormOwner: TForm;
+    FMenuCadasros: TForm;
+    FMenuEmissaoFiscal: TForm;
     FCmpMenuImg :TCmpMenuImage;
     FMenuItensImagens :TFormMenuItensImagens;
     FCmpTituloOpcao :TCmpTLabelTitulo;
@@ -57,6 +59,8 @@ implementation
 uses
     ConhecFrete.Forms.Cte.OpcoesInicio
    ,ConhecFrete.Forms.Cte.Background
+   ,ConhecFrete.Forms.Cte.MenuCadastros
+   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
    ,LayoutPages.View.Componentes.BotoesBarraOpcoes;
 
 { ControllerPrincipal }
@@ -74,14 +78,24 @@ end;
 
 procedure TControllerPrincipal.CloseMenus;
 begin
-  if Assigned(aFormsCte[Ord(tpMenuCadastros)]) then
+  FMenuCadasros := aFormsCte[Ord(tpMenuCadastros)];
+  if Assigned(FMenuCadasros) then
   begin
-    aFormsCte[Ord(tpMenuCadastros)].Close;
+    with TFormMenuCadastros(FMenuCadasros) do
+    begin
+      FController.SetOpcaoMenuItemCad(pnlRightNFe);
+      Close;
+    end;
   end;
 
-  if Assigned(aFormsCte[Ord(tpMenuEmissaoFiscal)]) then
+  FMenuEmissaoFiscal := aFormsCte[Ord(tpMenuEmissaoFiscal)];
+  if Assigned(FMenuEmissaoFiscal) then
   begin
-    aFormsCte[Ord(tpMenuEmissaoFiscal)].Close;
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(pnlRightNFe);
+      Close;
+    end;
   end;
 end;
 
