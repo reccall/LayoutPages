@@ -73,6 +73,11 @@ begin
     aFormsCte[Ord(tpBarraBotoes)].Close;
     aFormsCte[Ord(tpFormOpcoesItensCte)].Close;
   end;
+  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroProduto)].Showing then
+      aFormsCte[Ord(tpCadastroProduto)].Close;
+  end;
   CloseMenus(True);
 end;
 

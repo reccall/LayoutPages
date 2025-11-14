@@ -29,6 +29,8 @@ type
     FormOpcoesItensCte :TForm;
     FSetOpcaoItemMenuCad :TPanel;
 
+    FFormCadastroProdutos :TForm;
+
     procedure OnClickCadMarcas(Sender :TObject);
     procedure OnClickCadProdutos(Sender :TObject);
     procedure OnClickCadServicos(Sender :TObject);
@@ -60,12 +62,18 @@ uses
   ,ConhecFrete.Forms.Cte.OpcoesInicio
   ,ConhecFrete.Forms.Cte.MenuItensImagens
   ,ConhecFrete.Forms.Cte.OpcoesItens
-  ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal;
+  ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
+  ,ConhecFrete.Forms.Cte.CadastroProdutos;
 
 { TControllerMenuCadastros }
 
 procedure TControllerMenuCadastros.CloseFormsMenuCadastros;
 begin
+  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroProduto)].Showing then
+      aFormsCte[Ord(tpCadastroProduto)].Close;
+  end;
   if not Assigned(FormOpcoesItensCte) then
   begin
     FormOpcoesItensCte := aFormsCte[Ord(tpFormOpcoesItensCte)];
@@ -249,6 +257,14 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
+  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroProduto)].Showing then
+    begin
+      TFormMenuCadastros(FMenuCadastros).Close;
+      Exit;
+    end;
+  end;
   SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
@@ -273,6 +289,19 @@ begin
     FController.SetItemActive(pnlCadastros);
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlProdutos.Caption;
     CloseFormsMenuCadastros;
+  end;
+
+  if not Assigned(FFormCadastroProdutos) then
+  begin
+    FFormCadastroProdutos := TFormCadastrosProdutos.Create(aFormsCte);
+    aFormsCte[Ord(tpCadastroProduto)] := FFormCadastroProdutos;
+  end
+  else
+    FFormCadastroProdutos := aFormsCte[Ord(tpCadastroProduto)];
+
+  with TFormCadastrosProdutos(FFormCadastroProdutos) do
+  begin
+    FController.Iniciar;
   end;
 end;
 

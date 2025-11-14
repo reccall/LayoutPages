@@ -36,6 +36,9 @@ type
     lblVl: TLabel;
     lblAtivo: TLabel;
     pnlRegiaoPesq: TPanel;
+    pnlBackground: TPanel;
+    pnlBackMain: TPanel;
+    pnlRightMain: TPanel;
   private
     { Private declarations }
   public
@@ -45,5 +48,7 @@ type
 implementation
 
 {$R *.dfm}
+
+{ TFormCadastrosPrincipal }
 
 end.

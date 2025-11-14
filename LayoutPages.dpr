@@ -66,7 +66,9 @@ uses
   ConhecFrete.Forms.Cte.MenuPrincipal in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuPrincipal.pas' {FormMenuPrincipal},
   ConhecFrete.Forms.Cte.MenuEmissaoFiscal in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas' {FormMenuEmissaoFiscal},
   ConhecFrete.Forms.Cte.MenuCadastros in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros},
-  ConhecFrete.Forms.Cte.MenuItensImagens in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas' {FormMenuItensImagens};
+  ConhecFrete.Forms.Cte.MenuItensImagens in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas' {FormMenuItensImagens},
+  ConhecFrete.Controller.Cadastros.Produtos in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Produtos.pas',
+  ConhecFrete.Forms.Cte.CadastroProdutos in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroProdutos.pas' {FormCadastrosProdutos};
 
 {$R *.res}
 

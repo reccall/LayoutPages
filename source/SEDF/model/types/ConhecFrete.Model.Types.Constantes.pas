@@ -21,7 +21,7 @@ type
 
   TpForms = (tpOwner, tpMenuPrincipal, tpMenuEmissaoFiscal, tpMenuCadastros, tpCmpTitulo,
              tpCertificadoDig, tpRelatorios, tpTutorial, tpFormCte, tpFormOpcoesItensCte,
-             tpBarraBotoes, tpMenuItensImagens, tpFDefault);
+             tpBarraBotoes, tpMenuItensImagens, tpCadastroProduto, tpFDefault);
 
 const
   aImageNames :array[0..4] of String = ('ImgCadastros','ImgEmissaoFiscal','ImgCertDigital','ImgRelatorios','ImgTutorial');

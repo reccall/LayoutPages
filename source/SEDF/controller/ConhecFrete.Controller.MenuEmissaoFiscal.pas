@@ -64,6 +64,11 @@ uses
 
 procedure TControllerMenuEmissaoFiscal.CloseForms(pParam :TpOpcaoMenuEmissaoFis);
 begin
+  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroProduto)].Showing then
+      aFormsCte[Ord(tpCadastroProduto)].Close;
+  end;
   case pParam of
     tpMenuNFe:
     begin
