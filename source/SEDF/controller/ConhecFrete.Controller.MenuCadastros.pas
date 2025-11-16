@@ -6,6 +6,7 @@ uses
    Forms
   ,Math
   ,Graphics
+  ,Winapi.Windows
   ,System.SysUtils
   ,Vcl.ExtCtrls
   ,ConhecFrete.Model.Types.Constantes;
@@ -28,7 +29,6 @@ type
     FMenuEmissaoFiscal: TForm;
     FormOpcoesItensCte :TForm;
     FSetOpcaoItemMenuCad :TPanel;
-
     FFormCadastroProdutos :TForm;
 
     procedure OnClickCadMarcas(Sender :TObject);
@@ -259,9 +259,8 @@ procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
   begin
-    if aFormsCte[Ord(tpCadastroProduto)].Showing then
+    if TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProduto)]).Showing then
     begin
-      TFormMenuCadastros(FMenuCadastros).Close;
       Exit;
     end;
   end;
@@ -275,6 +274,13 @@ begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
 
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
+  begin
+    FController.SetItemActive(pnlCadastros);
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlProdutos.Caption;
+    CloseFormsMenuCadastros;
+  end;
+
   FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
   if Assigned(FMenuEmissaoFiscal) then
   begin
@@ -284,20 +290,20 @@ begin
     end;
   end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlProdutos.Caption;
-    CloseFormsMenuCadastros;
-  end;
-
   if not Assigned(FFormCadastroProdutos) then
   begin
     FFormCadastroProdutos := TFormCadastrosProdutos.Create(aFormsCte);
     aFormsCte[Ord(tpCadastroProduto)] := FFormCadastroProdutos;
   end
   else
-    FFormCadastroProdutos := aFormsCte[Ord(tpCadastroProduto)];
+  begin
+    with TFormCadastrosProdutos(FFormCadastroProdutos) do
+    begin
+      scrlbxMain.VertScrollBar.Position := 0;
+      FFormCadastroProdutos := aFormsCte[Ord(tpCadastroProduto)];
+      pnlBackMain.Width := GetSystemMetrics(SM_CXSCREEN)-10;
+    end;
+  end;
 
   with TFormCadastrosProdutos(FFormCadastroProdutos) do
   begin

@@ -14,6 +14,7 @@ uses
  ,Vcl.Dialogs
  ,Vcl.StdCtrls
  ,Vcl.ExtCtrls
+ ,Vcl.AppEvnts
  ,dxGDIPlusClasses
  ,ConhecFrete.Model.Types.Constantes
  ,ConhecFrete.Controller.Cadastros.Produtos

@@ -146,6 +146,12 @@
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas">
             <Form>CmpCardInfoUserCte</Form>
         </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraTituloCadastroProdutos.pas">
+            <Form>CmpBarraTituloCadastroProdutos</Form>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroProdutos.pas">
+            <Form>CmpBarraItemCadastroProdutos</Form>
+        </DCCReference>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.ClienteDadosCte.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Motorista.pas"/>
@@ -163,6 +169,7 @@
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuCadastros.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuItensImagens.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Produtos.pas"/>
         <DCCReference Include="source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas">
             <Form>frmClienteDadosCte</Form>
         </DCCReference>
@@ -220,11 +227,7 @@
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas">
             <Form>FormMenuItensImagens</Form>
         </DCCReference>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Produtos.pas"/>
-        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroProdutos.pas">
-            <Form>FormCadastrosProdutos</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroProdutos.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

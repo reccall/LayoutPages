@@ -4,7 +4,8 @@ unit ConhecFrete.Model.Types.Constantes;
 interface
 
 uses
-  Forms;
+   Winapi.Windows
+  ,Forms;
 
 type
   TpRegra    = (tpDefault, tpRemetente, tpDestinatario);
@@ -25,7 +26,6 @@ type
 
 const
   aImageNames :array[0..4] of String = ('ImgCadastros','ImgEmissaoFiscal','ImgCertDigital','ImgRelatorios','ImgTutorial');
-
 var
   aFormsCte :array of TForm;
 

@@ -8,9 +8,9 @@ inherited frmCtePrincipal: TfrmCtePrincipal
   PixelsPerInch = 96
   TextHeight = 16
   inherited pnlMain: TPanel [0]
-    Left = 231
+    Left = 180
     Top = 129
-    Width = 677
+    Width = 728
     Height = 382
     BevelOuter = bvNone
     Caption = ''
@@ -21,7 +21,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
     inherited pnlMainTopB: TPanel
       Left = 0
       Top = 0
-      Width = 677
+      Width = 728
       Height = 64
       BevelOuter = bvNone
       Caption = ''
@@ -30,13 +30,14 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       ExplicitWidth = 677
       ExplicitHeight = 64
       object pnlMainTopRight: TPanel [0]
-        Left = 290
+        Left = 341
         Top = 0
         Width = 387
         Height = 64
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitLeft = 290
         object pnlBotoes: TPanel
           Left = 16
           Top = 6
@@ -69,7 +70,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       inherited pnlMainTop: TPanel
         Left = 40
         Top = 0
-        Width = 250
+        Width = 301
         Height = 64
         BevelOuter = bvNone
         TabOrder = 2
@@ -147,23 +148,23 @@ inherited frmCtePrincipal: TfrmCtePrincipal
   end
   inherited pnlBackMenu: TPanel [2]
     Top = 129
-    Width = 231
+    Width = 180
     Height = 382
     BevelOuter = bvNone
     Caption = ''
     ExplicitTop = 129
-    ExplicitWidth = 231
+    ExplicitWidth = 180
     ExplicitHeight = 382
     object pnlMenu: TPanel
       Left = 48
       Top = 72
-      Width = 156
+      Width = 132
       Height = 357
       BevelOuter = bvNone
       TabOrder = 0
     end
     object pnlLineMenu: TPanel
-      Left = 226
+      Left = 175
       Top = 72
       Width = 1
       Height = 322

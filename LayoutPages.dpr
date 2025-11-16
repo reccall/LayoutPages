@@ -31,6 +31,8 @@ uses
   ConhecFrete.Model.Types.Constantes in 'source\SEDF\model\types\ConhecFrete.Model.Types.Constantes.pas',
   ConhecFrete.View.Componentes.OpcoesGerarCte in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.OpcoesGerarCte.pas' {CmpOpcoesGerarCte},
   ConhecFrete.View.Componentes.CardInfoUserCte in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.CardInfoUserCte.pas' {CmpCardInfoUserCte},
+  ConhecFrete.View.Componentes.BarraTituloCadastroProdutos in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraTituloCadastroProdutos.pas' {CmpBarraTituloCadastroProdutos},
+  ConhecFrete.View.Componentes.BarraItemCadastroProdutos in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroProdutos.pas' {CmpBarraItemCadastroProdutos},
   ConhecFrete.Controller.ClienteDadosCte in 'source\SEDF\controller\ConhecFrete.Controller.ClienteDadosCte.pas',
   ConhecFrete.Controller.DadosPedagioSeguro in 'source\SEDF\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas',
   ConhecFrete.Controller.Motorista in 'source\SEDF\controller\ConhecFrete.Controller.Motorista.pas',
@@ -48,6 +50,7 @@ uses
   ConhecFrete.Controller.MenuCadastros in 'source\SEDF\controller\ConhecFrete.Controller.MenuCadastros.pas',
   ConhecFrete.Controller.MenuEmissaoFiscal in 'source\SEDF\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas',
   ConhecFrete.Controller.MenuItensImagens in 'source\SEDF\controller\ConhecFrete.Controller.MenuItensImagens.pas',
+  ConhecFrete.Controller.Cadastros.Produtos in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Produtos.pas',
   ConhecFrete.Forms.Cte.Cliente.DadosCte in 'source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas' {frmClienteDadosCte},
   ConhecFrete.Forms.Cte.RegiaoDadosCte in 'source\SEDF\view\forms\cte\regiao\ConhecFrete.Forms.Cte.RegiaoDadosCte.pas' {frmRegiaoDadosCte},
   ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte in 'source\SEDF\view\forms\cte\ufglobalizado\ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte.pas' {frmUFGlobalizadoDadosCte},
@@ -67,8 +70,7 @@ uses
   ConhecFrete.Forms.Cte.MenuEmissaoFiscal in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas' {FormMenuEmissaoFiscal},
   ConhecFrete.Forms.Cte.MenuCadastros in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros},
   ConhecFrete.Forms.Cte.MenuItensImagens in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas' {FormMenuItensImagens},
-  ConhecFrete.Controller.Cadastros.Produtos in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Produtos.pas',
-  ConhecFrete.Forms.Cte.CadastroProdutos in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroProdutos.pas' {FormCadastrosProdutos};
+  ConhecFrete.Forms.Cte.CadastroProdutos in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroProdutos.pas';
 
 {$R *.res}
 

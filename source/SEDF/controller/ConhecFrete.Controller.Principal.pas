@@ -61,6 +61,7 @@ uses
    ,ConhecFrete.Forms.Cte.Background
    ,ConhecFrete.Forms.Cte.MenuCadastros
    ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
+   ,ConhecFrete.Forms.Cte.CadastroProdutos
    ,LayoutPages.View.Componentes.BotoesBarraOpcoes;
 
 { ControllerPrincipal }
@@ -142,26 +143,135 @@ begin
 end;
 
 procedure TControllerPrincipal.DestruirForms;
+var
+  iIdx :Integer;
 begin
   TFormCteBackground(FFormOwner).Close;
-  if Assigned(aFormsCte[Ord(tpFormCte)]) then
+  for iIdx := Low(aFormsCte) to High(aFormsCte) do
   begin
-    with TfrmCteOpcoesInicio(aFormsCte[Ord(tpFormCte)]) do
-    begin
-      FController.DestruirForms;
-      FreeAndNil(TfrmCteOpcoesInicio(aFormsCte[Ord(tpFormCte)]));
+    case TpForms(Ord(iIdx)) of
+
+      tpMenuPrincipal:
+      begin
+        if Assigned(aFormsCte[Ord(tpMenuPrincipal)]) then
+        begin
+          aFormsCte[Ord(tpMenuPrincipal)].Close;
+          aFormsCte[Ord(tpMenuPrincipal)].Free;
+          aFormsCte[Ord(tpMenuPrincipal)] := nil;
+          FCmpTituloOpcao := nil;
+          //FreeAndNil(FMenuPrincipal);
+        end;
+      end;
+
+      tpMenuEmissaoFiscal:
+      begin
+        if Assigned(aFormsCte[Ord(tpMenuEmissaoFiscal)]) then
+        begin
+          aFormsCte[Ord(tpMenuEmissaoFiscal)].Close;
+          //aFormsCte[Ord(tpMenuEmissaoFiscal)].Free;
+          aFormsCte[Ord(tpMenuEmissaoFiscal)] := nil;
+          FCmpTituloOpcao := nil;
+        end;
+      end;
+
+      tpMenuCadastros:
+      begin
+        if Assigned(aFormsCte[Ord(tpMenuCadastros)]) then
+        begin
+          aFormsCte[Ord(tpMenuCadastros)].Close;
+          //aFormsCte[Ord(tpMenuCadastros)].Free;
+          aFormsCte[Ord(tpMenuCadastros)] := nil;
+          FCmpTituloOpcao := nil;
+        end;
+      end;
+
+      tpCmpTitulo:
+      begin
+        if Assigned(aFormsCte[Ord(tpCmpTitulo)]) then
+        begin
+          aFormsCte[Ord(tpCmpTitulo)].Close;
+          aFormsCte[Ord(tpCmpTitulo)].Free;
+          aFormsCte[Ord(tpCmpTitulo)] := nil;
+          FCmpTituloOpcao := nil;
+        end;
+      end;
+
+      tpFormCte:
+      begin
+        if Assigned(aFormsCte[Ord(tpFormCte)]) then
+        begin
+          with TfrmCteOpcoesInicio(aFormsCte[Ord(tpFormCte)]) do
+          begin
+            FController.DestruirForms;
+            aFormsCte[Ord(tpFormCte)].Close;
+            //aFormsCte[Ord(tpFormCte)].Free;
+            aFormsCte[Ord(tpFormCte)] := nil;
+          end;
+        end;
+      end;
+
+      tpMenuItensImagens:
+      begin
+        with TFormMenuItensImagens(aFormsCte[Ord(tpMenuItensImagens)]) do
+        begin
+          FController.DestroyComponents;
+          aFormsCte[Ord(tpMenuItensImagens)].Close;
+          aFormsCte[Ord(tpMenuItensImagens)].Free;
+          aFormsCte[Ord(tpMenuItensImagens)] := nil;
+          //FMenuItensImagens.Free;
+          FMenuItensImagens := nil;
+        end;
+      end;
+
+      tpBarraBotoes:
+      begin
+        if Assigned(aFormsCte[Ord(tpBarraBotoes)]) then
+        begin
+          aFormsCte[Ord(tpBarraBotoes)].Close;
+          //aFormsCte[Ord(tpBarraBotoes)].Free;
+          aFormsCte[Ord(tpBarraBotoes)] := nil;
+          FCmpTituloOpcao := nil;
+        end;
+      end;
+
+      tpFormOpcoesItensCte:
+      begin
+         if Assigned(aFormsCte[Ord(tpFormOpcoesItensCte)]) then
+        begin
+          aFormsCte[Ord(tpFormOpcoesItensCte)].Close;
+          //aFormsCte[Ord(tpFormOpcoesItensCte)].Free;
+          aFormsCte[Ord(tpFormOpcoesItensCte)] := nil;
+          FCmpTituloOpcao := nil;
+        end;
+      end;
+
+      tpCadastroProduto:
+      begin
+        if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+        begin
+          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProduto)]) do
+          begin
+            FController.DestroyComponents;
+            aFormsCte[Ord(tpCadastroProduto)].Close;
+            aFormsCte[Ord(tpCadastroProduto)].Free;
+            aFormsCte[Ord(tpCadastroProduto)] := nil;
+          end;
+        end;
+      end;
     end;
   end;
 
-  aFormsCte := nil;
+
   FreeAndNil(FCmpMenuImg);
-  FreeAndNil(FMenuItensImagens);
-  FreeAndNil(FCmpTituloOpcao);
   FCmpCardInfoUser.Close;
   FreeAndNil(FCmpCardInfoUser);
-  FreeAndNil(FMenuPrincipal);
-  FCtePrincipal.Close;
-  FreeAndNil(FCtePrincipal);
+
+
+  aFormsCte[Ord(tpOwner)].Close;
+  aFormsCte[Ord(tpOwner)].Free;
+  aFormsCte[Ord(tpOwner)] := nil;
+  FCtePrincipal := nil;
+  aFormsCte := nil;
 end;
 
 procedure TControllerPrincipal.Iniciar;
@@ -181,6 +291,7 @@ begin
 
   with FCtePrincipal do
   begin
+    pnlBackMenu.Width := 270;
     FCmpMenuImg.Image1.OnClick := OnClickMenuImage;
     FCmpMenuImg.Parent := pnlTopMenu;
     Image1.OnClick := OnClickLogoImage;
@@ -246,7 +357,7 @@ begin
         FMenuItensImagens := TFormMenuItensImagens(aFormsCte[Ord(tpMenuItensImagens)]);
       end;
 
-      pnlBackMenu.Width := 200;
+      //pnlBackMenu.Width := 347;//200;
       FMenuPrincipal.Close;
       FMenuItensImagens.Parent := pnlMenu;
       FMenuItensImagens.Show;
@@ -254,7 +365,7 @@ begin
     else
     if FMenuItensImagens.Showing then
     begin
-      pnlBackMenu.Width := FWidthMenuImg;
+      //pnlBackMenu.Width := 347;//FWidthMenuImg;
       FMenuItensImagens.Close;
       FMenuPrincipal.Parent := pnlMenu;
       FMenuPrincipal.Show;

@@ -13,6 +13,7 @@ uses
   ,Vcl.Forms
   ,Vcl.Dialogs
   ,Vcl.ExtCtrls
+  ,ConhecFrete.Model.Types.Constantes
   ,ConhecFrete.Controller.Principal
   ,LayoutPages.View.Forms.BackgroundLayout;
 
@@ -35,11 +36,10 @@ implementation
 
 procedure TFormCteBackground.FormCreate(Sender: TObject);
 begin
-  Left := GetSystemMetrics(SM_XVIRTUALSCREEN)+4;
-  Top := GetSystemMetrics(SM_YVIRTUALSCREEN)+4;
-  Width := GetSystemMetrics(SM_CXSCREEN)-10;
-  Height := GetSystemMetrics(SM_CYSCREEN)-80;
-
+  Top    := GetSystemMetrics(SM_YVIRTUALSCREEN) + 4;
+  Left   := GetSystemMetrics(SM_XVIRTUALSCREEN) + 4;
+  Width  := GetSystemMetrics(SM_CXSCREEN) - 10;
+  Height := GetSystemMetrics(SM_CYSCREEN) - 80;
 
   pnlMain.Width := Width -6;
   pnlMain.Height := Height -6;
