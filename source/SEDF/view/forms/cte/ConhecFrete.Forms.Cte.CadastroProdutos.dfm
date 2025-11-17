@@ -41,12 +41,12 @@ inherited FormCadastrosProdutos: TFormCadastrosProdutos
       end
     end
     inherited pnlTopMainCad: TPanel
-      Top = 94
+      Top = 81
       Width = 1498
-      Height = 26
-      ExplicitTop = 94
+      Height = 39
+      ExplicitTop = 82
       ExplicitWidth = 1498
-      ExplicitHeight = 26
+      ExplicitHeight = 39
     end
   end
   inherited pnlMain: TPanel

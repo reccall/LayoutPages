@@ -54,10 +54,10 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
         ParentBackground = False
         TabOrder = 0
         object imgLupa: TImage
-          Left = 320
-          Top = -6
-          Width = 40
-          Height = 40
+          Left = 329
+          Top = 2
+          Width = 30
+          Height = 30
           Cursor = crHandPoint
           Align = alCustom
           Picture.Data = {
@@ -98,6 +98,7 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
             12654602902469A76264235C80EEF81ED23F00889A0E22F132D831798991D100
             24C1549C0590AA42FD3D9F3D81FEAE702AFF7F000000FFFF9B83E48100000006
             494441540300332071700A90434A0000000049454E44AE426082}
+          Stretch = True
         end
       end
     end

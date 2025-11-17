@@ -53,6 +53,8 @@ type
 
     function GetFormMenuEmissaoFiscal :TForm;
 
+    procedure IniciarInformacoesFormMenu(pSender: TObject; pFormMenu :TpForms);
+
     procedure Iniciar;
     public
   class function New(pArrayFormsCte :array of TForm) :IControllerMenuCadastros overload;
@@ -209,6 +211,46 @@ begin
   end;
 end;
 
+procedure TControllerMenuCadastros.IniciarInformacoesFormMenu(pSender: TObject; pFormMenu: TpForms);
+begin
+  SetOpcaoMenuItemCad(TPanel(pSender));
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
+  if not Assigned(FMenuPrincipal) then
+  begin
+    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
+  end;
+
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
+  begin
+    FController.SetItemActive(pnlCadastros);
+    with TFormMenuCadastros(FMenuCadastros) do
+    begin
+      case pFormMenu of
+        tpCadastroMarcas:           lblTitulo.Caption := pnlMarcas.Caption;
+        tpCadastroProduto:          lblTitulo.Caption := pnlProdutos.Caption;
+        tpCadastroClientes:         lblTitulo.Caption := pnlClientes.Caption ;
+        tpCadastroServicos:         lblTitulo.Caption := pnlServicos.Caption;
+        tpCadastroFornecedores:     lblTitulo.Caption := pnlFornec.Caption;
+        tpCadastroTransportadoras:  lblTitulo.Caption := pnlTransp.Caption;
+        tpCadastroUnidadesDeMedida: lblTitulo.Caption := pnlUnidMedida.Caption;
+      end;
+    end;
+    CloseFormsMenuCadastros;
+  end;
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(pSender));
+    end;
+  end;
+end;
+
 class function TControllerMenuCadastros.New(pArrayFormsCte :array of TForm): IControllerMenuCadastros;
 begin
   Result := Self.Create(pArrayFormsCte);
@@ -223,31 +265,8 @@ begin
       Exit;
     end;
   end;
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlProdutos.Caption;
-    CloseFormsMenuCadastros;
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
+  IniciarInformacoesFormMenu(Sender, tpCadastroProduto);
 
   if Assigned(FFormCadastroProdutos) then
   begin
@@ -272,32 +291,9 @@ begin
       Exit;
     end;
   end;
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlClientes.Caption;
-    CloseFormsMenuCadastros;
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
-
+  IniciarInformacoesFormMenu(Sender, tpCadastroClientes);
+  
   if Assigned(FFormCadastroClientes) then
   begin
     FreeAndNil(aFormsCte[Ord(tpCadastroClientes)]);
@@ -321,31 +317,8 @@ begin
       Exit;
     end;
   end;
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlFornec.Caption;
-    CloseFormsMenuCadastros;
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
+  IniciarInformacoesFormMenu(Sender, tpCadastroFornecedores);
 
   if Assigned(FFormCadastroFornecedores) then
   begin
@@ -370,31 +343,8 @@ begin
       Exit;
     end;
   end;
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlMarcas.Caption;
-    CloseFormsMenuCadastros;
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
+  IniciarInformacoesFormMenu(Sender, tpCadastroMarcas);
 
   if Assigned(FFormCadastroMarcas) then
   begin
@@ -419,31 +369,8 @@ begin
       Exit;
     end;
   end;
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlServicos.Caption;
-    CloseFormsMenuCadastros;
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
+  IniciarInformacoesFormMenu(Sender, tpCadastroServicos);
 
   if Assigned(FFormCadastroServicos) then
   begin
@@ -468,31 +395,8 @@ begin
       Exit;
     end;
   end;
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlTransp.Caption;
-    CloseFormsMenuCadastros;
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
+  IniciarInformacoesFormMenu(Sender, tpCadastroTransportadoras);
 
   if Assigned(FFormCadastroTransportadoras) then
   begin
@@ -517,31 +421,8 @@ begin
       Exit;
     end;
   end;
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlUnidMedida.Caption;
-    CloseFormsMenuCadastros;
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
+  IniciarInformacoesFormMenu(Sender, tpCadastroUnidadesDeMedida);
 
   if Assigned(FFormCadastroUnidMedidas) then
   begin
