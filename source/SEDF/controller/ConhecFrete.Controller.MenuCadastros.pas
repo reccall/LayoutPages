@@ -83,6 +83,8 @@ uses
 { TControllerMenuCadastros }
 
 procedure TControllerMenuCadastros.CloseFormsMenuCadastros;
+var
+  iIdx :Integer;
 begin
   if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
   begin
@@ -94,15 +96,29 @@ begin
     if aFormsCte[Ord(tpCadastroClientes)].Showing then
       aFormsCte[Ord(tpCadastroClientes)].Close;
   end;
+
   if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
   begin
-    if aFormsCte[Ord(tpCadastroProduto)].Showing then
-      aFormsCte[Ord(tpCadastroProduto)].Close;
+    with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProduto)]) do
+    begin
+      if Showing then
+      begin
+        FController.ResetComponentsItens;
+        Close;
+      end;
+    end;
   end;
+
   if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
   begin
-    if aFormsCte[Ord(tpCadastroServicos)].Showing then
-      aFormsCte[Ord(tpCadastroServicos)].Close;
+    with TFormCadastrosServicos(aFormsCte[Ord(tpCadastroServicos)]) do
+    begin
+      if Showing then
+      begin
+        FController.ResetComponentsItens;
+        Close;
+      end;
+    end;
   end;
   if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
   begin

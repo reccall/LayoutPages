@@ -14,6 +14,7 @@ type
   IControllerCadastrosServicos = interface
   ['{1924679B-498C-4482-AB31-D628C4D6743C}']
     procedure Iniciar;
+    procedure ResetComponentsItens;
     procedure DestroyComponents;
   end;
 
@@ -22,14 +23,15 @@ type
     FFormCte :TForm;
     FCmpTituloPrincipal :TForm;
     FFormCadServicos :TForm;
-    FCmpTituloCadProd :TForm;
+    FCmpTitulo :TForm;
 
-    aCmpItensCadProd :array of TForm;
     procedure Iniciar;
+    procedure ResetComponentsItens;
     procedure DestroyComponents;
-    procedure SetItensProdutos;
+    procedure SetItensServicos;
     procedure OnClickCheckBox(Sender :TObject);
   public
+    aCmpItensCadServ :array of TForm;
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosServicos overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
      destructor Destroy; override;
@@ -42,8 +44,8 @@ uses
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Forms.CadastroPrincipal
-  ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
-  ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
+  ,LayoutPages.View.Componentes.TituloDescricaoSimples
+  ,ConhecFrete.View.Componentes.BarraItemCadastroServicos;
 
 { TControllerCadastrosServicos }
 
@@ -52,7 +54,7 @@ begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadServicos := pArrayFormsCte[Ord(tpCadastroServicos)];
-  FCmpTituloCadProd := TCmpBarraTituloCadastroProdutos.Create(nil);
+  FCmpTitulo := TCmpTituloDescSimples.Create(nil);
 end;
 
 destructor TControllerCadastrosServicos.Destroy;
@@ -66,8 +68,9 @@ end;
 
 procedure TControllerCadastrosServicos.DestroyComponents;
 begin
-  FCmpTituloCadProd.Close;
-  FreeAndNil(FCmpTituloCadProd);
+  ResetComponentsItens;
+  FCmpTitulo.Close;
+  FreeAndNil(FCmpTitulo);
 end;
 
 procedure TControllerCadastrosServicos.Iniciar;
@@ -78,11 +81,11 @@ begin
     MakeRounded(pnlConsulta,20);
     MakeRounded(pnlRegiaoPesq,20);
     MakeRounded(pnlTopMainCad,10);
-    FCmpTituloCadProd.Parent := pnlTopMainCad;
+    FCmpTitulo.Parent := pnlTopMainCad;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensProdutos;
+    SetItensServicos;
     Show;
-    FCmpTituloCadProd.Show;
+    FCmpTitulo.Show;
   end;
   Screen.Cursor := crDefault;
 end;
@@ -98,10 +101,10 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
-  for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+  for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
   begin
-    with TCmpBarraTituloCadastroProdutos(FCmpTituloCadProd),
-         TCmpBarraItemCadastroProdutos(aCmpItensCadProd[iIdx]) do
+    with TCmpTituloDescSimples(FCmpTitulo),
+         TCmpBarraItemServicos(aCmpItensCadServ[iIdx]) do
     begin
       //chkItem.Checked := chkTituloSelect.Checked;
       case chkItem.Checked of
@@ -112,21 +115,32 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosServicos.SetItensProdutos;
+procedure TControllerCadastrosServicos.ResetComponentsItens;
+var
+  iIdx :Integer;
+begin
+  for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
+  begin
+    FreeAndNil(aCmpItensCadServ[iIdx]);
+  end;
+end;
+
+procedure TControllerCadastrosServicos.SetItensServicos;
 var
   iIdx :Integer;
 begin
   with TFormCadastrosServicos(FFormCadServicos) do
   begin
-    SetLength(aCmpItensCadProd,20);
-    for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+    SetLength(aCmpItensCadServ,20);
+    for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
     begin
-      if not Assigned(aCmpItensCadProd[iIdx]) then
+      if not Assigned(aCmpItensCadServ[iIdx]) then
       begin
-        aCmpItensCadProd[iIdx] := TCmpBarraItemCadastroProdutos.Create(nil);
-        aCmpItensCadProd[iIdx].Parent := scrlbxMain;
+        aCmpItensCadServ[iIdx] := TCmpBarraItemServicos.Create(nil);
+        TCmpBarraItemServicos(aCmpItensCadServ[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        aCmpItensCadServ[iIdx].Parent := scrlbxMain;
       end;
-      aCmpItensCadProd[iIdx].Show;
+      aCmpItensCadServ[iIdx].Show;
     end;
   end;
 end;

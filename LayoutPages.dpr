@@ -82,7 +82,9 @@ uses
   ConhecFrete.Controller.Cadastros.Marcas in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Marcas.pas',
   ConhecFrete.Controller.Cadastros.Transportadoras in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Transportadoras.pas',
   ConhecFrete.Controller.Cadastros.Fornecedores in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Fornecedores.pas',
-  ConhecFrete.Controller.Cadastros.UnidadesDeMedida in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.UnidadesDeMedida.pas';
+  ConhecFrete.Controller.Cadastros.UnidadesDeMedida in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.UnidadesDeMedida.pas',
+  LayoutPages.View.Componentes.TituloDescricaoSimples in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TituloDescricaoSimples.pas' {CmpTituloDescSimples},
+  ConhecFrete.View.Componentes.BarraItemCadastroServicos in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroServicos.pas' {CmpBarraItemServicos};
 
 {$R *.res}
 
@@ -91,5 +93,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFormCteBackground, FormCteBackground);
+  Application.CreateForm(TCmpBarraItemServicos, CmpBarraItemServicos);
   Application.Run;
 end.

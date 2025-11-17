@@ -14,6 +14,7 @@ type
   IControllerCadastrosProdutos = interface
   ['{E1E4251F-26BC-4BE5-B9D3-47DEB4A0B66F}']
     procedure Iniciar;
+    procedure ResetComponentsItens;
     procedure DestroyComponents;
   end;
 
@@ -26,6 +27,7 @@ type
     
     aCmpItensCadProd :array of TForm;
     procedure Iniciar;
+    procedure ResetComponentsItens;
     procedure DestroyComponents;
     procedure SetItensProdutos;
     procedure OnClickCheckBox(Sender :TObject);
@@ -66,6 +68,7 @@ end;
 
 procedure TControllerCadastrosProdutos.DestroyComponents;
 begin
+  ResetComponentsItens;
   FCmpTituloCadProd.Close;
   FreeAndNil(FCmpTituloCadProd);
 end;
@@ -109,6 +112,16 @@ begin
         False: OnMouseLeaveItem(pnlMainCad);
       end;
     end;
+  end;
+end;
+
+procedure TControllerCadastrosProdutos.ResetComponentsItens;
+var
+  iIdx :Integer;
+begin
+  for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+  begin
+    FreeAndNil(aCmpItensCadProd[iIdx]);
   end;
 end;
 

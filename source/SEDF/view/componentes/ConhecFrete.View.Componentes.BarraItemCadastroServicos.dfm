@@ -1,15 +1,17 @@
-inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
+inherited CmpBarraItemServicos: TCmpBarraItemServicos
   Align = alBottom
+  Caption = 'CmpBarraItemServicos'
   ClientHeight = 40
-  ClientWidth = 1028
-  ExplicitWidth = 1028
+  ClientWidth = 1029
+  ExplicitLeft = -278
+  ExplicitWidth = 1029
   ExplicitHeight = 40
   PixelsPerInch = 96
   TextHeight = 16
   object pnlMainCad: TPanel
     Left = 0
     Top = 0
-    Width = 1028
+    Width = 1029
     Height = 40
     Cursor = crArrow
     Align = alClient
@@ -21,9 +23,9 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     object lblCodigo: TLabel
       Left = 28
       Top = 3
-      Width = 82
+      Width = 81
       Height = 29
-      Caption = 'PR-000001'
+      Caption = 'SV-000001'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGrayText
       Font.Height = -16
@@ -35,25 +37,10 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object lblDesc: TLabel
       Left = 157
-      Top = -3
-      Width = 445
-      Height = 29
-      Caption = 'MONITOR GAMER AOC AGON PRO CS2 610Hz 0.3ms CS24A/P'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGrayText
-      Font.Height = -16
-      Font.Name = 'Bai Jamjuree'
-      Font.Style = []
-      ParentFont = False
-      OnMouseMove = lblCodigoMouseMove
-      OnMouseLeave = lblCodigoMouseLeave
-    end
-    object lblVl: TLabel
-      Left = 665
       Top = 3
-      Width = 88
+      Width = 266
       Height = 29
-      Caption = 'R$ 7.999,00'
+      Caption = 'EMISSAO DE DOCUMENTOS FISCAIS'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGrayText
       Font.Height = -16
@@ -184,8 +171,6 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
       Height = 17
       Cursor = crHandPoint
       TabOrder = 1
-      OnMouseLeave = lblCodigoMouseLeave
-      OnMouseMove = lblCodigoMouseMove
     end
   end
 end
