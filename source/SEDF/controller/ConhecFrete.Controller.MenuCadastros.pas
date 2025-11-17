@@ -249,19 +249,13 @@ begin
     end;
   end;
 
-  if not Assigned(FFormCadastroProdutos) then
+  if Assigned(FFormCadastroProdutos) then
   begin
-    FFormCadastroProdutos := TFormCadastrosProdutos.Create(aFormsCte);
-    aFormsCte[Ord(tpCadastroProduto)] := FFormCadastroProdutos;
-  end
-  else
-  begin
-    with TFormCadastrosProdutos(FFormCadastroProdutos) do
-    begin
-      scrlbxMain.VertScrollBar.Position := 0;
-      FFormCadastroProdutos := aFormsCte[Ord(tpCadastroProduto)];
-    end;
+    FreeAndNil(aFormsCte[Ord(tpCadastroProduto)]);
+    FFormCadastroProdutos := nil;
   end;
+  FFormCadastroProdutos := TFormCadastrosProdutos.Create(aFormsCte);
+  aFormsCte[Ord(tpCadastroProduto)] := FFormCadastroProdutos;
 
   with TFormCadastrosProdutos(FFormCadastroProdutos) do
   begin
@@ -304,19 +298,13 @@ begin
     end;
   end;
 
-  if not Assigned(FFormCadastroClientes) then
+  if Assigned(FFormCadastroClientes) then
   begin
-    FFormCadastroClientes := TFormCadastrosClientes.Create(aFormsCte);
-    aFormsCte[Ord(tpCadastroClientes)] := FFormCadastroClientes;
-  end
-  else
-  begin
-    with TFormCadastrosClientes(FFormCadastroClientes) do
-    begin
-      scrlbxMain.VertScrollBar.Position := 0;
-      FFormCadastroClientes := aFormsCte[Ord(tpCadastroClientes)];
-    end;
+    FreeAndNil(aFormsCte[Ord(tpCadastroClientes)]);
+    FFormCadastroClientes := nil;
   end;
+  FFormCadastroClientes := TFormCadastrosClientes.Create(aFormsCte);
+  aFormsCte[Ord(tpCadastroClientes)] := FFormCadastroClientes;
 
   with TFormCadastrosClientes(FFormCadastroClientes) do
   begin
@@ -359,19 +347,13 @@ begin
     end;
   end;
 
-  if not Assigned(FFormCadastroFornecedores) then
+  if Assigned(FFormCadastroFornecedores) then
   begin
-    FFormCadastroFornecedores := TFormCadastrosFornecedores.Create(aFormsCte);
-    aFormsCte[Ord(tpCadastroFornecedores)] := FFormCadastroFornecedores;
-  end
-  else
-  begin
-    with TFormCadastrosFornecedores(FFormCadastroFornecedores) do
-    begin
-      scrlbxMain.VertScrollBar.Position := 0;
-      FFormCadastroFornecedores := aFormsCte[Ord(tpCadastroFornecedores)];
-    end;
+    FreeAndNil(aFormsCte[Ord(tpCadastroFornecedores)]);
+    FFormCadastroFornecedores := nil;
   end;
+  FFormCadastroFornecedores := TFormCadastrosFornecedores.Create(aFormsCte);
+  aFormsCte[Ord(tpCadastroFornecedores)] := FFormCadastroFornecedores;
 
   with TFormCadastrosFornecedores(FFormCadastroFornecedores) do
   begin
@@ -414,19 +396,13 @@ begin
     end;
   end;
 
-  if not Assigned(FFormCadastroMarcas) then
+  if Assigned(FFormCadastroMarcas) then
   begin
-    FFormCadastroMarcas := TFormCadastrosMarcas.Create(aFormsCte);
-    aFormsCte[Ord(tpCadastroMarcas)] := FFormCadastroMarcas;
-  end
-  else
-  begin
-    with TFormCadastrosMarcas(FFormCadastroMarcas) do
-    begin
-      scrlbxMain.VertScrollBar.Position := 0;
-      FFormCadastroMarcas := aFormsCte[Ord(tpCadastroMarcas)];
-    end;
+    FreeAndNil(aFormsCte[Ord(tpCadastroMarcas)]);
+    FFormCadastroMarcas := nil;
   end;
+  FFormCadastroMarcas := TFormCadastrosMarcas.Create(aFormsCte);
+  aFormsCte[Ord(tpCadastroMarcas)] := FFormCadastroMarcas;
 
   with TFormCadastrosMarcas(FFormCadastroMarcas) do
   begin
@@ -469,19 +445,13 @@ begin
     end;
   end;
 
-  if not Assigned(FFormCadastroServicos) then
+  if Assigned(FFormCadastroServicos) then
   begin
-    FFormCadastroServicos := TFormCadastrosServicos.Create(aFormsCte);
-    aFormsCte[Ord(tpCadastroServicos)] := FFormCadastroServicos;
-  end
-  else
-  begin
-    with TFormCadastrosServicos(FFormCadastroServicos) do
-    begin
-      scrlbxMain.VertScrollBar.Position := 0;
-      FFormCadastroServicos := aFormsCte[Ord(tpCadastroServicos)];
-    end;
+    FreeAndNil(aFormsCte[Ord(tpCadastroServicos)]);
+    FFormCadastroServicos := nil;
   end;
+  FFormCadastroServicos := TFormCadastrosServicos.Create(aFormsCte);
+  aFormsCte[Ord(tpCadastroServicos)] := FFormCadastroServicos;
 
   with TFormCadastrosServicos(FFormCadastroServicos) do
   begin
@@ -524,19 +494,13 @@ begin
     end;
   end;
 
-  if not Assigned(FFormCadastroTransportadoras) then
+  if Assigned(FFormCadastroTransportadoras) then
   begin
-    FFormCadastroTransportadoras := TFormCadastrosTransportadoras.Create(aFormsCte);
-    aFormsCte[Ord(tpCadastroTransportadoras)] := FFormCadastroTransportadoras;
-  end
-  else
-  begin
-    with TFormCadastrosTransportadoras(FFormCadastroTransportadoras) do
-    begin
-      scrlbxMain.VertScrollBar.Position := 0;
-      FFormCadastroTransportadoras := aFormsCte[Ord(tpCadastroTransportadoras)];
-    end;
+    FreeAndNil(aFormsCte[Ord(tpCadastroTransportadoras)]);
+    FFormCadastroTransportadoras := nil;
   end;
+  FFormCadastroTransportadoras := TFormCadastrosTransportadoras.Create(aFormsCte);
+  aFormsCte[Ord(tpCadastroTransportadoras)] := FFormCadastroTransportadoras;
 
   with TFormCadastrosTransportadoras(FFormCadastroTransportadoras) do
   begin
@@ -579,19 +543,13 @@ begin
     end;
   end;
 
-  if not Assigned(FFormCadastroUnidMedidas) then
+  if Assigned(FFormCadastroUnidMedidas) then
   begin
-    FFormCadastroUnidMedidas := TFormCadastrosUnidadesDeMedida.Create(aFormsCte);
-    aFormsCte[Ord(tpCadastroUnidadesDeMedida)] := FFormCadastroUnidMedidas;
-  end
-  else
-  begin
-    with TFormCadastrosUnidadesDeMedida(FFormCadastroUnidMedidas) do
-    begin
-      scrlbxMain.VertScrollBar.Position := 0;
-      FFormCadastroUnidMedidas := aFormsCte[Ord(tpCadastroUnidadesDeMedida)];
-    end;
+    FreeAndNil(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]);
+    FFormCadastroUnidMedidas := nil;
   end;
+  FFormCadastroUnidMedidas := TFormCadastrosUnidadesDeMedida.Create(aFormsCte);
+  aFormsCte[Ord(tpCadastroUnidadesDeMedida)] := FFormCadastroUnidMedidas;
 
   with TFormCadastrosUnidadesDeMedida(FFormCadastroUnidMedidas) do
   begin
