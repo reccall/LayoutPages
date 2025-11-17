@@ -29,7 +29,14 @@ type
     FMenuEmissaoFiscal: TForm;
     FormOpcoesItensCte :TForm;
     FSetOpcaoItemMenuCad :TPanel;
+
+    FFormCadastroMarcas :TForm;
+    FFormCadastroServicos :TForm;
     FFormCadastroProdutos :TForm;
+    FFormCadastroClientes :TForm;
+    FFormCadastroUnidMedidas :TForm;
+    FFormCadastroFornecedores :TForm;
+    FFormCadastroTransportadoras :TForm;
 
     procedure OnClickCadMarcas(Sender :TObject);
     procedure OnClickCadProdutos(Sender :TObject);
@@ -63,17 +70,54 @@ uses
   ,ConhecFrete.Forms.Cte.MenuItensImagens
   ,ConhecFrete.Forms.Cte.OpcoesItens
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
-  ,ConhecFrete.Forms.Cte.CadastroProdutos;
+  ,ConhecFrete.Forms.Cte.CadastroMarcas
+  ,ConhecFrete.Forms.Cte.CadastroServicos
+  ,ConhecFrete.Forms.Cte.CadastroClientes
+  ,ConhecFrete.Forms.Cte.CadastroProdutos
+  ,ConhecFrete.Forms.Cte.CadastroFornecedores
+  ,ConhecFrete.Forms.Cte.CadastroTransportadoras
+  ,ConhecFrete.Forms.Cte.CadastroUnidadesDeMedida;
 
 { TControllerMenuCadastros }
 
 procedure TControllerMenuCadastros.CloseFormsMenuCadastros;
 begin
+  if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroMarcas)].Showing then
+      aFormsCte[Ord(tpCadastroMarcas)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroClientes)].Showing then
+      aFormsCte[Ord(tpCadastroClientes)].Close;
+  end;
   if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
   begin
     if aFormsCte[Ord(tpCadastroProduto)].Showing then
       aFormsCte[Ord(tpCadastroProduto)].Close;
   end;
+  if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroServicos)].Showing then
+      aFormsCte[Ord(tpCadastroServicos)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroFornecedores)].Showing then
+      aFormsCte[Ord(tpCadastroFornecedores)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroTransportadoras)].Showing then
+      aFormsCte[Ord(tpCadastroTransportadoras)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Showing then
+      aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Close;
+  end;
+
   if not Assigned(FormOpcoesItensCte) then
   begin
     FormOpcoesItensCte := aFormsCte[Ord(tpFormOpcoesItensCte)];
@@ -170,91 +214,6 @@ begin
   Result := Self.Create(pArrayFormsCte);
 end;
 
-procedure TControllerMenuCadastros.OnClickCadClientes(Sender: TObject);
-begin
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
-
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlClientes.Caption;
-    CloseFormsMenuCadastros;
-  end;
-end;
-
-procedure TControllerMenuCadastros.OnClickCadFornecedores(Sender: TObject);
-begin
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
-
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
-
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlFornec.Caption;
-    CloseFormsMenuCadastros;
-  end;
-end;
-
-procedure TControllerMenuCadastros.OnClickCadMarcas(Sender: TObject);
-begin
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
-  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
-  if Assigned(FMenuEmissaoFiscal) then
-  begin
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      FController.SetOpcaoMenuItem(TPanel(Sender));
-    end;
-  end;
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
-  begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlMarcas.Caption;
-    CloseFormsMenuCadastros;
-  end;
-end;
-
 procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
@@ -301,7 +260,6 @@ begin
     begin
       scrlbxMain.VertScrollBar.Position := 0;
       FFormCadastroProdutos := aFormsCte[Ord(tpCadastroProduto)];
-      pnlBackMain.Width := GetSystemMetrics(SM_CXSCREEN)-10;
     end;
   end;
 
@@ -311,8 +269,15 @@ begin
   end;
 end;
 
-procedure TControllerMenuCadastros.OnClickCadServicos(Sender: TObject);
+procedure TControllerMenuCadastros.OnClickCadClientes(Sender: TObject);
 begin
+  if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
+  begin
+    if TFormCadastrosClientes(aFormsCte[Ord(tpCadastroClientes)]).Showing then
+    begin
+      Exit;
+    end;
+  end;
   SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
@@ -323,6 +288,13 @@ begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
 
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
+  begin
+    FController.SetItemActive(pnlCadastros);
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlClientes.Caption;
+    CloseFormsMenuCadastros;
+  end;
+
   FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
   if Assigned(FMenuEmissaoFiscal) then
   begin
@@ -330,6 +302,155 @@ begin
     begin
       FController.SetOpcaoMenuItem(TPanel(Sender));
     end;
+  end;
+
+  if not Assigned(FFormCadastroClientes) then
+  begin
+    FFormCadastroClientes := TFormCadastrosClientes.Create(aFormsCte);
+    aFormsCte[Ord(tpCadastroClientes)] := FFormCadastroClientes;
+  end
+  else
+  begin
+    with TFormCadastrosClientes(FFormCadastroClientes) do
+    begin
+      scrlbxMain.VertScrollBar.Position := 0;
+      FFormCadastroClientes := aFormsCte[Ord(tpCadastroClientes)];
+    end;
+  end;
+
+  with TFormCadastrosClientes(FFormCadastroClientes) do
+  begin
+    FController.Iniciar;
+  end;
+end;
+
+procedure TControllerMenuCadastros.OnClickCadFornecedores(Sender: TObject);
+begin
+  if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
+  begin
+    if TFormCadastrosClientes(aFormsCte[Ord(tpCadastroFornecedores)]).Showing then
+    begin
+      Exit;
+    end;
+  end;
+  SetOpcaoMenuItemCad(TPanel(Sender));
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
+  if not Assigned(FMenuPrincipal) then
+  begin
+    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
+  end;
+
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
+  begin
+    FController.SetItemActive(pnlCadastros);
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlFornec.Caption;
+    CloseFormsMenuCadastros;
+  end;
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
+  if not Assigned(FFormCadastroFornecedores) then
+  begin
+    FFormCadastroFornecedores := TFormCadastrosFornecedores.Create(aFormsCte);
+    aFormsCte[Ord(tpCadastroFornecedores)] := FFormCadastroFornecedores;
+  end
+  else
+  begin
+    with TFormCadastrosFornecedores(FFormCadastroFornecedores) do
+    begin
+      scrlbxMain.VertScrollBar.Position := 0;
+      FFormCadastroFornecedores := aFormsCte[Ord(tpCadastroFornecedores)];
+    end;
+  end;
+
+  with TFormCadastrosFornecedores(FFormCadastroFornecedores) do
+  begin
+    FController.Iniciar;
+  end;
+end;
+
+procedure TControllerMenuCadastros.OnClickCadMarcas(Sender: TObject);
+begin
+  if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
+  begin
+    if TFormCadastrosMarcas(aFormsCte[Ord(tpCadastroMarcas)]).Showing then
+    begin
+      Exit;
+    end;
+  end;
+  SetOpcaoMenuItemCad(TPanel(Sender));
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
+  if not Assigned(FMenuPrincipal) then
+  begin
+    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
+  end;
+
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
+  begin
+    FController.SetItemActive(pnlCadastros);
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlMarcas.Caption;
+    CloseFormsMenuCadastros;
+  end;
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
+  if not Assigned(FFormCadastroMarcas) then
+  begin
+    FFormCadastroMarcas := TFormCadastrosMarcas.Create(aFormsCte);
+    aFormsCte[Ord(tpCadastroMarcas)] := FFormCadastroMarcas;
+  end
+  else
+  begin
+    with TFormCadastrosMarcas(FFormCadastroMarcas) do
+    begin
+      scrlbxMain.VertScrollBar.Position := 0;
+      FFormCadastroMarcas := aFormsCte[Ord(tpCadastroMarcas)];
+    end;
+  end;
+
+  with TFormCadastrosMarcas(FFormCadastroMarcas) do
+  begin
+    FController.Iniciar;
+  end;
+end;
+
+procedure TControllerMenuCadastros.OnClickCadServicos(Sender: TObject);
+begin
+  if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
+  begin
+    if TFormCadastrosServicos(aFormsCte[Ord(tpCadastroServicos)]).Showing then
+    begin
+      Exit;
+    end;
+  end;
+  SetOpcaoMenuItemCad(TPanel(Sender));
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
+  if not Assigned(FMenuPrincipal) then
+  begin
+    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
 
   with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
@@ -338,19 +459,6 @@ begin
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlServicos.Caption;
     CloseFormsMenuCadastros;
   end;
-end;
-
-procedure TControllerMenuCadastros.OnClickCadTransportadoras(Sender: TObject);
-begin
-  SetOpcaoMenuItemCad(TPanel(Sender));
-  with TFormMenuItensImagens(FMenuItensImagens) do
-  begin
-    FController.SetActiveImage(ImgCadastros);
-  end;
-  if not Assigned(FMenuPrincipal) then
-  begin
-    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-  end;
 
   FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
   if Assigned(FMenuEmissaoFiscal) then
@@ -361,16 +469,90 @@ begin
     end;
   end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
+  if not Assigned(FFormCadastroServicos) then
+  begin
+    FFormCadastroServicos := TFormCadastrosServicos.Create(aFormsCte);
+    aFormsCte[Ord(tpCadastroServicos)] := FFormCadastroServicos;
+  end
+  else
+  begin
+    with TFormCadastrosServicos(FFormCadastroServicos) do
+    begin
+      scrlbxMain.VertScrollBar.Position := 0;
+      FFormCadastroServicos := aFormsCte[Ord(tpCadastroServicos)];
+    end;
+  end;
+
+  with TFormCadastrosServicos(FFormCadastroServicos) do
+  begin
+    FController.Iniciar;
+  end;
+end;
+
+procedure TControllerMenuCadastros.OnClickCadTransportadoras(Sender: TObject);
+begin
+  if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
+  begin
+    if TFormCadastrosTransportadoras(aFormsCte[Ord(tpCadastroTransportadoras)]).Showing then
+    begin
+      Exit;
+    end;
+  end;
+  SetOpcaoMenuItemCad(TPanel(Sender));
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgCadastros);
+  end;
+  if not Assigned(FMenuPrincipal) then
+  begin
+    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
+  end;
+
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
   begin
     FController.SetItemActive(pnlCadastros);
     lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlTransp.Caption;
     CloseFormsMenuCadastros;
   end;
+
+  FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
+  if Assigned(FMenuEmissaoFiscal) then
+  begin
+    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+    begin
+      FController.SetOpcaoMenuItem(TPanel(Sender));
+    end;
+  end;
+
+  if not Assigned(FFormCadastroTransportadoras) then
+  begin
+    FFormCadastroTransportadoras := TFormCadastrosTransportadoras.Create(aFormsCte);
+    aFormsCte[Ord(tpCadastroTransportadoras)] := FFormCadastroTransportadoras;
+  end
+  else
+  begin
+    with TFormCadastrosTransportadoras(FFormCadastroTransportadoras) do
+    begin
+      scrlbxMain.VertScrollBar.Position := 0;
+      FFormCadastroTransportadoras := aFormsCte[Ord(tpCadastroTransportadoras)];
+    end;
+  end;
+
+  with TFormCadastrosTransportadoras(FFormCadastroTransportadoras) do
+  begin
+    FController.Iniciar;
+  end;
 end;
 
 procedure TControllerMenuCadastros.OnClickCadUnidMedida(Sender: TObject);
 begin
+  if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
+  begin
+    if TFormCadastrosUnidadesDeMedida(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]).Showing then
+    begin
+      Exit;
+    end;
+  end;
   SetOpcaoMenuItemCad(TPanel(Sender));
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
@@ -379,6 +561,13 @@ begin
   if not Assigned(FMenuPrincipal) then
   begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
+  end;
+
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
+  begin
+    FController.SetItemActive(pnlCadastros);
+    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlUnidMedida.Caption;
+    CloseFormsMenuCadastros;
   end;
 
   FMenuEmissaoFiscal := GetFormMenuEmissaoFiscal;
@@ -390,11 +579,23 @@ begin
     end;
   end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
+  if not Assigned(FFormCadastroUnidMedidas) then
   begin
-    FController.SetItemActive(pnlCadastros);
-    lblTitulo.Caption := TFormMenuCadastros(FMenuCadastros).pnlUnidMedida.Caption;
-    CloseFormsMenuCadastros;
+    FFormCadastroUnidMedidas := TFormCadastrosUnidadesDeMedida.Create(aFormsCte);
+    aFormsCte[Ord(tpCadastroUnidadesDeMedida)] := FFormCadastroUnidMedidas;
+  end
+  else
+  begin
+    with TFormCadastrosUnidadesDeMedida(FFormCadastroUnidMedidas) do
+    begin
+      scrlbxMain.VertScrollBar.Position := 0;
+      FFormCadastroUnidMedidas := aFormsCte[Ord(tpCadastroUnidadesDeMedida)];
+    end;
+  end;
+
+  with TFormCadastrosUnidadesDeMedida(FFormCadastroUnidMedidas) do
+  begin
+    FController.Iniciar;
   end;
 end;
 

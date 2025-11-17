@@ -61,7 +61,13 @@ uses
    ,ConhecFrete.Forms.Cte.Background
    ,ConhecFrete.Forms.Cte.MenuCadastros
    ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
+   ,ConhecFrete.Forms.Cte.CadastroMarcas
+   ,ConhecFrete.Forms.Cte.CadastroServicos
    ,ConhecFrete.Forms.Cte.CadastroProdutos
+   ,ConhecFrete.Forms.Cte.CadastroClientes
+   ,ConhecFrete.Forms.Cte.CadastroFornecedores
+   ,ConhecFrete.Forms.Cte.CadastroTransportadoras
+   ,ConhecFrete.Forms.Cte.CadastroUnidadesDeMedida
    ,LayoutPages.View.Componentes.BotoesBarraOpcoes;
 
 { ControllerPrincipal }
@@ -78,6 +84,36 @@ begin
   begin
     if aFormsCte[Ord(tpCadastroProduto)].Showing then
       aFormsCte[Ord(tpCadastroProduto)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroMarcas)].Showing then
+      aFormsCte[Ord(tpCadastroMarcas)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroServicos)].Showing then
+      aFormsCte[Ord(tpCadastroServicos)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroClientes)].Showing then
+      aFormsCte[Ord(tpCadastroClientes)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroFornecedores)].Showing then
+      aFormsCte[Ord(tpCadastroFornecedores)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroTransportadoras)].Showing then
+      aFormsCte[Ord(tpCadastroTransportadoras)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Showing then
+      aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Close;
   end;
   CloseMenus(True);
 end;
@@ -245,6 +281,34 @@ begin
         end;
       end;
 
+      tpCadastroMarcas:
+      begin
+        if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
+        begin
+          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroMarcas)]) do
+          begin
+            FController.DestroyComponents;
+            aFormsCte[Ord(tpCadastroMarcas)].Close;
+            aFormsCte[Ord(tpCadastroMarcas)].Free;
+            aFormsCte[Ord(tpCadastroMarcas)] := nil;
+          end;
+        end;
+      end;
+
+      tpCadastroServicos:
+      begin
+        if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
+        begin
+          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroServicos)]) do
+          begin
+            FController.DestroyComponents;
+            aFormsCte[Ord(tpCadastroServicos)].Close;
+            aFormsCte[Ord(tpCadastroServicos)].Free;
+            aFormsCte[Ord(tpCadastroServicos)] := nil;
+          end;
+        end;
+      end;
+
       tpCadastroProduto:
       begin
         if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
@@ -258,14 +322,68 @@ begin
           end;
         end;
       end;
+
+      tpCadastroClientes:
+      begin
+        if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
+        begin
+          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroClientes)]) do
+          begin
+            FController.DestroyComponents;
+            aFormsCte[Ord(tpCadastroClientes)].Close;
+            aFormsCte[Ord(tpCadastroClientes)].Free;
+            aFormsCte[Ord(tpCadastroClientes)] := nil;
+          end;
+        end;
+      end;
+
+      tpCadastroFornecedores:
+      begin
+        if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
+        begin
+          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroFornecedores)]) do
+          begin
+            FController.DestroyComponents;
+            aFormsCte[Ord(tpCadastroFornecedores)].Close;
+            aFormsCte[Ord(tpCadastroFornecedores)].Free;
+            aFormsCte[Ord(tpCadastroFornecedores)] := nil;
+          end;
+        end;
+      end;
+
+      tpCadastroTransportadoras:
+      begin
+        if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
+        begin
+          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroTransportadoras)]) do
+          begin
+            FController.DestroyComponents;
+            aFormsCte[Ord(tpCadastroTransportadoras)].Close;
+            aFormsCte[Ord(tpCadastroTransportadoras)].Free;
+            aFormsCte[Ord(tpCadastroTransportadoras)] := nil;
+          end;
+        end;
+      end;
+
+      tpCadastroUnidadesDeMedida:
+      begin
+        if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
+        begin
+          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) do
+          begin
+            FController.DestroyComponents;
+            aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Close;
+            aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Free;
+            aFormsCte[Ord(tpCadastroUnidadesDeMedida)] := nil;
+          end;
+        end;
+      end;
     end;
   end;
-
 
   FreeAndNil(FCmpMenuImg);
   FCmpCardInfoUser.Close;
   FreeAndNil(FCmpCardInfoUser);
-
 
   aFormsCte[Ord(tpOwner)].Close;
   aFormsCte[Ord(tpOwner)].Free;

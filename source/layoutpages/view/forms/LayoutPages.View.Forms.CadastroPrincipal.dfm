@@ -25,7 +25,7 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
     ParentBackground = False
     TabOrder = 1
     object pnlConsulta: TPanel
-      Left = 24
+      Left = 1
       Top = 4
       Width = 499
       Height = 52

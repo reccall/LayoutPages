@@ -64,10 +64,40 @@ uses
 
 procedure TControllerMenuEmissaoFiscal.CloseForms(pParam :TpOpcaoMenuEmissaoFis);
 begin
+  if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroMarcas)].Showing then
+      aFormsCte[Ord(tpCadastroMarcas)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroClientes)].Showing then
+      aFormsCte[Ord(tpCadastroClientes)].Close;
+  end;
   if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
   begin
     if aFormsCte[Ord(tpCadastroProduto)].Showing then
       aFormsCte[Ord(tpCadastroProduto)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroServicos)].Showing then
+      aFormsCte[Ord(tpCadastroServicos)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroFornecedores)].Showing then
+      aFormsCte[Ord(tpCadastroFornecedores)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroTransportadoras)].Showing then
+      aFormsCte[Ord(tpCadastroTransportadoras)].Close;
+  end;
+  if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
+  begin
+    if aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Showing then
+      aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Close;
   end;
   case pParam of
     tpMenuNFe:

@@ -3,9 +3,20 @@ unit LayoutPages.View.Forms.CadastroPrincipal;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, LayoutPages.View.Forms.FormDefault,
-  Vcl.StdCtrls, dxGDIPlusClasses, Vcl.ExtCtrls, Vcl.AppEvnts;
+   Winapi.Windows
+  ,Winapi.Messages
+  ,System.SysUtils
+  ,System.Variants
+  ,System.Classes
+  ,Vcl.Graphics
+  ,Vcl.Controls
+  ,Vcl.Forms
+  ,Vcl.Dialogs
+  ,Vcl.StdCtrls
+  ,dxGDIPlusClasses
+  ,Vcl.ExtCtrls
+  ,Vcl.AppEvnts
+  ,LayoutPages.View.Forms.FormDefault;
 
 type
   TFormCadastrosPrincipal = class(TFormDefault)

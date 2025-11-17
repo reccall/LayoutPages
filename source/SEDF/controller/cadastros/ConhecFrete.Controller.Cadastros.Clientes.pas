@@ -1,4 +1,4 @@
-unit ConhecFrete.Controller.Cadastros.Produtos;
+unit ConhecFrete.Controller.Cadastros.Clientes;
 
 interface
 
@@ -11,26 +11,26 @@ uses
   ,ConhecFrete.Model.Types.Constantes;
 
 type
-  IControllerCadastrosProdutos = interface
-  ['{E1E4251F-26BC-4BE5-B9D3-47DEB4A0B66F}']
+  IControllerCadastrosClientes = interface
+  ['{B9DAA2F4-9EF9-410C-88F0-A63B693CE845}']
     procedure Iniciar;
     procedure DestroyComponents;
   end;
 
-  TControllerCadastrosProdutos = class(TInterfacedObject, IControllerCadastrosProdutos)
+  TControllerCadastrosClientes = class(TInterfacedObject, IControllerCadastrosClientes)
   private
     FFormCte :TForm;
     FCmpTituloPrincipal :TForm;
-    FFormCadProdutos :TForm;
+    FFormCadClientes :TForm;
     FCmpTituloCadProd :TForm;
-    
+
     aCmpItensCadProd :array of TForm;
     procedure Iniciar;
     procedure DestroyComponents;
     procedure SetItensProdutos;
     procedure OnClickCheckBox(Sender :TObject);
   public
-  class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosProdutos overload;
+  class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosClientes overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
      destructor Destroy; override;
 end;
@@ -38,42 +38,42 @@ end;
 implementation
 
 uses
-   ConhecFrete.Forms.Cte.CadastroProdutos
+   ConhecFrete.Forms.Cte.CadastroClientes
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
   ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
 
-{ TControllerCadastrosProdutos }
+{ TControllerCadastrosClientes }
 
-constructor TControllerCadastrosProdutos.Create(pArrayFormsCte :array of TForm);
+constructor TControllerCadastrosClientes.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FFormCadProdutos := pArrayFormsCte[Ord(tpCadastroProduto)];
+  FFormCadClientes := pArrayFormsCte[Ord(tpCadastroClientes)];
   FCmpTituloCadProd := TCmpBarraTituloCadastroProdutos.Create(nil);
 end;
 
-destructor TControllerCadastrosProdutos.Destroy;
+destructor TControllerCadastrosClientes.Destroy;
 begin
-  with TFormCadastrosProdutos(FFormCadProdutos) do
+  with TFormCadastrosClientes(FFormCadClientes) do
   begin
     if Assigned(FController) then
       FreeAndNil(FController);
   end;
 end;
 
-procedure TControllerCadastrosProdutos.DestroyComponents;
+procedure TControllerCadastrosClientes.DestroyComponents;
 begin
   FCmpTituloCadProd.Close;
   FreeAndNil(FCmpTituloCadProd);
 end;
 
-procedure TControllerCadastrosProdutos.Iniciar;
+procedure TControllerCadastrosClientes.Iniciar;
 begin
   Screen.Cursor := crHourGlass;
-  with TFormCadastrosProdutos(FFormCadProdutos) do
+  with TFormCadastrosClientes(FFormCadClientes) do
   begin
     MakeRounded(pnlConsulta,20);
     MakeRounded(pnlRegiaoPesq,20);
@@ -87,12 +87,12 @@ begin
   Screen.Cursor := crDefault;
 end;
 
-class function TControllerCadastrosProdutos.New(pArrayFormsCte :array of TForm): IControllerCadastrosProdutos;
+class function TControllerCadastrosClientes.New(pArrayFormsCte :array of TForm): IControllerCadastrosClientes;
 begin
   Result := Self.Create(pArrayFormsCte);
 end;
 
-procedure TControllerCadastrosProdutos.OnClickCheckBox(Sender: TObject);
+procedure TControllerCadastrosClientes.OnClickCheckBox(Sender: TObject);
 var
   iIdx :Integer;
   Shift: TShiftState;
@@ -112,11 +112,11 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosProdutos.SetItensProdutos;
+procedure TControllerCadastrosClientes.SetItensProdutos;
 var
   iIdx :Integer;
 begin
-  with TFormCadastrosProdutos(FFormCadProdutos) do
+  with TFormCadastrosClientes(FFormCadClientes) do
   begin
     SetLength(aCmpItensCadProd,20);
     for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do

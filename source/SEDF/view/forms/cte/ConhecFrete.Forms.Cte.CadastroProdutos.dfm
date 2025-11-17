@@ -14,9 +14,10 @@ inherited FormCadastrosProdutos: TFormCadastrosProdutos
   end
   inherited pnlCadTop: TPanel
     Width = 1500
-    ExplicitTop = -6
     ExplicitWidth = 1500
     inherited pnlConsulta: TPanel
+      Top = 7
+      ExplicitTop = 7
       inherited lblConsulta: TLabel
         Left = 389
         ExplicitLeft = 389
@@ -43,7 +44,7 @@ inherited FormCadastrosProdutos: TFormCadastrosProdutos
       Top = 94
       Width = 1498
       Height = 26
-      ExplicitTop = 95
+      ExplicitTop = 94
       ExplicitWidth = 1498
       ExplicitHeight = 26
     end
@@ -57,7 +58,6 @@ inherited FormCadastrosProdutos: TFormCadastrosProdutos
     ExplicitHeight = 332
     inherited scrlbxMain: TScrollBox
       Width = 1500
-      ExplicitTop = 6
       ExplicitWidth = 1500
     end
   end

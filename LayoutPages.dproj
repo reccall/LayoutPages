@@ -228,6 +228,36 @@
             <Form>FormMenuItensImagens</Form>
         </DCCReference>
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroProdutos.pas"/>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroMarcas.pas">
+            <Form>FormCadastrosMarcas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroServicos.pas">
+            <Form>FormCadastrosServicos</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroUnidadesDeMedida.pas">
+            <Form>FormCadastrosUnidadesDeMedida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroClientes.pas">
+            <Form>FormCadastrosClientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroFornecedores.pas">
+            <Form>FormCadastrosFornecedores</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CadastroTransportadoras.pas">
+            <Form>FormCadastrosTransportadoras</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Servicos.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Clientes.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Marcas.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Transportadoras.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Fornecedores.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.UnidadesDeMedida.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
