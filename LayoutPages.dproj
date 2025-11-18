@@ -266,6 +266,26 @@
             <Form>CmpBarraItemServicos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroClientes.pas">
+            <Form>CmpBarraItemClientes</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroFornecedores.pas">
+            <Form>CmpBarraItemFornecedores</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras.pas">
+            <Form>CmpBarraItemTransportadoras</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroMarcas.pas">
+            <Form>CmpBarraItemMarcas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida.pas">
+            <Form>CmpBarraItemUnidadesDeMedida</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

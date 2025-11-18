@@ -20,11 +20,11 @@ type
   TControllerCadastrosFornecedores = class(TInterfacedObject, IControllerCadastrosFornecedores)
   private
     FFormCte :TForm;
+    FCmpTitulo :TForm;
     FCmpTituloPrincipal :TForm;
     FFormCadFornecedores :TForm;
-    FCmpTituloCadProd :TForm;
 
-    aCmpItensCadProd :array of TForm;
+    aCmpItensCadFornecedores :array of TForm;
     procedure Iniciar;
     procedure DestroyComponents;
     procedure SetItensProdutos;
@@ -41,8 +41,8 @@ uses
    ConhecFrete.Forms.Cte.CadastroFornecedores
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
-  ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
-  ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
+  ,LayoutPages.View.Componentes.TituloDescricaoSimples
+  ,ConhecFrete.View.Componentes.BarraItemCadastroFornecedores;
 
 { TControllerCadastrosFornecedores }
 
@@ -51,7 +51,7 @@ begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadFornecedores := pArrayFormsCte[Ord(tpCadastroFornecedores)];
-  FCmpTituloCadProd := TCmpBarraTituloCadastroProdutos.Create(nil);
+  FCmpTitulo := TCmpTituloDescSimples.Create(nil);
 end;
 
 destructor TControllerCadastrosFornecedores.Destroy;
@@ -65,8 +65,8 @@ end;
 
 procedure TControllerCadastrosFornecedores.DestroyComponents;
 begin
-  FCmpTituloCadProd.Close;
-  FreeAndNil(FCmpTituloCadProd);
+  FCmpTitulo.Close;
+  FreeAndNil(FCmpTitulo);
 end;
 
 procedure TControllerCadastrosFornecedores.Iniciar;
@@ -77,11 +77,11 @@ begin
     MakeRounded(pnlConsulta,20);
     MakeRounded(pnlRegiaoPesq,20);
     MakeRounded(pnlTopMainCad,10);
-    FCmpTituloCadProd.Parent := pnlTopMainCad;
+    FCmpTitulo.Parent := pnlTopMainCad;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     SetItensProdutos;
     Show;
-    FCmpTituloCadProd.Show;
+    FCmpTitulo.Show;
   end;
   Screen.Cursor := crDefault;
 end;
@@ -97,10 +97,10 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
-  for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+  for iIdx := Low(aCmpItensCadFornecedores) to High(aCmpItensCadFornecedores) do
   begin
-    with TCmpBarraTituloCadastroProdutos(FCmpTituloCadProd),
-         TCmpBarraItemCadastroProdutos(aCmpItensCadProd[iIdx]) do
+    with TCmpTituloDescSimples(FCmpTitulo),
+         TCmpBarraItemFornecedores(aCmpItensCadFornecedores[iIdx]) do
     begin
       //chkItem.Checked := chkTituloSelect.Checked;
       case chkItem.Checked of
@@ -117,15 +117,16 @@ var
 begin
   with TFormCadastrosFornecedores(FFormCadFornecedores) do
   begin
-    SetLength(aCmpItensCadProd,20);
-    for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+    SetLength(aCmpItensCadFornecedores,20);
+    for iIdx := Low(aCmpItensCadFornecedores) to High(aCmpItensCadFornecedores) do
     begin
-      if not Assigned(aCmpItensCadProd[iIdx]) then
+      if not Assigned(aCmpItensCadFornecedores[iIdx]) then
       begin
-        aCmpItensCadProd[iIdx] := TCmpBarraItemCadastroProdutos.Create(nil);
-        aCmpItensCadProd[iIdx].Parent := scrlbxMain;
+        aCmpItensCadFornecedores[iIdx] := TCmpBarraItemFornecedores.Create(nil);
+        TCmpBarraItemFornecedores(aCmpItensCadFornecedores[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        aCmpItensCadFornecedores[iIdx].Parent := scrlbxMain;
       end;
-      aCmpItensCadProd[iIdx].Show;
+      aCmpItensCadFornecedores[iIdx].Show;
     end;
   end;
 end;

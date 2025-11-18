@@ -22,9 +22,9 @@ type
     FFormCte :TForm;
     FCmpTituloPrincipal :TForm;
     FFormCadUnidadesDeMedida :TForm;
-    FCmpTituloCadProd :TForm;
+    FCmpTitulo :TForm;
 
-    aCmpItensCadProd :array of TForm;
+    aCmpItensCadUnidadesDeMedida :array of TForm;
     procedure Iniciar;
     procedure DestroyComponents;
     procedure SetItensProdutos;
@@ -41,8 +41,8 @@ uses
    ConhecFrete.Forms.Cte.CadastroUnidadesDeMedida
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
-  ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
-  ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
+  ,LayoutPages.View.Componentes.TituloDescricaoSimples
+  ,ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida;
 
 { TControllerCadastrosUnidadesDeMedida }
 
@@ -51,7 +51,7 @@ begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCadastroUnidadesDeMedida)];
-  FCmpTituloCadProd := TCmpBarraTituloCadastroProdutos.Create(nil);
+  FCmpTitulo := TCmpTituloDescSimples.Create(nil);
 end;
 
 destructor TControllerCadastrosUnidadesDeMedida.Destroy;
@@ -65,8 +65,8 @@ end;
 
 procedure TControllerCadastrosUnidadesDeMedida.DestroyComponents;
 begin
-  FCmpTituloCadProd.Close;
-  FreeAndNil(FCmpTituloCadProd);
+  FCmpTitulo.Close;
+  FreeAndNil(FCmpTitulo);
 end;
 
 procedure TControllerCadastrosUnidadesDeMedida.Iniciar;
@@ -77,11 +77,11 @@ begin
     MakeRounded(pnlConsulta,20);
     MakeRounded(pnlRegiaoPesq,20);
     MakeRounded(pnlTopMainCad,10);
-    FCmpTituloCadProd.Parent := pnlTopMainCad;
+    FCmpTitulo.Parent := pnlTopMainCad;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     SetItensProdutos;
     Show;
-    FCmpTituloCadProd.Show;
+    FCmpTitulo.Show;
   end;
   Screen.Cursor := crDefault;
 end;
@@ -97,10 +97,10 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
-  for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+  for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
   begin
-    with TCmpBarraTituloCadastroProdutos(FCmpTituloCadProd),
-         TCmpBarraItemCadastroProdutos(aCmpItensCadProd[iIdx]) do
+    with TCmpTituloDescSimples(FCmpTitulo),
+         TCmpBarraItemUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
     begin
       //chkItem.Checked := chkTituloSelect.Checked;
       case chkItem.Checked of
@@ -117,15 +117,16 @@ var
 begin
   with TFormCadastrosUnidadesDeMedida(FFormCadUnidadesDeMedida) do
   begin
-    SetLength(aCmpItensCadProd,20);
-    for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+    SetLength(aCmpItensCadUnidadesDeMedida,20);
+    for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
     begin
-      if not Assigned(aCmpItensCadProd[iIdx]) then
+      if not Assigned(aCmpItensCadUnidadesDeMedida[iIdx]) then
       begin
-        aCmpItensCadProd[iIdx] := TCmpBarraItemCadastroProdutos.Create(nil);
-        aCmpItensCadProd[iIdx].Parent := scrlbxMain;
+        aCmpItensCadUnidadesDeMedida[iIdx] := TCmpBarraItemUnidadesDeMedida.Create(nil);
+        TCmpBarraItemUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        aCmpItensCadUnidadesDeMedida[iIdx].Parent := scrlbxMain;
       end;
-      aCmpItensCadProd[iIdx].Show;
+      aCmpItensCadUnidadesDeMedida[iIdx].Show;
     end;
   end;
 end;

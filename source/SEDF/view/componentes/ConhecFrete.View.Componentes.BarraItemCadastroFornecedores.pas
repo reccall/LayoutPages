@@ -1,4 +1,4 @@
-unit ConhecFrete.View.Componentes.BarraItemCadastroServicos;
+unit ConhecFrete.View.Componentes.BarraItemCadastroFornecedores;
 
 interface
 
@@ -19,7 +19,7 @@ uses
   ,LayoutPages.View.Forms.FormDefault;
 
 type
-  TCmpBarraItemServicos = class(TFormDefault)
+  TCmpBarraItemFornecedores = class(TFormDefault)
     pnlMainCad: TPanel;
     lblCodigo: TLabel;
     lblDesc: TLabel;
@@ -42,14 +42,14 @@ implementation
 
 {$R *.dfm}
 
-procedure TCmpBarraItemServicos.lblCodigoMouseLeave(Sender: TObject);
+procedure TCmpBarraItemFornecedores.lblCodigoMouseLeave(Sender: TObject);
 begin
   inherited;
   if not chkItem.Checked then
     OnMouseLeaveItem(pnlMainCad);
 end;
 
-procedure TCmpBarraItemServicos.lblCodigoMouseMove(Sender: TObject;
+procedure TCmpBarraItemFornecedores.lblCodigoMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   inherited;

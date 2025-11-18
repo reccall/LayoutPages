@@ -1,4 +1,4 @@
-unit ConhecFrete.View.Componentes.BarraItemCadastroServicos;
+unit ConhecFrete.View.Componentes.BarraItemCadastroClientes;
 
 interface
 
@@ -18,8 +18,9 @@ uses
   ,dxGDIPlusClasses
   ,LayoutPages.View.Forms.FormDefault;
 
+
 type
-  TCmpBarraItemServicos = class(TFormDefault)
+  TCmpBarraItemClientes = class(TFormDefault)
     pnlMainCad: TPanel;
     lblCodigo: TLabel;
     lblDesc: TLabel;
@@ -29,9 +30,9 @@ type
     imgIndice: TImage;
     pnlLine: TPanel;
     chkItem: TCheckBox;
+    procedure lblCodigoMouseLeave(Sender: TObject);
     procedure lblCodigoMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
-    procedure lblCodigoMouseLeave(Sender: TObject);
   private
     { Private declarations }
   public
@@ -42,14 +43,14 @@ implementation
 
 {$R *.dfm}
 
-procedure TCmpBarraItemServicos.lblCodigoMouseLeave(Sender: TObject);
+procedure TCmpBarraItemClientes.lblCodigoMouseLeave(Sender: TObject);
 begin
   inherited;
-  if not chkItem.Checked then
+    if not chkItem.Checked then
     OnMouseLeaveItem(pnlMainCad);
 end;
 
-procedure TCmpBarraItemServicos.lblCodigoMouseMove(Sender: TObject;
+procedure TCmpBarraItemClientes.lblCodigoMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   inherited;

@@ -1,16 +1,16 @@
-inherited CmpBarraItemServicos: TCmpBarraItemServicos
-  Align = alBottom
-  Caption = 'CmpBarraItemServicos'
+inherited CmpBarraItemFornecedores: TCmpBarraItemFornecedores
+  Align = alTop
+  Caption = 'CmpBarraItemFornecedores'
   ClientHeight = 40
-  ClientWidth = 1029
-  ExplicitWidth = 1029
+  ClientWidth = 1026
+  ExplicitWidth = 1026
   ExplicitHeight = 40
   PixelsPerInch = 96
   TextHeight = 16
   object pnlMainCad: TPanel
     Left = 0
     Top = 0
-    Width = 1029
+    Width = 1026
     Height = 40
     Cursor = crArrow
     Align = alClient
@@ -22,9 +22,9 @@ inherited CmpBarraItemServicos: TCmpBarraItemServicos
     object lblCodigo: TLabel
       Left = 28
       Top = 3
-      Width = 81
+      Width = 82
       Height = 29
-      Caption = 'SV-000001'
+      Caption = 'FN-000001'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGrayText
       Font.Height = -16
@@ -37,9 +37,9 @@ inherited CmpBarraItemServicos: TCmpBarraItemServicos
     object lblDesc: TLabel
       Left = 157
       Top = 3
-      Width = 266
+      Width = 169
       Height = 29
-      Caption = 'EMISSAO DE DOCUMENTOS FISCAIS'
+      Caption = 'FORNECEDOR PADR'#195'O'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGrayText
       Font.Height = -16
