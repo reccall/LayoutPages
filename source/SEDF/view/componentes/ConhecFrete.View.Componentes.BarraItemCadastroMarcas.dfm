@@ -1,4 +1,4 @@
-inherited CmpBarraItemMarcas: TCmpBarraItemMarcas
+inherited CmpBarraItemCadastroMarcas: TCmpBarraItemCadastroMarcas
   Align = alTop
   ClientHeight = 40
   ClientWidth = 1025

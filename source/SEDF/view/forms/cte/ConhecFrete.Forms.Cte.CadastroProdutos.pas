@@ -39,7 +39,7 @@ implementation
 
 constructor TFormCadastrosProdutos.Create(pArrayFormsCte: array of TForm);
 begin
-  pArrayFormsCte[Ord(tpCadastroProduto)] := Self;
+  pArrayFormsCte[Ord(tpCadastroProdutos)] := Self;
   Inherited Create(nil);
   FController := TControllerCadastrosProdutos.New(pArrayFormsCte);
 end;

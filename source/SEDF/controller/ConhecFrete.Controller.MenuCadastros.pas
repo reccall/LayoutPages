@@ -66,6 +66,7 @@ implementation
 
 uses
    LayoutPages.View.Componentes.TLabelTitulo
+  ,LayoutPages.View.Componentes.ControlGrid
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
   ,ConhecFrete.Forms.Cte.OpcoesInicio
@@ -97,9 +98,9 @@ begin
       aFormsCte[Ord(tpCadastroClientes)].Close;
   end;
 
-  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+  if Assigned(aFormsCte[Ord(tpCadastroProdutos)]) then
   begin
-    with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProduto)]) do
+    with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProdutos)]) do
     begin
       if Showing then
       begin
@@ -246,7 +247,7 @@ begin
     begin
       case pFormMenu of
         tpCadastroMarcas:           lblTitulo.Caption := pnlMarcas.Caption;
-        tpCadastroProduto:          lblTitulo.Caption := pnlProdutos.Caption;
+        tpCadastroProdutos:          lblTitulo.Caption := pnlProdutos.Caption;
         tpCadastroClientes:         lblTitulo.Caption := pnlClientes.Caption ;
         tpCadastroServicos:         lblTitulo.Caption := pnlServicos.Caption;
         tpCadastroFornecedores:     lblTitulo.Caption := pnlFornec.Caption;
@@ -265,6 +266,11 @@ begin
       FController.SetOpcaoMenuItem(TPanel(pSender));
     end;
   end;
+
+  if not Assigned(aFormsCte[Ord(tpCmpControlGrid)]) then
+  begin
+    aFormsCte[Ord(tpCmpControlGrid)] := TCmpGridControl.Create(nil);
+  end;
 end;
 
 class function TControllerMenuCadastros.New(pArrayFormsCte :array of TForm): IControllerMenuCadastros;
@@ -274,23 +280,23 @@ end;
 
 procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
-  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+  if Assigned(aFormsCte[Ord(tpCadastroProdutos)]) then
   begin
-    if TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProduto)]).Showing then
+    if TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProdutos)]).Showing then
     begin
       Exit;
     end;
   end;
 
-  IniciarInformacoesFormMenu(Sender, tpCadastroProduto);
+  IniciarInformacoesFormMenu(Sender, tpCadastroProdutos);
 
   if Assigned(FFormCadastroProdutos) then
   begin
-    FreeAndNil(aFormsCte[Ord(tpCadastroProduto)]);
+    FreeAndNil(aFormsCte[Ord(tpCadastroProdutos)]);
     FFormCadastroProdutos := nil;
   end;
   FFormCadastroProdutos := TFormCadastrosProdutos.Create(aFormsCte);
-  aFormsCte[Ord(tpCadastroProduto)] := FFormCadastroProdutos;
+  aFormsCte[Ord(tpCadastroProdutos)] := FFormCadastroProdutos;
 
   with TFormCadastrosProdutos(FFormCadastroProdutos) do
   begin

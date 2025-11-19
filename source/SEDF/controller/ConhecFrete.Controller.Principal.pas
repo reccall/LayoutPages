@@ -80,10 +80,10 @@ begin
     aFormsCte[Ord(tpBarraBotoes)].Close;
     aFormsCte[Ord(tpFormOpcoesItensCte)].Close;
   end;
-  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+  if Assigned(aFormsCte[Ord(tpCadastroProdutos)]) then
   begin
-    if aFormsCte[Ord(tpCadastroProduto)].Showing then
-      aFormsCte[Ord(tpCadastroProduto)].Close;
+    if aFormsCte[Ord(tpCadastroProdutos)].Showing then
+      aFormsCte[Ord(tpCadastroProdutos)].Close;
   end;
   if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
   begin
@@ -309,16 +309,16 @@ begin
         end;
       end;
 
-      tpCadastroProduto:
+      tpCadastroProdutos:
       begin
-        if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+        if Assigned(aFormsCte[Ord(tpCadastroProdutos)]) then
         begin
-          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProduto)]) do
+          with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProdutos)]) do
           begin
             FController.DestroyComponents;
-            aFormsCte[Ord(tpCadastroProduto)].Close;
-            aFormsCte[Ord(tpCadastroProduto)].Free;
-            aFormsCte[Ord(tpCadastroProduto)] := nil;
+            aFormsCte[Ord(tpCadastroProdutos)].Close;
+            aFormsCte[Ord(tpCadastroProdutos)].Free;
+            aFormsCte[Ord(tpCadastroProdutos)] := nil;
           end;
         end;
       end;

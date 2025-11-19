@@ -84,12 +84,15 @@ uses
   ConhecFrete.Controller.Cadastros.Fornecedores in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Fornecedores.pas',
   ConhecFrete.Controller.Cadastros.UnidadesDeMedida in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.UnidadesDeMedida.pas',
   LayoutPages.View.Componentes.TituloDescricaoSimples in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TituloDescricaoSimples.pas' {CmpTituloDescSimples},
-  ConhecFrete.View.Componentes.BarraItemCadastroServicos in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroServicos.pas' {CmpBarraItemServicos},
-  ConhecFrete.View.Componentes.BarraItemCadastroClientes in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroClientes.pas' {CmpBarraItemClientes},
-  ConhecFrete.View.Componentes.BarraItemCadastroFornecedores in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroFornecedores.pas' {CmpBarraItemFornecedores},
-  ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras.pas' {CmpBarraItemTransportadoras},
-  ConhecFrete.View.Componentes.BarraItemCadastroMarcas in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroMarcas.pas' {CmpBarraItemMarcas},
-  ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida.pas' {CmpBarraItemUnidadesDeMedida};
+  ConhecFrete.View.Componentes.BarraItemCadastroServicos in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroServicos.pas' {CmpBarraItemCadastroServicos},
+  ConhecFrete.View.Componentes.BarraItemCadastroClientes in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroClientes.pas' {CmpBarraItemCadastroClientes},
+  ConhecFrete.View.Componentes.BarraItemCadastroFornecedores in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroFornecedores.pas' {CmpBarraItemCadastroFornecedores},
+  ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras.pas' {CmpBarraItemCadastroTransportadoras},
+  ConhecFrete.View.Componentes.BarraItemCadastroMarcas in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroMarcas.pas' {CmpBarraItemCadastroMarcas},
+  ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida.pas' {CmpBarraItemCadastroUnidadesDeMedida},
+  LayoutPages.View.Componentes.ControlGrid in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.ControlGrid.pas' {CmpGridControl},
+  ConhecFrete.Forms.Cte.Cadastros in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Cadastros.pas' {FormCteCadastros},
+  ConhecFrete.Controller.Cadastros in 'source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.pas';
 
 {$R *.res}
 

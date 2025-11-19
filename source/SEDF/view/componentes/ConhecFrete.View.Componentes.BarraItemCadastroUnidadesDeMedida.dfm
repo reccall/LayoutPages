@@ -1,9 +1,7 @@
-inherited CmpBarraItemUnidadesDeMedida: TCmpBarraItemUnidadesDeMedida
+inherited CmpBarraItemCadastroUnidadesDeMedida: TCmpBarraItemCadastroUnidadesDeMedida
   Align = alTop
-  Caption = 'CmpBarraItemUnidadesDeMedida'
   ClientHeight = 40
   ClientWidth = 1025
-  ExplicitLeft = -62
   ExplicitWidth = 1025
   ExplicitHeight = 40
   PixelsPerInch = 96

@@ -19,7 +19,7 @@ uses
   ,LayoutPages.View.Forms.FormDefault;
 
 type
-  TCmpBarraItemMarcas = class(TFormDefault)
+  TCmpBarraItemCadastroMarcas = class(TFormDefault)
     pnlMainCad: TPanel;
     lblCodigo: TLabel;
     lblDesc: TLabel;
@@ -42,14 +42,14 @@ implementation
 
 {$R *.dfm}
 
-procedure TCmpBarraItemMarcas.lblCodigoMouseLeave(Sender: TObject);
+procedure TCmpBarraItemCadastroMarcas.lblCodigoMouseLeave(Sender: TObject);
 begin
   inherited;
   if not chkItem.Checked then
     OnMouseLeaveItem(pnlMainCad);
 end;
 
-procedure TCmpBarraItemMarcas.lblCodigoMouseMove(Sender: TObject;
+procedure TCmpBarraItemCadastroMarcas.lblCodigoMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   inherited;

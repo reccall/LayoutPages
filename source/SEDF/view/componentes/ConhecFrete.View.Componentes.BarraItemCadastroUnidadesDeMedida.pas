@@ -19,7 +19,7 @@ uses
   ,LayoutPages.View.Forms.FormDefault;
 
 type
-  TCmpBarraItemUnidadesDeMedida = class(TFormDefault)
+  TCmpBarraItemCadastroUnidadesDeMedida = class(TFormDefault)
     pnlMainCad: TPanel;
     lblCodigo: TLabel;
     lblDesc: TLabel;
@@ -42,14 +42,14 @@ implementation
 
 {$R *.dfm}
 
-procedure TCmpBarraItemUnidadesDeMedida.lblCodigoMouseLeave(Sender: TObject);
+procedure TCmpBarraItemCadastroUnidadesDeMedida.lblCodigoMouseLeave(Sender: TObject);
 begin
   inherited;
   if not chkItem.Checked then
     OnMouseLeaveItem(pnlMainCad);
 end;
 
-procedure TCmpBarraItemUnidadesDeMedida.lblCodigoMouseMove(Sender: TObject;
+procedure TCmpBarraItemCadastroUnidadesDeMedida.lblCodigoMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   inherited;

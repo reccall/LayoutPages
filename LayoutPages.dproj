@@ -263,29 +263,38 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroServicos.pas">
-            <Form>CmpBarraItemServicos</Form>
+            <Form>CmpBarraItemCadastroServicos</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroClientes.pas">
-            <Form>CmpBarraItemClientes</Form>
+            <Form>CmpBarraItemCadastroClientes</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroFornecedores.pas">
-            <Form>CmpBarraItemFornecedores</Form>
+            <Form>CmpBarraItemCadastroFornecedores</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras.pas">
-            <Form>CmpBarraItemTransportadoras</Form>
+            <Form>CmpBarraItemCadastroTransportadoras</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroMarcas.pas">
-            <Form>CmpBarraItemMarcas</Form>
+            <Form>CmpBarraItemCadastroMarcas</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida.pas">
-            <Form>CmpBarraItemUnidadesDeMedida</Form>
+            <Form>CmpBarraItemCadastroUnidadesDeMedida</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.ControlGrid.pas">
+            <Form>CmpGridControl</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Cadastros.pas">
+            <Form>FormCteCadastros</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

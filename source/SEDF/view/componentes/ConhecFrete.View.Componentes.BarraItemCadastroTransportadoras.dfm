@@ -1,4 +1,4 @@
-inherited CmpBarraItemTransportadoras: TCmpBarraItemTransportadoras
+inherited CmpBarraItemCadastroTransportadoras: TCmpBarraItemCadastroTransportadoras
   Align = alTop
   ClientHeight = 40
   ClientWidth = 1025

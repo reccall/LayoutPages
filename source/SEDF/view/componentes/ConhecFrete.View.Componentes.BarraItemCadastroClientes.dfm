@@ -1,6 +1,5 @@
-inherited CmpBarraItemClientes: TCmpBarraItemClientes
+inherited CmpBarraItemCadastroClientes: TCmpBarraItemCadastroClientes
   Align = alTop
-  Caption = 'CmpBarraItemClientes'
   ClientHeight = 38
   ClientWidth = 1025
   ExplicitWidth = 1025

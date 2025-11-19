@@ -20,7 +20,7 @@ uses
 
 
 type
-  TCmpBarraItemClientes = class(TFormDefault)
+  TCmpBarraItemCadastroClientes = class(TFormDefault)
     pnlMainCad: TPanel;
     lblCodigo: TLabel;
     lblDesc: TLabel;
@@ -43,14 +43,14 @@ implementation
 
 {$R *.dfm}
 
-procedure TCmpBarraItemClientes.lblCodigoMouseLeave(Sender: TObject);
+procedure TCmpBarraItemCadastroClientes.lblCodigoMouseLeave(Sender: TObject);
 begin
   inherited;
     if not chkItem.Checked then
     OnMouseLeaveItem(pnlMainCad);
 end;
 
-procedure TCmpBarraItemClientes.lblCodigoMouseMove(Sender: TObject;
+procedure TCmpBarraItemCadastroClientes.lblCodigoMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   inherited;

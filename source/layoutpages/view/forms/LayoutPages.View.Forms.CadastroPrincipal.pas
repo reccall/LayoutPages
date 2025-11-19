@@ -33,6 +33,8 @@ type
     pnlTopMainCad: TPanel;
     ApplicationEvents1: TApplicationEvents;
     imgLupa: TImage;
+    pnlMainBottom: TPanel;
+    pnlControlGrid: TPanel;
     procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
   private
     { Private declarations }

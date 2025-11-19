@@ -14,6 +14,9 @@ type
   IControllerCadastrosUnidadesDeMedida = interface
   ['{A644751A-BEE8-41E3-8EB9-CE17234B8D85}']
     procedure Iniciar;
+    procedure SetItensUnidadesDeMedida;
+    procedure ResetComponentsItens;
+    procedure OnClickCheckBox(Sender :TObject);
     procedure DestroyComponents;
   end;
 
@@ -23,11 +26,13 @@ type
     FCmpTituloPrincipal :TForm;
     FFormCadUnidadesDeMedida :TForm;
     FCmpTitulo :TForm;
+    FCmpControlGrid :TForm;
 
     aCmpItensCadUnidadesDeMedida :array of TForm;
     procedure Iniciar;
     procedure DestroyComponents;
-    procedure SetItensProdutos;
+    procedure SetItensUnidadesDeMedida;
+    procedure ResetComponentsItens;
     procedure OnClickCheckBox(Sender :TObject);
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosUnidadesDeMedida overload;
@@ -41,6 +46,7 @@ uses
    ConhecFrete.Forms.Cte.CadastroUnidadesDeMedida
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida;
 
@@ -52,6 +58,7 @@ begin
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCadastroUnidadesDeMedida)];
   FCmpTitulo := TCmpTituloDescSimples.Create(nil);
+  FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
 destructor TControllerCadastrosUnidadesDeMedida.Destroy;
@@ -79,7 +86,7 @@ begin
     MakeRounded(pnlTopMainCad,10);
     FCmpTitulo.Parent := pnlTopMainCad;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensProdutos;
+    SetItensUnidadesDeMedida;
     Show;
     FCmpTitulo.Show;
   end;
@@ -100,9 +107,10 @@ begin
   for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
   begin
     with TCmpTituloDescSimples(FCmpTitulo),
-         TCmpBarraItemUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
+         TCmpGridControl(FCmpControlGrid),
+         TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
     begin
-      //chkItem.Checked := chkTituloSelect.Checked;
+      chkItem.Checked := chkControl.Checked;
       case chkItem.Checked of
         True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
         False: OnMouseLeaveItem(pnlMainCad);
@@ -111,7 +119,17 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.SetItensProdutos;
+procedure TControllerCadastrosUnidadesDeMedida.ResetComponentsItens;
+var
+  iIdx :Integer;
+begin
+  for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
+  begin
+    FreeAndNil(aCmpItensCadUnidadesDeMedida[iIdx]);
+  end;
+end;
+
+procedure TControllerCadastrosUnidadesDeMedida.SetItensUnidadesDeMedida;
 var
   iIdx :Integer;
 begin
@@ -122,8 +140,8 @@ begin
     begin
       if not Assigned(aCmpItensCadUnidadesDeMedida[iIdx]) then
       begin
-        aCmpItensCadUnidadesDeMedida[iIdx] := TCmpBarraItemUnidadesDeMedida.Create(nil);
-        TCmpBarraItemUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        aCmpItensCadUnidadesDeMedida[iIdx] := TCmpBarraItemCadastroUnidadesDeMedida.Create(nil);
+        TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
         aCmpItensCadUnidadesDeMedida[iIdx].Parent := scrlbxMain;
       end;
       aCmpItensCadUnidadesDeMedida[iIdx].Show;

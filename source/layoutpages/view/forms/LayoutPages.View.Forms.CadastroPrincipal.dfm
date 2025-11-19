@@ -9,9 +9,9 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
   TextHeight = 16
   object pnlBackMain: TPanel
     Left = 0
-    Top = 121
+    Top = 129
     Width = 947
-    Height = 342
+    Height = 334
     Align = alClient
     TabOrder = 0
   end
@@ -19,14 +19,14 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
     Left = 0
     Top = 0
     Width = 947
-    Height = 121
+    Height = 129
     Align = alTop
     Color = clWhite
     ParentBackground = False
     TabOrder = 1
     object pnlConsulta: TPanel
       Left = 1
-      Top = 4
+      Top = 0
       Width = 499
       Height = 52
       Color = clMenu
@@ -104,7 +104,7 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
     end
     object pnlIncluirRegistro: TPanel
       Left = 544
-      Top = 4
+      Top = 0
       Width = 139
       Height = 52
       Color = clWhite
@@ -151,20 +151,27 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
     end
     object pnlTopMainCad: TPanel
       Left = 1
-      Top = 79
+      Top = 93
       Width = 945
-      Height = 41
+      Height = 35
       Align = alBottom
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 2
     end
+    object pnlControlGrid: TPanel
+      Left = 0
+      Top = 54
+      Width = 500
+      Height = 29
+      TabOrder = 3
+    end
   end
   object pnlMain: TPanel
     Left = 0
-    Top = 121
+    Top = 129
     Width = 947
-    Height = 342
+    Height = 334
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
@@ -172,14 +179,24 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
       Left = 0
       Top = 0
       Width = 947
-      Height = 340
-      Align = alTop
+      Height = 280
+      Align = alClient
       BevelInner = bvNone
       BevelOuter = bvNone
       BorderStyle = bsNone
       Color = clWhite
       ParentColor = False
       TabOrder = 0
+    end
+    object pnlMainBottom: TPanel
+      Left = 0
+      Top = 280
+      Width = 947
+      Height = 54
+      Align = alBottom
+      Color = clWhite
+      ParentBackground = False
+      TabOrder = 1
     end
   end
   object ApplicationEvents1: TApplicationEvents

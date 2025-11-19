@@ -74,10 +74,10 @@ begin
     if aFormsCte[Ord(tpCadastroClientes)].Showing then
       aFormsCte[Ord(tpCadastroClientes)].Close;
   end;
-  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
+  if Assigned(aFormsCte[Ord(tpCadastroProdutos)]) then
   begin
-    if aFormsCte[Ord(tpCadastroProduto)].Showing then
-      aFormsCte[Ord(tpCadastroProduto)].Close;
+    if aFormsCte[Ord(tpCadastroProdutos)].Showing then
+      aFormsCte[Ord(tpCadastroProdutos)].Close;
   end;
   if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
   begin

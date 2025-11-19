@@ -14,6 +14,9 @@ type
   IControllerCadastrosTransportadoras = interface
   ['{B9DAA2F4-9EF9-410C-88F0-A63B693CE845}']
     procedure Iniciar;
+    procedure SetItensTransportadoras;
+    procedure ResetComponentsItens;
+    procedure OnClickCheckBox(Sender :TObject);
     procedure DestroyComponents;
   end;
 
@@ -23,11 +26,13 @@ type
     FCmpTitulo :TForm;
     FCmpTituloPrincipal :TForm;
     FFormCadTransportadoras :TForm;
+    FCmpControlGrid :TForm;
 
     aCmpItensCadTransportadoras :array of TForm;
     procedure Iniciar;
     procedure DestroyComponents;
-    procedure SetItensProdutos;
+    procedure SetItensTransportadoras;
+    procedure ResetComponentsItens;
     procedure OnClickCheckBox(Sender :TObject);
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosTransportadoras overload;
@@ -41,6 +46,7 @@ uses
    ConhecFrete.Forms.Cte.CadastroTransportadoras
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras;
 
@@ -52,6 +58,7 @@ begin
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadTransportadoras := pArrayFormsCte[Ord(tpCadastroTransportadoras)];
   FCmpTitulo := TCmpTituloDescSimples.Create(nil);
+  FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
 destructor TControllerCadastrosTransportadoras.Destroy;
@@ -79,7 +86,7 @@ begin
     MakeRounded(pnlTopMainCad,10);
     FCmpTitulo.Parent := pnlTopMainCad;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensProdutos;
+    SetItensTransportadoras;
     Show;
     FCmpTitulo.Show;
   end;
@@ -100,9 +107,10 @@ begin
   for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
   begin
     with TCmpTituloDescSimples(FCmpTitulo),
-         TCmpBarraItemTransportadoras(aCmpItensCadTransportadoras[iIdx]) do
+         TCmpGridControl(FCmpControlGrid),
+         TCmpBarraItemCadastroTransportadoras(aCmpItensCadTransportadoras[iIdx]) do
     begin
-      //chkItem.Checked := chkTituloSelect.Checked;
+      chkItem.Checked := chkControl.Checked;
       case chkItem.Checked of
         True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
         False: OnMouseLeaveItem(pnlMainCad);
@@ -111,7 +119,17 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosTransportadoras.SetItensProdutos;
+procedure TControllerCadastrosTransportadoras.ResetComponentsItens;
+var
+  iIdx :Integer;
+begin
+  for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
+  begin
+    FreeAndNil(aCmpItensCadTransportadoras[iIdx]);
+  end;
+end;
+
+procedure TControllerCadastrosTransportadoras.SetItensTransportadoras;
 var
   iIdx :Integer;
 begin
@@ -122,8 +140,8 @@ begin
     begin
       if not Assigned(aCmpItensCadTransportadoras[iIdx]) then
       begin
-        aCmpItensCadTransportadoras[iIdx] := TCmpBarraItemTransportadoras.Create(nil);
-        TCmpBarraItemTransportadoras(aCmpItensCadTransportadoras[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        aCmpItensCadTransportadoras[iIdx] := TCmpBarraItemCadastroTransportadoras.Create(nil);
+        TCmpBarraItemCadastroTransportadoras(aCmpItensCadTransportadoras[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
         aCmpItensCadTransportadoras[iIdx].Parent := scrlbxMain;
       end;
       aCmpItensCadTransportadoras[iIdx].Show;
