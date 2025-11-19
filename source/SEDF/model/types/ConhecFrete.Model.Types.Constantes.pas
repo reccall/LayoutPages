@@ -22,9 +22,9 @@ type
 
   TpForms = (tpOwner, tpMenuPrincipal, tpMenuEmissaoFiscal, tpMenuCadastros, tpCmpTitulo,
              tpCertificadoDig, tpRelatorios, tpTutorial, tpFormCte, tpFormOpcoesItensCte,
-             tpBarraBotoes, tpMenuItensImagens, tpCadastros, tpCadastroProdutos, tpCadastroClientes,
+             tpBarraBotoes, tpMenuItensImagens, tpCteCadastros, tpCadastroProdutos, tpCadastroClientes,
              tpCadastroFornecedores, tpCadastroTransportadoras, tpCadastroMarcas,
-             tpCadastroServicos, tpCadastroUnidadesDeMedida, tpCmpControlGrid, tpFDefault);
+             tpCadastroServicos, tpCadastroUnidadesDeMedida, tpCmpTituloDescSimples, tpCmpControlGrid, tpFDefault);
 
 const
   aImageNames :array[0..4] of String = ('ImgCadastros','ImgEmissaoFiscal','ImgCertDigital','ImgRelatorios','ImgTutorial');

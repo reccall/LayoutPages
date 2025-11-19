@@ -58,47 +58,25 @@ uses
   ,ConhecFrete.Forms.Cte.MenuCadastros
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
   ,ConhecFrete.Forms.Cte.MenuItensImagens
+  ,ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo;
 
 { TControllerMenuEmissaoFiscal }
 
 procedure TControllerMenuEmissaoFiscal.CloseForms(pParam :TpOpcaoMenuEmissaoFis);
 begin
-  if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
+  if Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    if aFormsCte[Ord(tpCadastroMarcas)].Showing then
-      aFormsCte[Ord(tpCadastroMarcas)].Close;
+    with TFormCteCadastros(aFormsCte[Ord(tpCteCadastros)]) do
+    begin
+      if Showing then
+      begin
+        FController.ResetComponentsItens;
+        Close;
+      end;
+    end;
   end;
-  if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroClientes)].Showing then
-      aFormsCte[Ord(tpCadastroClientes)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroProdutos)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroProdutos)].Showing then
-      aFormsCte[Ord(tpCadastroProdutos)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroServicos)].Showing then
-      aFormsCte[Ord(tpCadastroServicos)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroFornecedores)].Showing then
-      aFormsCte[Ord(tpCadastroFornecedores)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroTransportadoras)].Showing then
-      aFormsCte[Ord(tpCadastroTransportadoras)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Showing then
-      aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Close;
-  end;
+
   case pParam of
     tpMenuNFe:
     begin

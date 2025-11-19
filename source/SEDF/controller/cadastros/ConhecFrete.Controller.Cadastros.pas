@@ -23,16 +23,18 @@ type
     procedure Iniciar;
     procedure ResetComponentsItens;
     procedure DestroyComponents;
+    function SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
   end;
 
   TControllerCadastros = class(TInterfacedObject, IControllerCadastros)
   private
     FFormCte :TForm;
     FFormCadastros :TForm;
-    FTpOwnerCadastro :TpForms;
-    FCmpTituloPrincipal :TForm;
-    FCmpTitulo :TForm;
     FCmpControlGrid :TForm;
+    FCmpTituloPrincipal :TForm;
+    FCmpTituloDescSimples :TForm;
+
+    FTpOwnerCadastro :TpForms;
 
     FControllerCadastrosMarcas :IControllerCadastrosMarcas;
     FControllerCadastrosServicos :IControllerCadastrosServicos;
@@ -45,12 +47,14 @@ type
     procedure Iniciar;
     procedure ResetComponentsItens;
     procedure DestroyComponents;
+    procedure SetInterfaces;
     procedure SetArrayItens;
     procedure OnClickCheckBox(Sender :TObject);
+    function SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
   public
 
-  class function New(pFormOwnerCadastro :TpForms; pArrayFormsCte :array of TForm) :IControllerCadastros overload;
-    constructor Create(pFormOwnerCadastro :TpForms; pArrayFormsCte :array of TForm); overload;
+  class function New(pArrayFormsCte :array of TForm) :IControllerCadastros overload;
+    constructor Create(pArrayFormsCte :array of TForm); overload;
      destructor Destroy; override;
 end;
 
@@ -66,33 +70,27 @@ uses
 
 { TControllerCadastros }
 
-constructor TControllerCadastros.Create(pFormOwnerCadastro :TpForms; pArrayFormsCte :array of TForm);
+constructor TControllerCadastros.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCte            := pArrayFormsCte[Ord(tpOwner)];
-  FTpOwnerCadastro    := pFormOwnerCadastro;
-  FFormCadastros      := pArrayFormsCte[Ord(tpCadastros)];
+  FFormCadastros      := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FCmpTitulo          := TCmpTituloDescSimples.Create(nil);
   if not Assigned(aFormsCte[Ord(tpCmpControlGrid)]) then
   begin
     aFormsCte[Ord(tpCmpControlGrid)] := TCmpGridControl.Create(nil);
   end;
   FCmpControlGrid := aFormsCte[Ord(tpCmpControlGrid)];
 
-  case FTpOwnerCadastro of
-    tpCadastroMarcas:           FControllerCadastrosMarcas           := TControllerCadastrosMarcas.New(aFormsCte);
-    tpCadastroServicos:         FControllerCadastrosServicos         := TControllerCadastrosServicos.New(aFormsCte);
-    tpCadastroProdutos:         FControllerCadastrosProdutos         := TControllerCadastrosProdutos.New(aFormsCte);
-    tpCadastroClientes:         FControllerCadastrosClientes         := TControllerCadastrosClientes.New(aFormsCte);
-    tpCadastroFornecedores:     FControllerCadastrosFornecedores     := TControllerCadastrosFornecedores.New(aFormsCte);
-    tpCadastroTransportadoras:  FControllerCadastrosTranportadoras   := TControllerCadastrosTransportadoras.New(aFormsCte);
-    tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida := TControllerCadastrosUnidadesDeMedida.New(aFormsCte);
+  if not Assigned(aFormsCte[Ord(tpCmpTituloDescSimples)]) then
+  begin
+    aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
   end;
+  FCmpTituloDescSimples := aFormsCte[Ord(tpCmpTituloDescSimples)];
 end;
 
 destructor TControllerCadastros.Destroy;
 begin
-  with TFormCteCadastros(FTpOwnerCadastro) do
+  with TFormCteCadastros(FFormCadastros) do
   begin
     if Assigned(FController) then
       FreeAndNil(FController);
@@ -102,8 +100,6 @@ end;
 procedure TControllerCadastros.DestroyComponents;
 begin
   ResetComponentsItens;
-  FCmpTitulo.Close;
-  FreeAndNil(FCmpTitulo);
   FCmpControlGrid.Close;
   FreeAndNil(FCmpControlGrid);
 end;
@@ -111,26 +107,26 @@ end;
 procedure TControllerCadastros.Iniciar;
 begin
   Screen.Cursor := crHourGlass;
-  with TFormCteCadastros(FTpOwnerCadastro) do
+  SetInterfaces;
+  with TFormCteCadastros(FFormCadastros)  do
   begin
     FCmpControlGrid.Parent := pnlControlGrid;
-    TCmpGridControl(FCmpControlGrid).chkControl.OnClick := OnClickCheckBox;
     MakeRounded(pnlConsulta,20);
     MakeRounded(pnlRegiaoPesq,20);
     MakeRounded(pnlTopMainCad,10);
-    FCmpTitulo.Parent := pnlTopMainCad;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     SetArrayItens;
+    TCmpGridControl(FCmpControlGrid).chkControl.Checked := False;
+    TCmpGridControl(FCmpControlGrid).chkControl.OnClick := OnClickCheckBox;
     Show;
-    FCmpTitulo.Show;
     FCmpControlGrid.Show;
   end;
   Screen.Cursor := crDefault;
 end;
 
-class function TControllerCadastros.New(pFormOwnerCadastro :TpForms; pArrayFormsCte :array of TForm): IControllerCadastros;
+class function TControllerCadastros.New(pArrayFormsCte :array of TForm): IControllerCadastros;
 begin
-  Result := Self.Create(pFormOwnerCadastro,pArrayFormsCte);
+  Result := Self.Create(pArrayFormsCte);
 end;
 
 procedure TControllerCadastros.OnClickCheckBox(Sender: TObject);
@@ -169,6 +165,53 @@ begin
     tpCadastroFornecedores:     FControllerCadastrosFornecedores.SetItensFornecedores;
     tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.SetItensTransportadoras;
     tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.SetItensUnidadesDeMedida;
+  end;
+end;
+
+function TControllerCadastros.SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
+begin
+  Result := Self;
+  FTpOwnerCadastro := pFormOwnerCadastro;
+end;
+
+procedure TControllerCadastros.SetInterfaces;
+begin
+  case FTpOwnerCadastro of
+    tpCadastroMarcas:
+    begin
+      if not Assigned(FControllerCadastrosMarcas) then
+        FControllerCadastrosMarcas := TControllerCadastrosMarcas.New(aFormsCte);
+    end;
+    tpCadastroServicos:
+    begin
+      if not Assigned(FControllerCadastrosServicos) then
+        FControllerCadastrosServicos := TControllerCadastrosServicos.New(aFormsCte);
+    end;
+    tpCadastroProdutos:
+    begin
+      if not Assigned(FControllerCadastrosProdutos) then
+        FControllerCadastrosProdutos := TControllerCadastrosProdutos.New(aFormsCte);
+    end;
+    tpCadastroClientes:
+    begin
+      if not Assigned(FControllerCadastrosClientes) then
+        FControllerCadastrosClientes := TControllerCadastrosClientes.New(aFormsCte);
+    end;
+    tpCadastroFornecedores:
+    begin
+      if not Assigned(FControllerCadastrosFornecedores) then
+        FControllerCadastrosFornecedores := TControllerCadastrosFornecedores.New(aFormsCte);
+    end;
+    tpCadastroTransportadoras:
+    begin
+      if not Assigned(FControllerCadastrosTranportadoras) then
+        FControllerCadastrosTranportadoras := TControllerCadastrosTransportadoras.New(aFormsCte);
+    end;
+    tpCadastroUnidadesDeMedida:
+    begin
+      if not Assigned(FControllerCadastrosUnidadesDeMedida) then
+        FControllerCadastrosUnidadesDeMedida := TControllerCadastrosUnidadesDeMedida.New(aFormsCte);
+    end;
   end;
 end;
 

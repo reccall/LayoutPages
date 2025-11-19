@@ -13,7 +13,6 @@ uses
 type
   IControllerCadastrosFornecedores = interface
   ['{9AAAEAD9-D607-439E-A431-409DA5605D4D}']
-    procedure Iniciar;
     procedure SetItensFornecedores;
     procedure ResetComponentsItens;
     procedure OnClickCheckBox(Sender :TObject);
@@ -29,7 +28,6 @@ type
     FCmpControlGrid :TForm;
 
     aCmpItensCadFornecedores :array of TForm;
-    procedure Iniciar;
     procedure DestroyComponents;
     procedure SetItensFornecedores;
     procedure ResetComponentsItens;
@@ -43,7 +41,7 @@ end;
 implementation
 
 uses
-   ConhecFrete.Forms.Cte.CadastroFornecedores
+   ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.ControlGrid
@@ -56,41 +54,20 @@ constructor TControllerCadastrosFornecedores.Create(pArrayFormsCte :array of TFo
 begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FFormCadFornecedores := pArrayFormsCte[Ord(tpCadastroFornecedores)];
-  FCmpTitulo := TCmpTituloDescSimples.Create(nil);
+  FFormCadFornecedores := pArrayFormsCte[Ord(tpCteCadastros)];
+  FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
 destructor TControllerCadastrosFornecedores.Destroy;
 begin
-  with TFormCadastrosFornecedores(FFormCadFornecedores) do
-  begin
-    if Assigned(FController) then
-      FreeAndNil(FController);
-  end;
+  inherited;
 end;
 
 procedure TControllerCadastrosFornecedores.DestroyComponents;
 begin
   FCmpTitulo.Close;
   FreeAndNil(FCmpTitulo);
-end;
-
-procedure TControllerCadastrosFornecedores.Iniciar;
-begin
-  Screen.Cursor := crHourGlass;
-  with TFormCadastrosFornecedores(FFormCadFornecedores) do
-  begin
-    MakeRounded(pnlConsulta,20);
-    MakeRounded(pnlRegiaoPesq,20);
-    MakeRounded(pnlTopMainCad,10);
-    FCmpTitulo.Parent := pnlTopMainCad;
-    Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensFornecedores;
-    Show;
-    FCmpTitulo.Show;
-  end;
-  Screen.Cursor := crDefault;
 end;
 
 class function TControllerCadastrosFornecedores.New(pArrayFormsCte :array of TForm): IControllerCadastrosFornecedores;
@@ -110,10 +87,13 @@ begin
          TCmpGridControl(FCmpControlGrid),
          TCmpBarraItemCadastroFornecedores(aCmpItensCadFornecedores[iIdx]) do
     begin
-      chkItem.Checked := chkControl.Checked;
-      case chkItem.Checked of
-        True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
-        False: OnMouseLeaveItem(pnlMainCad);
+      if Assigned(aCmpItensCadFornecedores[iIdx]) then
+      begin
+        chkItem.Checked := chkControl.Checked;
+        case chkItem.Checked of
+          True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
+          False: OnMouseLeaveItem(pnlMainCad);
+        end;
       end;
     end;
   end;
@@ -133,8 +113,9 @@ procedure TControllerCadastrosFornecedores.SetItensFornecedores;
 var
   iIdx :Integer;
 begin
-  with TFormCadastrosFornecedores(FFormCadFornecedores) do
+  with TFormCteCadastros(FFormCadFornecedores) do
   begin
+    FCmpTitulo.Parent := pnlTopMainCad;
     SetLength(aCmpItensCadFornecedores,20);
     for iIdx := Low(aCmpItensCadFornecedores) to High(aCmpItensCadFornecedores) do
     begin
@@ -146,6 +127,7 @@ begin
       end;
       aCmpItensCadFornecedores[iIdx].Show;
     end;
+    FCmpTitulo.Show;
   end;
 end;
 

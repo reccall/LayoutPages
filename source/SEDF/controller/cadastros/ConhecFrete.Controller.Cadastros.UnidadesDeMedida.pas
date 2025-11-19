@@ -13,7 +13,6 @@ uses
 type
   IControllerCadastrosUnidadesDeMedida = interface
   ['{A644751A-BEE8-41E3-8EB9-CE17234B8D85}']
-    procedure Iniciar;
     procedure SetItensUnidadesDeMedida;
     procedure ResetComponentsItens;
     procedure OnClickCheckBox(Sender :TObject);
@@ -29,7 +28,6 @@ type
     FCmpControlGrid :TForm;
 
     aCmpItensCadUnidadesDeMedida :array of TForm;
-    procedure Iniciar;
     procedure DestroyComponents;
     procedure SetItensUnidadesDeMedida;
     procedure ResetComponentsItens;
@@ -43,7 +41,7 @@ end;
 implementation
 
 uses
-   ConhecFrete.Forms.Cte.CadastroUnidadesDeMedida
+   ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.ControlGrid
@@ -56,41 +54,20 @@ constructor TControllerCadastrosUnidadesDeMedida.Create(pArrayFormsCte :array of
 begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCadastroUnidadesDeMedida)];
-  FCmpTitulo := TCmpTituloDescSimples.Create(nil);
+  FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCteCadastros)];
+  FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
 destructor TControllerCadastrosUnidadesDeMedida.Destroy;
 begin
-  with TFormCadastrosUnidadesDeMedida(FFormCadUnidadesDeMedida) do
-  begin
-    if Assigned(FController) then
-      FreeAndNil(FController);
-  end;
+  inherited;
 end;
 
 procedure TControllerCadastrosUnidadesDeMedida.DestroyComponents;
 begin
   FCmpTitulo.Close;
   FreeAndNil(FCmpTitulo);
-end;
-
-procedure TControllerCadastrosUnidadesDeMedida.Iniciar;
-begin
-  Screen.Cursor := crHourGlass;
-  with TFormCadastrosUnidadesDeMedida(FFormCadUnidadesDeMedida) do
-  begin
-    MakeRounded(pnlConsulta,20);
-    MakeRounded(pnlRegiaoPesq,20);
-    MakeRounded(pnlTopMainCad,10);
-    FCmpTitulo.Parent := pnlTopMainCad;
-    Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensUnidadesDeMedida;
-    Show;
-    FCmpTitulo.Show;
-  end;
-  Screen.Cursor := crDefault;
 end;
 
 class function TControllerCadastrosUnidadesDeMedida.New(pArrayFormsCte :array of TForm): IControllerCadastrosUnidadesDeMedida;
@@ -110,10 +87,13 @@ begin
          TCmpGridControl(FCmpControlGrid),
          TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
     begin
-      chkItem.Checked := chkControl.Checked;
-      case chkItem.Checked of
-        True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
-        False: OnMouseLeaveItem(pnlMainCad);
+      if Assigned(aCmpItensCadUnidadesDeMedida[iIdx]) then
+      begin
+        chkItem.Checked := chkControl.Checked;
+        case chkItem.Checked of
+          True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
+          False: OnMouseLeaveItem(pnlMainCad);
+        end;
       end;
     end;
   end;
@@ -133,8 +113,9 @@ procedure TControllerCadastrosUnidadesDeMedida.SetItensUnidadesDeMedida;
 var
   iIdx :Integer;
 begin
-  with TFormCadastrosUnidadesDeMedida(FFormCadUnidadesDeMedida) do
+  with TFormCteCadastros(FFormCadUnidadesDeMedida) do
   begin
+    FCmpTitulo.Parent := pnlTopMainCad;
     SetLength(aCmpItensCadUnidadesDeMedida,20);
     for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
     begin
@@ -146,6 +127,7 @@ begin
       end;
       aCmpItensCadUnidadesDeMedida[iIdx].Show;
     end;
+    FCmpTitulo.Show;
   end;
 end;
 

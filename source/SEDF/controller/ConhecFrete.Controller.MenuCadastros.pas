@@ -28,15 +28,8 @@ type
     FMenuItensImagens :TForm;
     FMenuEmissaoFiscal: TForm;
     FormOpcoesItensCte :TForm;
+    FFormCteCadastro :TForm;
     FSetOpcaoItemMenuCad :TPanel;
-
-    FFormCadastroMarcas :TForm;
-    FFormCadastroServicos :TForm;
-    FFormCadastroProdutos :TForm;
-    FFormCadastroClientes :TForm;
-    FFormCadastroUnidMedidas :TForm;
-    FFormCadastroFornecedores :TForm;
-    FFormCadastroTransportadoras :TForm;
 
     procedure OnClickCadMarcas(Sender :TObject);
     procedure OnClickCadProdutos(Sender :TObject);
@@ -67,40 +60,22 @@ implementation
 uses
    LayoutPages.View.Componentes.TLabelTitulo
   ,LayoutPages.View.Componentes.ControlGrid
+  ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
   ,ConhecFrete.Forms.Cte.OpcoesInicio
   ,ConhecFrete.Forms.Cte.MenuItensImagens
   ,ConhecFrete.Forms.Cte.OpcoesItens
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
-  ,ConhecFrete.Forms.Cte.CadastroMarcas
-  ,ConhecFrete.Forms.Cte.CadastroServicos
-  ,ConhecFrete.Forms.Cte.CadastroClientes
-  ,ConhecFrete.Forms.Cte.CadastroProdutos
-  ,ConhecFrete.Forms.Cte.CadastroFornecedores
-  ,ConhecFrete.Forms.Cte.CadastroTransportadoras
-  ,ConhecFrete.Forms.Cte.CadastroUnidadesDeMedida;
+  ,ConhecFrete.Forms.Cte.Cadastros;
 
 { TControllerMenuCadastros }
 
 procedure TControllerMenuCadastros.CloseFormsMenuCadastros;
-var
-  iIdx :Integer;
 begin
-  if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
+  if Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    if aFormsCte[Ord(tpCadastroMarcas)].Showing then
-      aFormsCte[Ord(tpCadastroMarcas)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroClientes)].Showing then
-      aFormsCte[Ord(tpCadastroClientes)].Close;
-  end;
-
-  if Assigned(aFormsCte[Ord(tpCadastroProdutos)]) then
-  begin
-    with TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProdutos)]) do
+    with TFormCteCadastros(aFormsCte[Ord(tpCteCadastros)]) do
     begin
       if Showing then
       begin
@@ -108,33 +83,6 @@ begin
         Close;
       end;
     end;
-  end;
-
-  if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
-  begin
-    with TFormCadastrosServicos(aFormsCte[Ord(tpCadastroServicos)]) do
-    begin
-      if Showing then
-      begin
-        FController.ResetComponentsItens;
-        Close;
-      end;
-    end;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroFornecedores)].Showing then
-      aFormsCte[Ord(tpCadastroFornecedores)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroTransportadoras)].Showing then
-      aFormsCte[Ord(tpCadastroTransportadoras)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Showing then
-      aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Close;
   end;
 
   if not Assigned(FormOpcoesItensCte) then
@@ -247,7 +195,7 @@ begin
     begin
       case pFormMenu of
         tpCadastroMarcas:           lblTitulo.Caption := pnlMarcas.Caption;
-        tpCadastroProdutos:          lblTitulo.Caption := pnlProdutos.Caption;
+        tpCadastroProdutos:         lblTitulo.Caption := pnlProdutos.Caption;
         tpCadastroClientes:         lblTitulo.Caption := pnlClientes.Caption ;
         tpCadastroServicos:         lblTitulo.Caption := pnlServicos.Caption;
         tpCadastroFornecedores:     lblTitulo.Caption := pnlFornec.Caption;
@@ -271,6 +219,11 @@ begin
   begin
     aFormsCte[Ord(tpCmpControlGrid)] := TCmpGridControl.Create(nil);
   end;
+
+  if not Assigned(aFormsCte[Ord(tpCmpTituloDescSimples)]) then
+  begin
+    aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
+  end;
 end;
 
 class function TControllerMenuCadastros.New(pArrayFormsCte :array of TForm): IControllerMenuCadastros;
@@ -282,7 +235,7 @@ procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroProdutos)]) then
   begin
-    if TFormCadastrosProdutos(aFormsCte[Ord(tpCadastroProdutos)]).Showing then
+    if aFormsCte[Ord(tpCadastroProdutos)].Showing then
     begin
       Exit;
     end;
@@ -290,17 +243,16 @@ begin
 
   IniciarInformacoesFormMenu(Sender, tpCadastroProdutos);
 
-  if Assigned(FFormCadastroProdutos) then
+  if not Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    FreeAndNil(aFormsCte[Ord(tpCadastroProdutos)]);
-    FFormCadastroProdutos := nil;
+    aFormsCte[Ord(tpCteCadastros)] := TFormCteCadastros.Create(aFormsCte);
   end;
-  FFormCadastroProdutos := TFormCadastrosProdutos.Create(aFormsCte);
-  aFormsCte[Ord(tpCadastroProdutos)] := FFormCadastroProdutos;
 
-  with TFormCadastrosProdutos(FFormCadastroProdutos) do
+  FFormCteCadastro := aFormsCte[Ord(tpCteCadastros)];
+
+  with TFormCteCadastros(FFormCteCadastro) do
   begin
-    FController.Iniciar;
+    FController.SetFormOwner(tpCadastroProdutos).Iniciar;
   end;
 end;
 
@@ -308,25 +260,24 @@ procedure TControllerMenuCadastros.OnClickCadClientes(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
   begin
-    if TFormCadastrosClientes(aFormsCte[Ord(tpCadastroClientes)]).Showing then
+    if aFormsCte[Ord(tpCadastroClientes)].Showing then
     begin
       Exit;
     end;
   end;
 
   IniciarInformacoesFormMenu(Sender, tpCadastroClientes);
-  
-  if Assigned(FFormCadastroClientes) then
-  begin
-    FreeAndNil(aFormsCte[Ord(tpCadastroClientes)]);
-    FFormCadastroClientes := nil;
-  end;
-  FFormCadastroClientes := TFormCadastrosClientes.Create(aFormsCte);
-  aFormsCte[Ord(tpCadastroClientes)] := FFormCadastroClientes;
 
-  with TFormCadastrosClientes(FFormCadastroClientes) do
+  if not Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    FController.Iniciar;
+    aFormsCte[Ord(tpCteCadastros)] := TFormCteCadastros.Create(aFormsCte);
+  end;
+
+  FFormCteCadastro := aFormsCte[Ord(tpCteCadastros)];
+
+  with TFormCteCadastros(FFormCteCadastro) do
+  begin
+    FController.SetFormOwner(tpCadastroClientes).Iniciar;
   end;
 end;
 
@@ -334,7 +285,7 @@ procedure TControllerMenuCadastros.OnClickCadFornecedores(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
   begin
-    if TFormCadastrosClientes(aFormsCte[Ord(tpCadastroFornecedores)]).Showing then
+    if aFormsCte[Ord(tpCadastroFornecedores)].Showing then
     begin
       Exit;
     end;
@@ -342,17 +293,16 @@ begin
 
   IniciarInformacoesFormMenu(Sender, tpCadastroFornecedores);
 
-  if Assigned(FFormCadastroFornecedores) then
+  if not Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    FreeAndNil(aFormsCte[Ord(tpCadastroFornecedores)]);
-    FFormCadastroFornecedores := nil;
+    aFormsCte[Ord(tpCteCadastros)] := TFormCteCadastros.Create(aFormsCte);
   end;
-  FFormCadastroFornecedores := TFormCadastrosFornecedores.Create(aFormsCte);
-  aFormsCte[Ord(tpCadastroFornecedores)] := FFormCadastroFornecedores;
 
-  with TFormCadastrosFornecedores(FFormCadastroFornecedores) do
+  FFormCteCadastro := aFormsCte[Ord(tpCteCadastros)];
+
+  with TFormCteCadastros(FFormCteCadastro) do
   begin
-    FController.Iniciar;
+    FController.SetFormOwner(tpCadastroFornecedores).Iniciar;
   end;
 end;
 
@@ -360,7 +310,7 @@ procedure TControllerMenuCadastros.OnClickCadMarcas(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
   begin
-    if TFormCadastrosMarcas(aFormsCte[Ord(tpCadastroMarcas)]).Showing then
+    if aFormsCte[Ord(tpCadastroMarcas)].Showing then
     begin
       Exit;
     end;
@@ -368,17 +318,16 @@ begin
 
   IniciarInformacoesFormMenu(Sender, tpCadastroMarcas);
 
-  if Assigned(FFormCadastroMarcas) then
+  if not Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    FreeAndNil(aFormsCte[Ord(tpCadastroMarcas)]);
-    FFormCadastroMarcas := nil;
+    aFormsCte[Ord(tpCteCadastros)] := TFormCteCadastros.Create(aFormsCte);
   end;
-  FFormCadastroMarcas := TFormCadastrosMarcas.Create(aFormsCte);
-  aFormsCte[Ord(tpCadastroMarcas)] := FFormCadastroMarcas;
 
-  with TFormCadastrosMarcas(FFormCadastroMarcas) do
+  FFormCteCadastro := aFormsCte[Ord(tpCteCadastros)];
+
+  with TFormCteCadastros(FFormCteCadastro) do
   begin
-    FController.Iniciar;
+    FController.SetFormOwner(tpCadastroMarcas).Iniciar;
   end;
 end;
 
@@ -386,7 +335,7 @@ procedure TControllerMenuCadastros.OnClickCadServicos(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
   begin
-    if TFormCadastrosServicos(aFormsCte[Ord(tpCadastroServicos)]).Showing then
+    if aFormsCte[Ord(tpCadastroServicos)].Showing then
     begin
       Exit;
     end;
@@ -394,17 +343,15 @@ begin
 
   IniciarInformacoesFormMenu(Sender, tpCadastroServicos);
 
-  if Assigned(FFormCadastroServicos) then
+  if not Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    FreeAndNil(aFormsCte[Ord(tpCadastroServicos)]);
-    FFormCadastroServicos := nil;
+    aFormsCte[Ord(tpCteCadastros)] := TFormCteCadastros.Create(aFormsCte);
   end;
-  FFormCadastroServicos := TFormCadastrosServicos.Create(aFormsCte);
-  aFormsCte[Ord(tpCadastroServicos)] := FFormCadastroServicos;
+  FFormCteCadastro := aFormsCte[Ord(tpCteCadastros)];
 
-  with TFormCadastrosServicos(FFormCadastroServicos) do
+  with TFormCteCadastros(FFormCteCadastro) do
   begin
-    FController.Iniciar;
+    FController.SetFormOwner(tpCadastroServicos).Iniciar;
   end;
 end;
 
@@ -412,7 +359,7 @@ procedure TControllerMenuCadastros.OnClickCadTransportadoras(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
   begin
-    if TFormCadastrosTransportadoras(aFormsCte[Ord(tpCadastroTransportadoras)]).Showing then
+    if aFormsCte[Ord(tpCadastroTransportadoras)].Showing then
     begin
       Exit;
     end;
@@ -420,17 +367,16 @@ begin
 
   IniciarInformacoesFormMenu(Sender, tpCadastroTransportadoras);
 
-  if Assigned(FFormCadastroTransportadoras) then
+  if not Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    FreeAndNil(aFormsCte[Ord(tpCadastroTransportadoras)]);
-    FFormCadastroTransportadoras := nil;
+    aFormsCte[Ord(tpCteCadastros)] := TFormCteCadastros.Create(aFormsCte);
   end;
-  FFormCadastroTransportadoras := TFormCadastrosTransportadoras.Create(aFormsCte);
-  aFormsCte[Ord(tpCadastroTransportadoras)] := FFormCadastroTransportadoras;
 
-  with TFormCadastrosTransportadoras(FFormCadastroTransportadoras) do
+  FFormCteCadastro := aFormsCte[Ord(tpCteCadastros)];
+
+  with TFormCteCadastros(FFormCteCadastro) do
   begin
-    FController.Iniciar;
+    FController.SetFormOwner(tpCadastroTransportadoras).Iniciar;
   end;
 end;
 
@@ -438,7 +384,7 @@ procedure TControllerMenuCadastros.OnClickCadUnidMedida(Sender: TObject);
 begin
   if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
   begin
-    if TFormCadastrosUnidadesDeMedida(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]).Showing then
+    if aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Showing then
     begin
       Exit;
     end;
@@ -446,17 +392,16 @@ begin
 
   IniciarInformacoesFormMenu(Sender, tpCadastroUnidadesDeMedida);
 
-  if Assigned(FFormCadastroUnidMedidas) then
+  if not Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    FreeAndNil(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]);
-    FFormCadastroUnidMedidas := nil;
+    aFormsCte[Ord(tpCteCadastros)] := TFormCteCadastros.Create(aFormsCte);
   end;
-  FFormCadastroUnidMedidas := TFormCadastrosUnidadesDeMedida.Create(aFormsCte);
-  aFormsCte[Ord(tpCadastroUnidadesDeMedida)] := FFormCadastroUnidMedidas;
 
-  with TFormCadastrosUnidadesDeMedida(FFormCadastroUnidMedidas) do
+  FFormCteCadastro := aFormsCte[Ord(tpCteCadastros)];
+
+  with TFormCteCadastros(FFormCteCadastro) do
   begin
-    FController.Iniciar;
+    FController.SetFormOwner(tpCadastroUnidadesDeMedida).Iniciar;
   end;
 end;
 

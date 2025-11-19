@@ -28,7 +28,7 @@ type
   public
     { Public declarations }
     FController :IControllerCadastros;
-    constructor Create(pFormOwnerCadastro :TpForms; pArrayFormsCte :array of TForm); overload;
+    constructor Create(pArrayFormsCte :array of TForm); overload;
   end;
 
 implementation
@@ -37,11 +37,11 @@ implementation
 
 { TFormCteCadastros }
 
-constructor TFormCteCadastros.Create(pFormOwnerCadastro :TpForms; pArrayFormsCte :array of TForm);
+constructor TFormCteCadastros.Create(pArrayFormsCte :array of TForm);
 begin
-  pArrayFormsCte[Ord(tpCadastros)] := Self;
+  pArrayFormsCte[Ord(tpCteCadastros)] := Self;
   Inherited Create(nil);
-  FController := TControllerCadastros.New(pFormOwnerCadastro, pArrayFormsCte);
+  FController := TControllerCadastros.New(pArrayFormsCte);
 end;
 
 procedure TFormCteCadastros.FormShow(Sender: TObject);

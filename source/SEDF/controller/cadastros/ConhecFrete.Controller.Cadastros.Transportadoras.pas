@@ -13,7 +13,6 @@ uses
 type
   IControllerCadastrosTransportadoras = interface
   ['{B9DAA2F4-9EF9-410C-88F0-A63B693CE845}']
-    procedure Iniciar;
     procedure SetItensTransportadoras;
     procedure ResetComponentsItens;
     procedure OnClickCheckBox(Sender :TObject);
@@ -29,7 +28,6 @@ type
     FCmpControlGrid :TForm;
 
     aCmpItensCadTransportadoras :array of TForm;
-    procedure Iniciar;
     procedure DestroyComponents;
     procedure SetItensTransportadoras;
     procedure ResetComponentsItens;
@@ -43,7 +41,7 @@ end;
 implementation
 
 uses
-   ConhecFrete.Forms.Cte.CadastroTransportadoras
+   ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.ControlGrid
@@ -56,41 +54,20 @@ constructor TControllerCadastrosTransportadoras.Create(pArrayFormsCte :array of 
 begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FFormCadTransportadoras := pArrayFormsCte[Ord(tpCadastroTransportadoras)];
-  FCmpTitulo := TCmpTituloDescSimples.Create(nil);
+  FFormCadTransportadoras := pArrayFormsCte[Ord(tpCteCadastros)];
+  FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
 destructor TControllerCadastrosTransportadoras.Destroy;
 begin
-  with TFormCadastrosTransportadoras(FFormCadTransportadoras) do
-  begin
-    if Assigned(FController) then
-      FreeAndNil(FController);
-  end;
+  inherited;
 end;
 
 procedure TControllerCadastrosTransportadoras.DestroyComponents;
 begin
   FCmpTitulo.Close;
   FreeAndNil(FCmpTitulo);
-end;
-
-procedure TControllerCadastrosTransportadoras.Iniciar;
-begin
-  Screen.Cursor := crHourGlass;
-  with TFormCadastrosTransportadoras(FFormCadTransportadoras) do
-  begin
-    MakeRounded(pnlConsulta,20);
-    MakeRounded(pnlRegiaoPesq,20);
-    MakeRounded(pnlTopMainCad,10);
-    FCmpTitulo.Parent := pnlTopMainCad;
-    Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensTransportadoras;
-    Show;
-    FCmpTitulo.Show;
-  end;
-  Screen.Cursor := crDefault;
 end;
 
 class function TControllerCadastrosTransportadoras.New(pArrayFormsCte :array of TForm): IControllerCadastrosTransportadoras;
@@ -110,10 +87,13 @@ begin
          TCmpGridControl(FCmpControlGrid),
          TCmpBarraItemCadastroTransportadoras(aCmpItensCadTransportadoras[iIdx]) do
     begin
-      chkItem.Checked := chkControl.Checked;
-      case chkItem.Checked of
-        True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
-        False: OnMouseLeaveItem(pnlMainCad);
+      if Assigned(aCmpItensCadTransportadoras[iIdx]) then
+      begin
+        chkItem.Checked := chkControl.Checked;
+        case chkItem.Checked of
+          True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
+          False: OnMouseLeaveItem(pnlMainCad);
+        end;
       end;
     end;
   end;
@@ -133,8 +113,9 @@ procedure TControllerCadastrosTransportadoras.SetItensTransportadoras;
 var
   iIdx :Integer;
 begin
-  with TFormCadastrosTransportadoras(FFormCadTransportadoras) do
+  with TFormCteCadastros(FFormCadTransportadoras) do
   begin
+    FCmpTitulo.Parent := pnlTopMainCad;
     SetLength(aCmpItensCadTransportadoras,20);
     for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
     begin
@@ -146,6 +127,7 @@ begin
       end;
       aCmpItensCadTransportadoras[iIdx].Show;
     end;
+    FCmpTitulo.Show;
   end;
 end;
 

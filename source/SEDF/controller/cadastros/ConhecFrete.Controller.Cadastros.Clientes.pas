@@ -13,7 +13,6 @@ uses
 type
   IControllerCadastrosClientes = interface
   ['{B9DAA2F4-9EF9-410C-88F0-A63B693CE845}']
-    procedure Iniciar;
     procedure SetItensClientes;
     procedure ResetComponentsItens;
     procedure OnClickCheckBox(Sender :TObject);
@@ -29,7 +28,6 @@ type
     FCmpControlGrid :TForm;
 
     aCmpItensCadClientes :array of TForm;
-    procedure Iniciar;
     procedure DestroyComponents;
     procedure SetItensClientes;
     procedure ResetComponentsItens;
@@ -43,7 +41,7 @@ end;
 implementation
 
 uses
-   ConhecFrete.Forms.Cte.CadastroClientes
+   ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.ControlGrid
@@ -57,41 +55,20 @@ constructor TControllerCadastrosClientes.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FFormCadClientes := pArrayFormsCte[Ord(tpCadastroClientes)];
-  FCmpTitulo := TCmpTituloDescSimples.Create(nil);
+  FFormCadClientes := pArrayFormsCte[Ord(tpCteCadastros)];
+  FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
 destructor TControllerCadastrosClientes.Destroy;
 begin
-  with TFormCadastrosClientes(FFormCadClientes) do
-  begin
-    if Assigned(FController) then
-      FreeAndNil(FController);
-  end;
+  inherited;
 end;
 
 procedure TControllerCadastrosClientes.DestroyComponents;
 begin
   FCmpTitulo.Close;
   FreeAndNil(FCmpTitulo);
-end;
-
-procedure TControllerCadastrosClientes.Iniciar;
-begin
-  Screen.Cursor := crHourGlass;
-  with TFormCadastrosClientes(FFormCadClientes) do
-  begin
-    MakeRounded(pnlConsulta,20);
-    MakeRounded(pnlRegiaoPesq,20);
-    MakeRounded(pnlTopMainCad,10);
-    FCmpTitulo.Parent := pnlTopMainCad;
-    Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensClientes;
-    Show;
-    FCmpTitulo.Show;
-  end;
-  Screen.Cursor := crDefault;
 end;
 
 class function TControllerCadastrosClientes.New(pArrayFormsCte :array of TForm): IControllerCadastrosClientes;
@@ -111,10 +88,13 @@ begin
          TCmpGridControl(FCmpControlGrid),
          TCmpBarraItemCadastroClientes(aCmpItensCadClientes[iIdx]) do
     begin
-      chkItem.Checked := chkControl.Checked;
-      case chkItem.Checked of
-        True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
-        False: OnMouseLeaveItem(pnlMainCad);
+      if Assigned(aCmpItensCadClientes[iIdx]) then
+      begin
+        chkItem.Checked := chkControl.Checked;
+        case chkItem.Checked of
+          True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
+          False: OnMouseLeaveItem(pnlMainCad);
+        end;
       end;
     end;
   end;
@@ -134,8 +114,9 @@ procedure TControllerCadastrosClientes.SetItensClientes;
 var
   iIdx :Integer;
 begin
-  with TFormCadastrosClientes(FFormCadClientes) do
+  with TFormCteCadastros(FFormCadClientes) do
   begin
+    FCmpTitulo.Parent := pnlTopMainCad;
     SetLength(aCmpItensCadClientes,20);
     for iIdx := Low(aCmpItensCadClientes) to High(aCmpItensCadClientes) do
     begin
@@ -147,6 +128,7 @@ begin
       end;
       aCmpItensCadClientes[iIdx].Show;
     end;
+    FCmpTitulo.Show;
   end;
 end;
 
