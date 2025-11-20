@@ -110,6 +110,7 @@ begin
   begin
     FreeAndNil(aCmpItensCadUnidadesDeMedida[iIdx]);
   end;
+  aCmpItensCadUnidadesDeMedida := nil;
 end;
 
 procedure TControllerCadastrosUnidadesDeMedida.SetItensUnidadesDeMedida;

@@ -110,6 +110,7 @@ begin
   begin
     FreeAndNil(aCmpItensCadMarcas[iIdx]);
   end;
+  aCmpItensCadMarcas := nil;
 end;
 
 procedure TControllerCadastrosMarcas.SetItensMarcas;

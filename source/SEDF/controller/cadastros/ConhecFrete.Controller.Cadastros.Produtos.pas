@@ -111,6 +111,7 @@ begin
   begin
     FreeAndNil(aCmpItensCadProd[iIdx]);
   end;
+  aCmpItensCadProd := nil;
 end;
 
 procedure TControllerCadastrosProdutos.SetItensProdutos;

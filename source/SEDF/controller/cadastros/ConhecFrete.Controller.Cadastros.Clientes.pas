@@ -111,6 +111,7 @@ begin
   begin
     FreeAndNil(aCmpItensCadClientes[iIdx]);
   end;
+  aCmpItensCadClientes := nil;
 end;
 
 procedure TControllerCadastrosClientes.SetItensClientes;

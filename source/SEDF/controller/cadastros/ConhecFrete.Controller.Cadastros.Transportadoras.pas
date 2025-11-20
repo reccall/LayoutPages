@@ -110,6 +110,7 @@ begin
   begin
     FreeAndNil(aCmpItensCadTransportadoras[iIdx]);
   end;
+  aCmpItensCadTransportadoras := nil;
 end;
 
 procedure TControllerCadastrosTransportadoras.SetItensTransportadoras;

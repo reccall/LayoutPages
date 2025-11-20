@@ -110,6 +110,7 @@ begin
   begin
     FreeAndNil(aCmpItensCadFornecedores[iIdx]);
   end;
+  aCmpItensCadFornecedores := nil;
 end;
 
 procedure TControllerCadastrosFornecedores.SetItensFornecedores;

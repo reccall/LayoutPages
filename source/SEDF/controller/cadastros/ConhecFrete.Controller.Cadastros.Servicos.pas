@@ -118,6 +118,7 @@ begin
   begin
     FreeAndNil(aCmpItensCadServ[iIdx]);
   end;
+  aCmpItensCadServ := nil;
 end;
 
 procedure TControllerCadastrosServicos.SetItensServicos;
