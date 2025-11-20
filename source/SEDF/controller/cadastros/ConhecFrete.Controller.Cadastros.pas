@@ -23,6 +23,7 @@ type
     procedure Iniciar;
     procedure ResetComponentsItens;
     procedure DestroyComponents;
+    function GetFormOwner :TpForms;
     function SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
   end;
 
@@ -50,6 +51,7 @@ type
     procedure SetInterfaces;
     procedure SetArrayItens;
     procedure OnClickCheckBox(Sender :TObject);
+    function GetFormOwner :TpForms;
     function SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
   public
 
@@ -74,7 +76,9 @@ constructor TControllerCadastros.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCte            := pArrayFormsCte[Ord(tpOwner)];
   FFormCadastros      := pArrayFormsCte[Ord(tpCteCadastros)];
+  FTpOwnerCadastro    := tpFDefault;
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
+
   if not Assigned(aFormsCte[Ord(tpCmpControlGrid)]) then
   begin
     aFormsCte[Ord(tpCmpControlGrid)] := TCmpGridControl.Create(nil);
@@ -86,6 +90,7 @@ begin
     aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
   end;
   FCmpTituloDescSimples := aFormsCte[Ord(tpCmpTituloDescSimples)];
+
 end;
 
 destructor TControllerCadastros.Destroy;
@@ -102,6 +107,11 @@ begin
   ResetComponentsItens;
   FCmpControlGrid.Close;
   FreeAndNil(FCmpControlGrid);
+end;
+
+function TControllerCadastros.GetFormOwner: TpForms;
+begin
+  Result := FTpOwnerCadastro;
 end;
 
 procedure TControllerCadastros.Iniciar;
@@ -144,15 +154,20 @@ end;
 
 procedure TControllerCadastros.ResetComponentsItens;
 begin
-  case FTpOwnerCadastro of
-    tpCadastroMarcas:           FControllerCadastrosMarcas.ResetComponentsItens;
-    tpCadastroProdutos:         FControllerCadastrosProdutos.ResetComponentsItens;
-    tpCadastroClientes:         FControllerCadastrosClientes.ResetComponentsItens;
-    tpCadastroServicos:         FControllerCadastrosServicos.ResetComponentsItens;
-    tpCadastroFornecedores:     FControllerCadastrosFornecedores.ResetComponentsItens;
-    tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.ResetComponentsItens;
-    tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.ResetComponentsItens;
-  end;
+  if Assigned(FControllerCadastrosMarcas) then
+    FControllerCadastrosMarcas.ResetComponentsItens;
+  if Assigned(FControllerCadastrosProdutos) then
+    FControllerCadastrosProdutos.ResetComponentsItens;
+  if Assigned(FControllerCadastrosClientes) then
+    FControllerCadastrosClientes.ResetComponentsItens;
+  if Assigned(FControllerCadastrosServicos) then
+    FControllerCadastrosServicos.ResetComponentsItens;
+  if Assigned(FControllerCadastrosFornecedores) then
+    FControllerCadastrosFornecedores.ResetComponentsItens;
+  if Assigned(FControllerCadastrosTranportadoras) then
+    FControllerCadastrosTranportadoras.ResetComponentsItens;
+  if Assigned(FControllerCadastrosUnidadesDeMedida) then
+    FControllerCadastrosUnidadesDeMedida.ResetComponentsItens;
 end;
 
 procedure TControllerCadastros.SetArrayItens;

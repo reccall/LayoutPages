@@ -80,6 +80,7 @@ begin
     begin
       if Showing then
       begin
+        FController.SetFormOwner(tpFDefault);
         FController.ResetComponentsItens;
         Close;
       end;
