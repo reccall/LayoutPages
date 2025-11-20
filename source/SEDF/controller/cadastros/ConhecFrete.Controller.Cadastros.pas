@@ -141,12 +141,14 @@ begin
       chkControl.OnClick := OnClickCheckBox;
     end;
     Show;
+    FCmpControlGrid.Show;
     with TCmpFormGrid(FCmpFormGrid) do
     begin
+      MakeRounded(pnlCmpGridTop,10);
       scrlbxCmpMain.SetFocus;
       scrlbxCmpMain.VertScrollBar.Position := 1;
+      scrlbxCmpMain.Realign;
     end;
-    FCmpControlGrid.Show;
   end;
   Screen.Cursor := crDefault;
 end;
