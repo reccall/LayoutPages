@@ -25,6 +25,7 @@ type
     FCmpTitulo :TForm;
     FCmpTituloPrincipal :TForm;
     FFormCadTransportadoras :TForm;
+    FCmpFormGrid :TForm;
     FCmpControlGrid :TForm;
 
     aCmpItensCadTransportadoras :array of TForm;
@@ -44,6 +45,7 @@ uses
    ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras;
@@ -56,6 +58,7 @@ begin
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadTransportadoras := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
@@ -113,21 +116,27 @@ procedure TControllerCadastrosTransportadoras.SetItensTransportadoras;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadTransportadoras) do
+  with TFormCteCadastros(FFormCadTransportadoras), TCmpFormGrid(FCmpFormGrid) do
   begin
-    FCmpTitulo.Parent := pnlTopMainCad;
+    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
+    FCmpTitulo.Parent := pnlCmpGridTop;
     SetLength(aCmpItensCadTransportadoras,20);
     for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
     begin
       if not Assigned(aCmpItensCadTransportadoras[iIdx]) then
       begin
         aCmpItensCadTransportadoras[iIdx] := TCmpBarraItemCadastroTransportadoras.Create(nil);
-        TCmpBarraItemCadastroTransportadoras(aCmpItensCadTransportadoras[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-        aCmpItensCadTransportadoras[iIdx].Parent := scrlbxMain;
+        with TCmpBarraItemCadastroTransportadoras(aCmpItensCadTransportadoras[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblCodigo.Caption := 'TR - '+FormatFloat('000000',High(aCmpItensCadTransportadoras) - iIdx);
+        end;
+        aCmpItensCadTransportadoras[iIdx].Parent := scrlbxCmpMain;
       end;
       aCmpItensCadTransportadoras[iIdx].Show;
     end;
     FCmpTitulo.Show;
+    FCmpFormGrid.Show;
   end;
 end;
 

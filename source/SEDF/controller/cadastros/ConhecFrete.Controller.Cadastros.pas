@@ -31,6 +31,7 @@ type
   private
     FFormCte :TForm;
     FFormCadastros :TForm;
+    FCmpFormGrid :TForm;
     FCmpControlGrid :TForm;
     FCmpTituloPrincipal :TForm;
     FCmpTituloDescSimples :TForm;
@@ -66,6 +67,7 @@ uses
    ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples;
@@ -78,6 +80,12 @@ begin
   FFormCadastros      := pArrayFormsCte[Ord(tpCteCadastros)];
   FTpOwnerCadastro    := tpFDefault;
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
+
+  if not Assigned(aFormsCte[Ord(tpCmpFormGrid)]) then
+  begin
+    aFormsCte[Ord(tpCmpFormGrid)] := TCmpFormGrid.Create(nil);
+  end;
+  FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
 
   if not Assigned(aFormsCte[Ord(tpCmpControlGrid)]) then
   begin
@@ -107,6 +115,8 @@ begin
   ResetComponentsItens;
   FCmpControlGrid.Close;
   FreeAndNil(FCmpControlGrid);
+  FCmpFormGrid.Close;
+  FreeAndNil(FCmpFormGrid);
 end;
 
 function TControllerCadastros.GetFormOwner: TpForms;
@@ -123,12 +133,19 @@ begin
     FCmpControlGrid.Parent := pnlControlGrid;
     MakeRounded(pnlConsulta,20);
     MakeRounded(pnlRegiaoPesq,20);
-    MakeRounded(pnlTopMainCad,10);
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     SetArrayItens;
-    TCmpGridControl(FCmpControlGrid).chkControl.Checked := False;
-    TCmpGridControl(FCmpControlGrid).chkControl.OnClick := OnClickCheckBox;
+    with TCmpGridControl(FCmpControlGrid) do
+    begin
+      chkControl.Checked := False;
+      chkControl.OnClick := OnClickCheckBox;
+    end;
     Show;
+    with TCmpFormGrid(FCmpFormGrid) do
+    begin
+      scrlbxCmpMain.SetFocus;
+      scrlbxCmpMain.VertScrollBar.Position := 1;
+    end;
     FCmpControlGrid.Show;
   end;
   Screen.Cursor := crDefault;

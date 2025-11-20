@@ -24,7 +24,8 @@ type
              tpCertificadoDig, tpRelatorios, tpTutorial, tpFormCte, tpFormOpcoesItensCte,
              tpBarraBotoes, tpMenuItensImagens, tpCteCadastros, tpCadastroProdutos, tpCadastroClientes,
              tpCadastroFornecedores, tpCadastroTransportadoras, tpCadastroMarcas,
-             tpCadastroServicos, tpCadastroUnidadesDeMedida, tpCmpTituloDescSimples, tpCmpControlGrid, tpFDefault);
+             tpCadastroServicos, tpCadastroUnidadesDeMedida, tpCmpTituloDescSimples,
+             tpCmpFormGrid, tpCmpControlGrid, tpFDefault);
 
 const
   aImageNames :array[0..4] of String = ('ImgCadastros','ImgEmissaoFiscal','ImgCertDigital','ImgRelatorios','ImgTutorial');

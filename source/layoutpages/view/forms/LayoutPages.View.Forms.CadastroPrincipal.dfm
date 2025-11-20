@@ -3,23 +3,26 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
   Caption = 'FormCadastrosPrincipal'
   ClientHeight = 463
   ClientWidth = 947
+  ExplicitTop = -30
   ExplicitWidth = 947
   ExplicitHeight = 463
   PixelsPerInch = 96
   TextHeight = 16
   object pnlBackMain: TPanel
     Left = 0
-    Top = 129
+    Top = 89
     Width = 947
-    Height = 334
+    Height = 374
     Align = alClient
     TabOrder = 0
+    ExplicitTop = 129
+    ExplicitHeight = 334
   end
   object pnlCadTop: TPanel
     Left = 0
     Top = 0
     Width = 947
-    Height = 129
+    Height = 89
     Align = alTop
     Color = clWhite
     ParentBackground = False
@@ -149,59 +152,33 @@ inherited FormCadastrosPrincipal: TFormCadastrosPrincipal
         Stretch = True
       end
     end
-    object pnlTopMainCad: TPanel
-      Left = 1
-      Top = 93
-      Width = 945
-      Height = 35
-      Align = alBottom
-      BevelOuter = bvNone
-      ParentBackground = False
-      TabOrder = 2
-    end
     object pnlControlGrid: TPanel
       Left = 0
       Top = 54
       Width = 500
       Height = 29
-      TabOrder = 3
+      TabOrder = 2
     end
   end
   object pnlMain: TPanel
     Left = 0
-    Top = 129
+    Top = 89
     Width = 947
-    Height = 334
+    Height = 374
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    object scrlbxMain: TScrollBox
-      Left = 0
-      Top = 0
-      Width = 947
-      Height = 280
-      Align = alClient
-      BevelInner = bvNone
-      BevelOuter = bvNone
-      BorderStyle = bsNone
-      Color = clWhite
-      ParentColor = False
-      TabOrder = 0
-    end
+    ExplicitLeft = 1
     object pnlMainBottom: TPanel
       Left = 0
-      Top = 280
+      Top = 314
       Width = 947
-      Height = 54
+      Height = 60
       Align = alBottom
       Color = clWhite
       ParentBackground = False
-      TabOrder = 1
+      TabOrder = 0
+      ExplicitTop = 274
     end
-  end
-  object ApplicationEvents1: TApplicationEvents
-    OnMessage = ApplicationEvents1Message
-    Left = 602
-    Top = 221
   end
 end

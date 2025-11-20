@@ -128,6 +128,15 @@
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.CardInfoUser.pas">
             <Form>CmpCardInfoUser</Form>
         </DCCReference>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.TituloDescricaoSimples.pas">
+            <Form>CmpTituloDescSimples</Form>
+        </DCCReference>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.ControlGrid.pas">
+            <Form>CmpGridControl</Form>
+        </DCCReference>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.FormGrid.pas">
+            <Form>CmpFormGrid</Form>
+        </DCCReference>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Cliente.pas"/>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Regiao.pas"/>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Simplificado.pas"/>
@@ -152,6 +161,24 @@
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroProdutos.pas">
             <Form>CmpBarraItemCadastroProdutos</Form>
         </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroServicos.pas">
+            <Form>CmpBarraItemCadastroServicos</Form>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroClientes.pas">
+            <Form>CmpBarraItemCadastroClientes</Form>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroFornecedores.pas">
+            <Form>CmpBarraItemCadastroFornecedores</Form>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras.pas">
+            <Form>CmpBarraItemCadastroTransportadoras</Form>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroMarcas.pas">
+            <Form>CmpBarraItemCadastroMarcas</Form>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida.pas">
+            <Form>CmpBarraItemCadastroUnidadesDeMedida</Form>
+        </DCCReference>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.ClienteDadosCte.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Motorista.pas"/>
@@ -169,7 +196,14 @@
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuCadastros.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuItensImagens.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.pas"/>
         <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Produtos.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Servicos.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Clientes.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Marcas.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Transportadoras.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Fornecedores.pas"/>
+        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.UnidadesDeMedida.pas"/>
         <DCCReference Include="source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas">
             <Form>frmClienteDadosCte</Form>
         </DCCReference>
@@ -227,49 +261,9 @@
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas">
             <Form>FormMenuItensImagens</Form>
         </DCCReference>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Servicos.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Clientes.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Marcas.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Transportadoras.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Fornecedores.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.UnidadesDeMedida.pas"/>
-        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.TituloDescricaoSimples.pas">
-            <Form>CmpTituloDescSimples</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroServicos.pas">
-            <Form>CmpBarraItemCadastroServicos</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroClientes.pas">
-            <Form>CmpBarraItemCadastroClientes</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroFornecedores.pas">
-            <Form>CmpBarraItemCadastroFornecedores</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras.pas">
-            <Form>CmpBarraItemCadastroTransportadoras</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroMarcas.pas">
-            <Form>CmpBarraItemCadastroMarcas</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida.pas">
-            <Form>CmpBarraItemCadastroUnidadesDeMedida</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.ControlGrid.pas">
-            <Form>CmpGridControl</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Cadastros.pas">
             <Form>FormCteCadastros</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -298,12 +292,27 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployClass Name="ProjectiOSDeviceResourceRules">
+                <DeployClass Name="DependencyModule">
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.dll;.bpl</Extensions>
+                    </Platform>
                     <Platform Name="iOSDevice64">
                         <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXResource">
@@ -657,27 +666,12 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <DeployClass Name="DependencyModule">
-                    <Platform Name="Win32">
-                        <Operation>0</Operation>
-                        <Extensions>.dll;.bpl</Extensions>
-                    </Platform>
+                <DeployClass Name="ProjectiOSDeviceResourceRules">
                     <Platform Name="iOSDevice64">
                         <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="iOSSimulator">
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
                     </Platform>
                 </DeployClass>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>

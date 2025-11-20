@@ -13,7 +13,6 @@ type
     lblVl: TLabel;
     lblDesc: TLabel;
     lblCodigo: TLabel;
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -23,11 +22,5 @@ type
 implementation
 
 {$R *.dfm}
-
-procedure TCmpBarraTituloCadastroProdutos.FormShow(Sender: TObject);
-begin
-  inherited;
-  MakeRounded(Self,10);
-end;
 
 end.

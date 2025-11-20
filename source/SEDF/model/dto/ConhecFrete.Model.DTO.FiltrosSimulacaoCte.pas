@@ -1,12 +1,3 @@
-{**************************************************}
-{                                                  }
-{                     Winthor                      }
-{                                                  }
-{ Classe que compõe o model FiltroSimulacaoCte     }
-{ para gerar o CTe Simplificado                    }
-{ Autor: Luiz Fernando Cândido Machado             }
-{ Data: 15/10/2025                                 }
-{**************************************************}
 unit ConhecFrete.Model.DTO.FiltrosSimulacaoCte;
 
 interface

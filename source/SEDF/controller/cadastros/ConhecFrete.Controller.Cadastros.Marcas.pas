@@ -25,6 +25,7 @@ type
     FCmpTituloPrincipal :TForm;
     FFormCadMarcas :TForm;
     FCmpTitulo :TForm;
+    FCmpFormGrid :TForm;
     FCmpControlGrid :TForm;
 
     aCmpItensCadMarcas :array of TForm;
@@ -45,6 +46,7 @@ uses
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Forms.CadastroPrincipal
+  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroMarcas;
@@ -57,6 +59,7 @@ begin
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadMarcas := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
@@ -113,21 +116,27 @@ procedure TControllerCadastrosMarcas.SetItensMarcas;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadMarcas) do
+  with TFormCteCadastros(FFormCadMarcas), TCmpFormGrid(FCmpFormGrid) do
   begin
-    FCmpTitulo.Parent := pnlTopMainCad;
+    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
+    FCmpTitulo.Parent := pnlCmpGridTop;
     SetLength(aCmpItensCadMarcas,20);
     for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
     begin
       if not Assigned(aCmpItensCadMarcas[iIdx]) then
       begin
         aCmpItensCadMarcas[iIdx] := TCmpBarraItemCadastroMarcas.Create(nil);
-        TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-        aCmpItensCadMarcas[iIdx].Parent := scrlbxMain;
+        with TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblCodigo.Caption := 'MR - '+FormatFloat('000000',High(aCmpItensCadMarcas) - iIdx);
+        end;
+        aCmpItensCadMarcas[iIdx].Parent := scrlbxCmpMain;
       end;
       aCmpItensCadMarcas[iIdx].Show;
     end;
     FCmpTitulo.Show;
+    FCmpFormGrid.Show;
   end;
 end;
 

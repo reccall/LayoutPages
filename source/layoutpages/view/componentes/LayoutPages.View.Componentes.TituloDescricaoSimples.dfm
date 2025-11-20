@@ -1,15 +1,15 @@
 inherited CmpTituloDescSimples: TCmpTituloDescSimples
   Align = alClient
-  ClientHeight = 29
-  ClientWidth = 845
+  ClientHeight = 30
+  ClientWidth = 755
   Color = clMenu
-  ExplicitWidth = 845
-  ExplicitHeight = 29
+  ExplicitWidth = 755
+  ExplicitHeight = 30
   PixelsPerInch = 96
   TextHeight = 16
   object lblAtivo: TLabel
     Left = 697
-    Top = 3
+    Top = 0
     Width = 40
     Height = 29
     Caption = 'Ativo'
@@ -22,7 +22,7 @@ inherited CmpTituloDescSimples: TCmpTituloDescSimples
   end
   object lblDesc: TLabel
     Left = 155
-    Top = 4
+    Top = 0
     Width = 77
     Height = 29
     Caption = 'Descri'#231#227'o'
@@ -35,7 +35,7 @@ inherited CmpTituloDescSimples: TCmpTituloDescSimples
   end
   object lblCodigo: TLabel
     Left = 27
-    Top = 4
+    Top = 0
     Width = 56
     Height = 29
     Caption = 'C'#243'digo'

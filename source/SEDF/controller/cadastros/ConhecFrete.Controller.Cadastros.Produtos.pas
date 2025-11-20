@@ -25,6 +25,7 @@ type
     FCmpTituloPrincipal :TForm;
     FFormCadProdutos :TForm;
     FCmpTitulo :TForm;
+    FCmpFormGrid :TForm;
     FCmpControlGrid :TForm;
 
     aCmpItensCadProd :array of TForm;
@@ -45,6 +46,7 @@ uses
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Forms.CadastroPrincipal
+  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
   ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
   ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
@@ -57,6 +59,7 @@ begin
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadProdutos := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := TCmpBarraTituloCadastroProdutos.Create(nil);
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
@@ -114,20 +117,26 @@ procedure TControllerCadastrosProdutos.SetItensProdutos;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadProdutos) do
+  with TFormCteCadastros(FFormCadProdutos), TCmpFormGrid(FCmpFormGrid) do
   begin
-    FCmpTitulo.Parent := pnlTopMainCad;
+    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
+    FCmpTitulo.Parent := pnlCmpGridTop;
     SetLength(aCmpItensCadProd,20);
     for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
     begin
       if not Assigned(aCmpItensCadProd[iIdx]) then
       begin
         aCmpItensCadProd[iIdx] := TCmpBarraItemCadastroProdutos.Create(nil);
-        aCmpItensCadProd[iIdx].Parent := scrlbxMain;
+        with TCmpBarraItemCadastroProdutos(aCmpItensCadProd[iIdx]) do
+        begin
+          lblCodigo.Caption := 'PR - '+FormatFloat('000000',High(aCmpItensCadProd) - iIdx);
+        end;
+        aCmpItensCadProd[iIdx].Parent := scrlbxCmpMain;
       end;
       aCmpItensCadProd[iIdx].Show;
     end;
     FCmpTitulo.Show;
+    FCmpFormGrid.Show;
   end;
 end;
 

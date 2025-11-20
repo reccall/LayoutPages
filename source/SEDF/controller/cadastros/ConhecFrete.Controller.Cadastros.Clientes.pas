@@ -25,6 +25,7 @@ type
     FCmpTituloPrincipal :TForm;
     FFormCadClientes :TForm;
     FCmpTitulo :TForm;
+    FCmpFormGrid :TForm;
     FCmpControlGrid :TForm;
 
     aCmpItensCadClientes :array of TForm;
@@ -44,6 +45,7 @@ uses
    ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
@@ -57,6 +59,7 @@ begin
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadClientes := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
@@ -114,21 +117,27 @@ procedure TControllerCadastrosClientes.SetItensClientes;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadClientes) do
+  with TFormCteCadastros(FFormCadClientes), TCmpFormGrid(FCmpFormGrid) do
   begin
-    FCmpTitulo.Parent := pnlTopMainCad;
+    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
+    FCmpTitulo.Parent := pnlCmpGridTop;
     SetLength(aCmpItensCadClientes,20);
     for iIdx := Low(aCmpItensCadClientes) to High(aCmpItensCadClientes) do
     begin
       if not Assigned(aCmpItensCadClientes[iIdx]) then
       begin
         aCmpItensCadClientes[iIdx] := TCmpBarraItemCadastroClientes.Create(nil);
-        TCmpBarraItemCadastroClientes(aCmpItensCadClientes[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-        aCmpItensCadClientes[iIdx].Parent := scrlbxMain;
+        with TCmpBarraItemCadastroClientes(aCmpItensCadClientes[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblCodigo.Caption := 'CL - '+FormatFloat('000000',High(aCmpItensCadClientes) - iIdx);
+        end;
+        aCmpItensCadClientes[iIdx].Parent := scrlbxCmpMain;
       end;
       aCmpItensCadClientes[iIdx].Show;
     end;
     FCmpTitulo.Show;
+    FCmpFormGrid.Show;
   end;
 end;
 

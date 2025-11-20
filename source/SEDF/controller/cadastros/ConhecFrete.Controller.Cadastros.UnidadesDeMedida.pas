@@ -25,6 +25,7 @@ type
     FCmpTituloPrincipal :TForm;
     FFormCadUnidadesDeMedida :TForm;
     FCmpTitulo :TForm;
+    FCmpFormGrid :TForm;
     FCmpControlGrid :TForm;
 
     aCmpItensCadUnidadesDeMedida :array of TForm;
@@ -44,6 +45,7 @@ uses
    ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida;
@@ -56,6 +58,7 @@ begin
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
@@ -113,21 +116,27 @@ procedure TControllerCadastrosUnidadesDeMedida.SetItensUnidadesDeMedida;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadUnidadesDeMedida) do
+  with TFormCteCadastros(FFormCadUnidadesDeMedida), TCmpFormGrid(FCmpFormGrid) do
   begin
-    FCmpTitulo.Parent := pnlTopMainCad;
+    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
+    FCmpTitulo.Parent := pnlCmpGridTop;
     SetLength(aCmpItensCadUnidadesDeMedida,20);
     for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
     begin
       if not Assigned(aCmpItensCadUnidadesDeMedida[iIdx]) then
       begin
         aCmpItensCadUnidadesDeMedida[iIdx] := TCmpBarraItemCadastroUnidadesDeMedida.Create(nil);
-        TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-        aCmpItensCadUnidadesDeMedida[iIdx].Parent := scrlbxMain;
+        with TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblCodigo.Caption := 'UN - '+FormatFloat('000000',High(aCmpItensCadUnidadesDeMedida) - iIdx);
+        end;
+        aCmpItensCadUnidadesDeMedida[iIdx].Parent := scrlbxCmpMain;
       end;
       aCmpItensCadUnidadesDeMedida[iIdx].Show;
     end;
     FCmpTitulo.Show;
+    FCmpFormGrid.Show;
   end;
 end;
 

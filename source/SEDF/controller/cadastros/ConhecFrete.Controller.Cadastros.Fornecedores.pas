@@ -25,6 +25,7 @@ type
     FCmpTitulo :TForm;
     FCmpTituloPrincipal :TForm;
     FFormCadFornecedores :TForm;
+    FCmpFormGrid :TForm;
     FCmpControlGrid :TForm;
 
     aCmpItensCadFornecedores :array of TForm;
@@ -44,6 +45,7 @@ uses
    ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroFornecedores;
@@ -56,6 +58,7 @@ begin
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadFornecedores := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
@@ -113,21 +116,27 @@ procedure TControllerCadastrosFornecedores.SetItensFornecedores;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadFornecedores) do
+  with TFormCteCadastros(FFormCadFornecedores), TCmpFormGrid(FCmpFormGrid) do
   begin
-    FCmpTitulo.Parent := pnlTopMainCad;
+    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
+    FCmpTitulo.Parent := pnlCmpGridTop;
     SetLength(aCmpItensCadFornecedores,20);
     for iIdx := Low(aCmpItensCadFornecedores) to High(aCmpItensCadFornecedores) do
     begin
       if not Assigned(aCmpItensCadFornecedores[iIdx]) then
       begin
         aCmpItensCadFornecedores[iIdx] := TCmpBarraItemCadastroFornecedores.Create(nil);
-        TCmpBarraItemCadastroFornecedores(aCmpItensCadFornecedores[iIdx]).lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-        aCmpItensCadFornecedores[iIdx].Parent := scrlbxMain;
+        with TCmpBarraItemCadastroFornecedores(aCmpItensCadFornecedores[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblCodigo.Caption := 'FN - '+FormatFloat('000000',High(aCmpItensCadFornecedores) - iIdx);
+        end;
+        aCmpItensCadFornecedores[iIdx].Parent := scrlbxCmpMain;
       end;
       aCmpItensCadFornecedores[iIdx].Show;
     end;
     FCmpTitulo.Show;
+    FCmpFormGrid.Show;
   end;
 end;
 

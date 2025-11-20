@@ -265,7 +265,6 @@ procedure TControllerMenuCadastros.OnClickCadProdutos(Sender: TObject);
 begin
   if GetActiveForm = tpCadastroProdutos then
     Exit;
-
   IniciarInformacoesFormMenu(Sender, tpCadastroProdutos);
   IniciarFormCadastros(tpCadastroProdutos);
 end;

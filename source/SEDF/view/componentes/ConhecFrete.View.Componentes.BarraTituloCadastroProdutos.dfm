@@ -1,16 +1,17 @@
 inherited CmpBarraTituloCadastroProdutos: TCmpBarraTituloCadastroProdutos
   Align = alClient
-  ClientHeight = 30
-  ClientWidth = 1049
+  ClientHeight = 25
+  ClientWidth = 842
   Color = clMenu
   Visible = True
-  ExplicitWidth = 1049
-  ExplicitHeight = 30
+  ExplicitLeft = -36
+  ExplicitWidth = 842
+  ExplicitHeight = 25
   PixelsPerInch = 96
   TextHeight = 16
   object lblAtivo: TLabel
     Left = 795
-    Top = 3
+    Top = 0
     Width = 40
     Height = 29
     Caption = 'Ativo'
@@ -23,7 +24,7 @@ inherited CmpBarraTituloCadastroProdutos: TCmpBarraTituloCadastroProdutos
   end
   object lblVl: TLabel
     Left = 664
-    Top = 4
+    Top = 0
     Width = 59
     Height = 29
     Caption = 'Vl. Unit'
@@ -36,7 +37,7 @@ inherited CmpBarraTituloCadastroProdutos: TCmpBarraTituloCadastroProdutos
   end
   object lblDesc: TLabel
     Left = 155
-    Top = 4
+    Top = 0
     Width = 77
     Height = 29
     Caption = 'Descri'#231#227'o'
@@ -49,7 +50,7 @@ inherited CmpBarraTituloCadastroProdutos: TCmpBarraTituloCadastroProdutos
   end
   object lblCodigo: TLabel
     Left = 27
-    Top = 4
+    Top = 0
     Width = 56
     Height = 29
     Caption = 'C'#243'digo'
