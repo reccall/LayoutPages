@@ -20,6 +20,7 @@ uses
   LayoutPages.View.Componentes.TituloDescricaoSimples in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TituloDescricaoSimples.pas' {CmpTituloDescSimples},
   LayoutPages.View.Componentes.ControlGrid in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.ControlGrid.pas' {CmpGridControl},
   LayoutPages.View.Componentes.FormGrid in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.FormGrid.pas' {CmpFormGrid},
+  LayoutPages.View.Componentes.CabecalhoCadastroPrincipal in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.CabecalhoCadastroPrincipal.pas' {CmpCabCadastros},
   ConhecFrete.Model.DAO.Cliente in 'source\SEDF\model\dao\ConhecFrete.Model.DAO.Cliente.pas',
   ConhecFrete.Model.DAO.Regiao in 'source\SEDF\model\dao\ConhecFrete.Model.DAO.Regiao.pas',
   ConhecFrete.Model.DAO.Simplificado in 'source\SEDF\model\dao\ConhecFrete.Model.DAO.Simplificado.pas',

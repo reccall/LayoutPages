@@ -29,6 +29,7 @@ type
     FMenuEmissaoFiscal: TForm;
     FormOpcoesItensCte :TForm;
     FFormCteCadastro :TForm;
+    FCmpFormGrid :TForm;
     FSetOpcaoItemMenuCad :TPanel;
 
     procedure OnClickCadMarcas(Sender :TObject);
@@ -62,6 +63,7 @@ implementation
 uses
    LayoutPages.View.Componentes.TLabelTitulo
   ,LayoutPages.View.Componentes.ControlGrid
+  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
@@ -82,7 +84,11 @@ begin
       if Showing then
       begin
         FController.ResetComponentsItens;
-        Close;
+        if not Assigned(FCmpFormGrid) then
+        begin
+          FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
+        end;
+        FCmpFormGrid.Close;
       end;
     end;
   end;
@@ -95,7 +101,7 @@ begin
   if Assigned(FormOpcoesItensCte) then
   begin
     if FormOpcoesItensCte.Showing then
-      TFormOpcoesItensCte(FormOpcoesItensCte).Close;
+      FormOpcoesItensCte.Close;
   end;
 
   if not Assigned(FOpcoesCte) then
@@ -118,11 +124,7 @@ constructor TControllerMenuCadastros.Create(pArrayFormsCte :array of TForm);
 begin
   FMenuCadastros     := pArrayFormsCte[Ord(tpMenuCadastros)];
   FCmpTitulo         := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FOpcoesCte         := pArrayFormsCte[Ord(tpFormCte)];
-  FMenuPrincipal     := pArrayFormsCte[Ord(tpMenuPrincipal)];
-  FormOpcoesItensCte := pArrayFormsCte[Ord(tpFormOpcoesItensCte)];
-
-  FMenuItensImagens := pArrayFormsCte[Ord(tpMenuItensImagens)];
+  FMenuItensImagens  := pArrayFormsCte[Ord(tpMenuItensImagens)];
   if not Assigned(FMenuItensImagens) then
   begin
     FMenuItensImagens := TFormMenuItensImagens.Create(aFormsCte);

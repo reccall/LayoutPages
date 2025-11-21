@@ -74,6 +74,7 @@ begin
       begin
         FController.SetFormOwner(tpFDefault);
         FController.ResetComponentsItens;
+        aFormsCte[Ord(tpCmpCabCadastros)].Close;
         Close;
       end;
     end;

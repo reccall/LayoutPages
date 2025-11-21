@@ -4,6 +4,8 @@ interface
 
 uses
    Forms
+  ,Winapi.Windows
+  ,Winapi.Messages
   ,Graphics
   ,System.Classes
   ,System.SysUtils
@@ -29,14 +31,16 @@ type
 
   TControllerCadastros = class(TInterfacedObject, IControllerCadastros)
   private
+    FPosition :Integer;
+    FTpOwnerCadastro :TpForms;
+
     FFormCte :TForm;
-    FFormCadastros :TForm;
     FCmpFormGrid :TForm;
+    FFormCadastros :TForm;
+    FCmpCabCadastro :TForm;
     FCmpControlGrid :TForm;
     FCmpTituloPrincipal :TForm;
     FCmpTituloDescSimples :TForm;
-
-    FTpOwnerCadastro :TpForms;
 
     FControllerCadastrosMarcas :IControllerCadastrosMarcas;
     FControllerCadastrosServicos :IControllerCadastrosServicos;
@@ -54,6 +58,7 @@ type
     procedure OnClickCheckBox(Sender :TObject);
     function GetFormOwner :TpForms;
     function SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
+    procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
   public
 
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastros overload;
@@ -65,12 +70,13 @@ implementation
 
 uses
    ConhecFrete.Forms.Cte.Cadastros
-  ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.ControlGrid
-  ,LayoutPages.View.Componentes.TituloDescricaoSimples;
+  ,LayoutPages.View.Componentes.TLabelTitulo
+  ,LayoutPages.View.Componentes.TituloDescricaoSimples
+  ,LayoutPages.View.Componentes.CabecalhoCadastroPrincipal;
 
 { TControllerCadastros }
 
@@ -87,6 +93,12 @@ begin
   end;
   FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
 
+  if not Assigned(aFormsCte[Ord(tpCmpCabCadastros)]) then
+  begin
+    aFormsCte[Ord(tpCmpCabCadastros)] := TCmpCabCadastros.Create(nil);
+  end;
+  FCmpCabCadastro := aFormsCte[Ord(tpCmpCabCadastros)];
+
   if not Assigned(aFormsCte[Ord(tpCmpControlGrid)]) then
   begin
     aFormsCte[Ord(tpCmpControlGrid)] := TCmpGridControl.Create(nil);
@@ -98,41 +110,26 @@ begin
     aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
   end;
   FCmpTituloDescSimples := aFormsCte[Ord(tpCmpTituloDescSimples)];
-
 end;
 
-destructor TControllerCadastros.Destroy;
+class function TControllerCadastros.New(pArrayFormsCte :array of TForm): IControllerCadastros;
 begin
-  with TFormCteCadastros(FFormCadastros) do
-  begin
-    if Assigned(FController) then
-      FreeAndNil(FController);
-  end;
-end;
-
-procedure TControllerCadastros.DestroyComponents;
-begin
-  ResetComponentsItens;
-  FCmpControlGrid.Close;
-  FreeAndNil(FCmpControlGrid);
-  FCmpFormGrid.Close;
-  FreeAndNil(FCmpFormGrid);
-end;
-
-function TControllerCadastros.GetFormOwner: TpForms;
-begin
-  Result := FTpOwnerCadastro;
+  Result := Self.Create(pArrayFormsCte);
 end;
 
 procedure TControllerCadastros.Iniciar;
 begin
   Screen.Cursor := crHourGlass;
   SetInterfaces;
-  with TFormCteCadastros(FFormCadastros)  do
+  with TFormCteCadastros(FFormCadastros) do
   begin
-    FCmpControlGrid.Parent := pnlControlGrid;
-    MakeRounded(pnlConsulta,20);
-    MakeRounded(pnlRegiaoPesq,20);
+    FCmpCabCadastro.Parent := pnlCadTop;
+    with TCmpCabCadastros(FCmpCabCadastro) do
+    begin
+      FCmpControlGrid.Parent := pnlControlGrid;
+      MakeRounded(pnlConsulta,20);
+      MakeRounded(pnlRegiaoPesq,20);
+    end;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     SetArrayItens;
     with TCmpGridControl(FCmpControlGrid) do
@@ -142,20 +139,15 @@ begin
     end;
     Show;
     FCmpControlGrid.Show;
+    FCmpCabCadastro.Show;
     with TCmpFormGrid(FCmpFormGrid) do
     begin
+      ApplicationEvents1.OnMessage := ApplicationEvents1Message;
       MakeRounded(pnlCmpGridTop,10);
-      scrlbxCmpMain.SetFocus;
-      scrlbxCmpMain.VertScrollBar.Position := 1;
       scrlbxCmpMain.Realign;
     end;
   end;
   Screen.Cursor := crDefault;
-end;
-
-class function TControllerCadastros.New(pArrayFormsCte :array of TForm): IControllerCadastros;
-begin
-  Result := Self.Create(pArrayFormsCte);
 end;
 
 procedure TControllerCadastros.OnClickCheckBox(Sender: TObject);
@@ -245,6 +237,62 @@ begin
     begin
       if not Assigned(FControllerCadastrosUnidadesDeMedida) then
         FControllerCadastrosUnidadesDeMedida := TControllerCadastrosUnidadesDeMedida.New(aFormsCte);
+    end;
+  end;
+end;
+
+destructor TControllerCadastros.Destroy;
+begin
+  with TFormCteCadastros(FFormCadastros) do
+  begin
+    if Assigned(FController) then
+      FreeAndNil(FController);
+  end;
+end;
+
+procedure TControllerCadastros.DestroyComponents;
+begin
+  ResetComponentsItens;
+  FCmpControlGrid.Close;
+  FreeAndNil(FCmpControlGrid);
+  FCmpFormGrid.Close;
+  FreeAndNil(FCmpFormGrid);
+  FCmpCabCadastro.Close;
+  FreeAndNil(FCmpCabCadastro);
+end;
+
+function TControllerCadastros.GetFormOwner: TpForms;
+begin
+  Result := FTpOwnerCadastro;
+end;
+
+procedure TControllerCadastros.ApplicationEvents1Message(var Msg: tagMSG;
+  var Handled: Boolean);
+var
+  i: SmallInt;
+begin
+  inherited;
+  with TCmpFormGrid(FCmpFormGrid) do
+  begin
+    if Msg.message = WM_MOUSEWHEEL then
+    begin
+      FPosition := scrlbxCmpMain.VertScrollBar.Position;
+      Msg.message := WM_KEYDOWN;
+      Msg.lParam := 0;
+      i := HiWord(Msg.wParam) ;
+      if i > 0 then
+      begin
+        Msg.wParam := VK_UP;
+        Dec(FPosition,20);
+      end
+      else
+      begin
+        Msg.wParam := VK_DOWN;
+        Inc(FPosition,20);
+      end;
+      Handled := False;
+
+      scrlbxCmpMain.VertScrollBar.Position := FPosition;
     end;
   end;
 end;

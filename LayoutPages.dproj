@@ -137,6 +137,9 @@
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.FormGrid.pas">
             <Form>CmpFormGrid</Form>
         </DCCReference>
+        <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.CabecalhoCadastroPrincipal.pas">
+            <Form>CmpCabCadastros</Form>
+        </DCCReference>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Cliente.pas"/>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Regiao.pas"/>
         <DCCReference Include="source\SEDF\model\dao\ConhecFrete.Model.DAO.Simplificado.pas"/>

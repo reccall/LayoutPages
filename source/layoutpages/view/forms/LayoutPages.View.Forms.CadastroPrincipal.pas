@@ -22,15 +22,7 @@ type
     pnlBackMain: TPanel;
     pnlCadTop: TPanel;
     pnlMain: TPanel;
-    pnlConsulta: TPanel;
-    lblConsulta: TLabel;
-    pnlRegiaoPesq: TPanel;
-    pnlIncluirRegistro: TPanel;
-    lblInserir: TLabel;
-    Image1: TImage;
-    imgLupa: TImage;
     pnlMainBottom: TPanel;
-    pnlControlGrid: TPanel;
   private
     { Private declarations }
   public

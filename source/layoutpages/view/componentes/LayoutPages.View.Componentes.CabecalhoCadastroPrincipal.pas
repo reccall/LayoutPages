@@ -1,4 +1,4 @@
-unit LayoutPages.View.Componentes.FormGrid;
+unit LayoutPages.View.Componentes.CabecalhoCadastroPrincipal;
 
 interface
 
@@ -14,20 +14,25 @@ uses
   ,Vcl.Forms
   ,Vcl.ExtCtrls
   ,Vcl.Dialogs
-  ,Vcl.AppEvnts
+  ,Vcl.StdCtrls
+  ,dxGDIPlusClasses
   ,LayoutPages.View.Forms.FormDefault;
 
 type
-  TCmpFormGrid = class(TFormDefault)
-    pnlCmpGridTop: TPanel;
-    pnlCmpGridMain: TPanel;
-    scrlbxCmpMain: TScrollBox;
-    ApplicationEvents1: TApplicationEvents;
+  TCmpCabCadastros = class(TFormDefault)
+    pnlCadTop: TPanel;
+    pnlConsulta: TPanel;
+    lblConsulta: TLabel;
+    pnlRegiaoPesq: TPanel;
+    imgLupa: TImage;
+    pnlIncluirRegistro: TPanel;
+    lblInserir: TLabel;
+    Image1: TImage;
+    pnlControlGrid: TPanel;
   private
     { Private declarations }
   public
     { Public declarations }
-    FPosition :Integer;
   end;
 
 implementation

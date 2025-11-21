@@ -43,7 +43,6 @@ inherited CmpFormGrid: TCmpFormGrid
     end
   end
   object ApplicationEvents1: TApplicationEvents
-    OnMessage = ApplicationEvents1Message
     Left = 577
     Top = 242
   end
