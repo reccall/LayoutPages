@@ -18,9 +18,9 @@ inherited CmpFormGrid: TCmpFormGrid
     TabOrder = 0
     object scrlbxCmpMain: TScrollBox
       Left = 1
-      Top = 41
+      Top = 46
       Width = 962
-      Height = 290
+      Height = 285
       Align = alTop
       BevelInner = bvNone
       BevelOuter = bvNone
@@ -28,8 +28,7 @@ inherited CmpFormGrid: TCmpFormGrid
       Color = clWhite
       ParentColor = False
       TabOrder = 0
-      ExplicitLeft = 0
-      ExplicitTop = 37
+      ExplicitTop = 49
     end
     object pnlCmpGridTop: TPanel
       Left = 1
@@ -40,6 +39,18 @@ inherited CmpFormGrid: TCmpFormGrid
       Color = clMenu
       ParentBackground = False
       TabOrder = 1
+      ExplicitLeft = 9
+      ExplicitTop = -14
+    end
+    object pnlLinha: TPanel
+      Left = 1
+      Top = 41
+      Width = 962
+      Height = 5
+      Align = alTop
+      Color = clWhite
+      ParentBackground = False
+      TabOrder = 2
     end
   end
   object ApplicationEvents1: TApplicationEvents

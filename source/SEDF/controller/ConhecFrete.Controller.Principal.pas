@@ -299,9 +299,8 @@ begin
     Show;
   end;
 
-  with TfrmCtePrincipal(FCtePrincipal), TCmpMenuImage(FCmpMenuImg) do
+  with TfrmCtePrincipal(FCtePrincipal) do
   begin
-    pnlBackMenu.Width := 270;
     with TCmpMenuImage(FCmpMenuImg) do
     begin
       ImageMenu.OnClick := OnClickMenuImage;

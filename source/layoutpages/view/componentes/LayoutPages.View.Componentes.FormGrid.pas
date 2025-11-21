@@ -23,6 +23,7 @@ type
     pnlCmpGridMain: TPanel;
     scrlbxCmpMain: TScrollBox;
     ApplicationEvents1: TApplicationEvents;
+    pnlLinha: TPanel;
   private
     { Private declarations }
   public
