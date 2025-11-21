@@ -1,7 +1,8 @@
 inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
-  Align = alBottom
+  Align = alTop
   ClientHeight = 40
   ClientWidth = 1028
+  ExplicitLeft = -243
   ExplicitWidth = 1028
   ExplicitHeight = 40
   PixelsPerInch = 96
@@ -20,7 +21,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     OnMouseMove = lblCodigoMouseMove
     object lblCodigo: TLabel
       Left = 28
-      Top = 3
+      Top = 7
       Width = 82
       Height = 29
       Caption = 'PR-000001'
@@ -35,7 +36,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object lblDesc: TLabel
       Left = 157
-      Top = -3
+      Top = 7
       Width = 445
       Height = 29
       Caption = 'MONITOR GAMER AOC AGON PRO CS2 610Hz 0.3ms CS24A/P'
@@ -50,7 +51,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object lblVl: TLabel
       Left = 665
-      Top = 3
+      Top = 7
       Width = 88
       Height = 29
       Caption = 'R$ 7.999,00'
@@ -65,7 +66,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object lblAtivo: TLabel
       Left = 800
-      Top = 3
+      Top = 7
       Width = 27
       Height = 29
       Caption = 'SIM'
@@ -80,7 +81,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object imgEdit: TImage
       Left = 875
-      Top = 6
+      Top = 10
       Width = 20
       Height = 20
       Cursor = crHandPoint
@@ -123,7 +124,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object imgTrash: TImage
       Left = 922
-      Top = 6
+      Top = 10
       Width = 20
       Height = 20
       Cursor = crHandPoint
@@ -149,7 +150,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object imgIndice: TImage
       Left = 1016
-      Top = 8
+      Top = 10
       Width = 8
       Height = 31
       Cursor = crHandPoint
@@ -168,7 +169,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object pnlLine: TPanel
       Left = 0
-      Top = 32
+      Top = 36
       Width = 993
       Height = 1
       Color = clMenu
@@ -179,7 +180,7 @@ inherited CmpBarraItemCadastroProdutos: TCmpBarraItemCadastroProdutos
     end
     object chkItem: TCheckBox
       Left = 5
-      Top = 9
+      Top = 13
       Width = 17
       Height = 17
       Cursor = crHandPoint

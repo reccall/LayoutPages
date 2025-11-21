@@ -9,7 +9,7 @@ inherited CmpTituloDescSimples: TCmpTituloDescSimples
   TextHeight = 16
   object lblAtivo: TLabel
     Left = 697
-    Top = 0
+    Top = 6
     Width = 40
     Height = 29
     Caption = 'Ativo'
@@ -22,7 +22,7 @@ inherited CmpTituloDescSimples: TCmpTituloDescSimples
   end
   object lblDesc: TLabel
     Left = 155
-    Top = 0
+    Top = 6
     Width = 77
     Height = 29
     Caption = 'Descri'#231#227'o'
@@ -35,7 +35,7 @@ inherited CmpTituloDescSimples: TCmpTituloDescSimples
   end
   object lblCodigo: TLabel
     Left = 27
-    Top = 0
+    Top = 6
     Width = 56
     Height = 29
     Caption = 'C'#243'digo'
