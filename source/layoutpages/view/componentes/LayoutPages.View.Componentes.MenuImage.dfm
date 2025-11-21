@@ -7,7 +7,7 @@ inherited CmpMenuImage: TCmpMenuImage
   ExplicitHeight = 20
   PixelsPerInch = 96
   TextHeight = 19
-  object Image1: TImage
+  object ImageMenu: TImage
     Left = 0
     Top = 0
     Width = 20

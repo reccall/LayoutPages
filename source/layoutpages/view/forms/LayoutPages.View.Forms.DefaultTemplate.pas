@@ -22,12 +22,11 @@ type
     pnlBackMenu: TPanel;
     pnlMain: TPanel;
     pnlTop: TPanel;
-    Image1: TImage;
-    pnlLineOpcoes: TPanel;
     pnlMainTopB: TPanel;
     pnlMainLeft: TPanel;
     pnlMainTopLeft: TPanel;
     pnlMainTop: TPanel;
+    pnlLogo: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }

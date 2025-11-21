@@ -182,6 +182,10 @@
         <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida.pas">
             <Form>CmpBarraItemCadastroUnidadesDeMedida</Form>
         </DCCReference>
+        <DCCReference Include="source\SEDF\view\componentes\ConhecFrete.View.Componentes.TopLogo.pas">
+            <Form>CmpTopLogo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.ClienteDadosCte.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Motorista.pas"/>

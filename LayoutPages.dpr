@@ -43,6 +43,7 @@ uses
   ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras.pas' {CmpBarraItemCadastroTransportadoras},
   ConhecFrete.View.Componentes.BarraItemCadastroMarcas in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroMarcas.pas' {CmpBarraItemCadastroMarcas},
   ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida.pas' {CmpBarraItemCadastroUnidadesDeMedida},
+  ConhecFrete.View.Componentes.TopLogo in 'source\SEDF\view\componentes\ConhecFrete.View.Componentes.TopLogo.pas' {CmpTopLogo},
   ConhecFrete.Controller.ClienteDadosCte in 'source\SEDF\controller\ConhecFrete.Controller.ClienteDadosCte.pas',
   ConhecFrete.Controller.DadosPedagioSeguro in 'source\SEDF\controller\ConhecFrete.Controller.DadosPedagioSeguro.pas',
   ConhecFrete.Controller.Motorista in 'source\SEDF\controller\ConhecFrete.Controller.Motorista.pas',

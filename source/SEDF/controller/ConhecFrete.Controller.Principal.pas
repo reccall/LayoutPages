@@ -9,13 +9,6 @@ uses
   ,Vcl.ExtCtrls
   ,Vcl.Graphics
   ,System.SysUtils
-  ,LayoutPages.View.Componentes.TLabelTitulo
-  ,LayoutPages.View.Componentes.MenuImage
-  ,ConhecFrete.View.Componentes.CardInfoUserCte
-  ,ConhecFrete.Forms.Cte.Principal
-  ,ConhecFrete.Forms.Cte.MenuPrincipal
-  ,ConhecFrete.Forms.Cte.MenuItensImagens
-  ,ConhecFrete.Forms.Cte.Cadastros
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -29,11 +22,14 @@ type
     FWidthMenuImg :Integer;
     FFormOwner: TForm;
     FMenuCadasros: TForm;
+    FCmpTopLogo: TForm;
     FMenuEmissaoFiscal: TForm;
-    FCmpMenuImg :TCmpMenuImage;
-    FMenuItensImagens :TFormMenuItensImagens;
-    FCmpTituloOpcao :TCmpTLabelTitulo;
-    FCmpCardInfoUser :TCmpCardInfoUserCte;
+    FCtePrincipal :TForm;
+    FMenuPrincipal :TForm;
+    FCmpMenuImg :TForm;
+    FMenuItensImagens :TForm;
+    FCmpTituloOpcao :TForm;
+    FCmpCardInfoUser :TForm;
     FImageDefault :TImage;
 
     procedure OnClickCardUserInfo(Sender :TObject);
@@ -44,9 +40,6 @@ type
     procedure CloseMenus(pResetItemMenu :Boolean);
     procedure SetActiveDefaultImage;
   public
-    FCtePrincipal :TfrmCtePrincipal;
-    FMenuPrincipal :TFormMenuPrincipal;
-
     procedure Iniciar;
     procedure DestruirForms;
 
@@ -62,6 +55,14 @@ uses
    ,ConhecFrete.Forms.Cte.Background
    ,ConhecFrete.Forms.Cte.MenuCadastros
    ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
+   ,ConhecFrete.Forms.Cte.Principal
+   ,ConhecFrete.Forms.Cte.MenuPrincipal
+   ,ConhecFrete.Forms.Cte.MenuItensImagens
+   ,ConhecFrete.Forms.Cte.Cadastros
+   ,ConhecFrete.View.Componentes.TopLogo
+   ,ConhecFrete.View.Componentes.CardInfoUserCte
+   ,LayoutPages.View.Componentes.TLabelTitulo
+   ,LayoutPages.View.Componentes.MenuImage
    ,LayoutPages.View.Componentes.BotoesBarraOpcoes;
 
 { ControllerPrincipal }
@@ -134,8 +135,11 @@ begin
   FMenuPrincipal := TFormMenuPrincipal.Create(aFormsCte);
   aFormsCte[Ord(tpMenuPrincipal)] := FMenuPrincipal;
 
-  with FCtePrincipal do
+  FCmpTopLogo := TCmpTopLogo.Create(nil);
+
+  with TfrmCtePrincipal(FCtePrincipal) do
   begin
+    FCmpTopLogo.Parent := pnlLogo;
     FWidthMenuImg := pnlBackMenu.Width;
     pnlMainTopRight.Visible := False;
     FCmpCardInfoUser.Parent := pnlUserInfo;
@@ -166,7 +170,7 @@ begin
           aFormsCte[Ord(tpMenuPrincipal)].Free;
           aFormsCte[Ord(tpMenuPrincipal)] := nil;
           FCmpTituloOpcao := nil;
-          //FreeAndNil(FMenuPrincipal);
+          FMenuPrincipal := nil;
         end;
       end;
 
@@ -268,6 +272,7 @@ begin
     end;
   end;
 
+  FreeAndNil(FCmpTopLogo);
   FreeAndNil(FCmpMenuImg);
   FCmpCardInfoUser.Close;
   FreeAndNil(FCmpCardInfoUser);
@@ -281,8 +286,8 @@ end;
 
 procedure TControllerPrincipal.Iniciar;
 begin
-  FCmpTituloOpcao.lblTitulo.Caption := 'SEDF - Início';
-  with FCmpCardInfoUser do
+  TCmpTLabelTitulo(FCmpTituloOpcao).lblTitulo.Caption := 'SEDF - Início';
+  with TCmpCardInfoUserCte(FCmpCardInfoUser) do
   begin
     lblUserName.Caption := 'KAMAYURI NUNES-SAAD';
     pnlUser.OnClick := OnClickCardUserInfo;
@@ -290,30 +295,34 @@ begin
 
   with TFormCteBackground(FFormOwner)  do
   begin
-    FCtePrincipal.Parent := pnlMain;
+    TfrmCtePrincipal(FCtePrincipal).Parent := pnlMain;
     Show;
   end;
 
-  with FCtePrincipal do
+  with TfrmCtePrincipal(FCtePrincipal), TCmpMenuImage(FCmpMenuImg) do
   begin
     pnlBackMenu.Width := 270;
-    FCmpMenuImg.Image1.OnClick := OnClickMenuImage;
-    FCmpMenuImg.Parent := pnlTopMenu;
-    Image1.OnClick := OnClickLogoImage;
-    FMenuPrincipal.Parent := pnlMenu;
+    with TCmpMenuImage(FCmpMenuImg) do
+    begin
+      ImageMenu.OnClick := OnClickMenuImage;
+      FCmpMenuImg.Parent := pnlTopMenu;
+    end;
+    TCmpTopLogo(FCmpTopLogo).Image1.OnClick := OnClickLogoImage;
+    TFormMenuPrincipal(FMenuPrincipal).Parent := pnlMenu;
     CloseForms;
 
     if Assigned(FMenuItensImagens) then
     begin
       if FMenuItensImagens.Showing then
       begin
-        FMenuPrincipal.Close;
+        TFormMenuPrincipal(FMenuPrincipal).Close;
       end;
     end
     else
-      FMenuPrincipal.Show;
-    Show;
+      TFormMenuPrincipal(FMenuPrincipal).Show;
+    TfrmCtePrincipal(FCtePrincipal).Show;
   end;
+  FCmpTopLogo.Show;
   FCmpMenuImg.Show;
   FCmpCardInfoUser.Show;
   FCmpTituloOpcao.Show;
@@ -331,7 +340,7 @@ end;
 
 procedure TControllerPrincipal.OnClickLogoImage(Sender: TObject);
 begin
-  if FCmpTituloOpcao.lblTitulo.Caption = 'SEDF - Início' then
+  if TCmpTLabelTitulo(FCmpTituloOpcao).lblTitulo.Caption = 'SEDF - Início' then
     Exit;
   with TFormMenuPrincipal(FMenuPrincipal) do
   begin
@@ -344,13 +353,13 @@ end;
 procedure TControllerPrincipal.OnClickMenuImage(Sender: TObject);
 begin
   CloseMenus(False);
-  if FCmpTituloOpcao.lblTitulo.Caption = 'SEDF - Início' then
+  if TCmpTLabelTitulo(FCmpTituloOpcao).lblTitulo.Caption = 'SEDF - Início' then
   begin
     SetActiveDefaultImage;
   end;
-  with FCtePrincipal do
+  with TfrmCtePrincipal(FCtePrincipal) do
   begin
-    if FMenuPrincipal.Showing then
+    if TFormMenuPrincipal(FMenuPrincipal).Showing then
     begin
       if not Assigned(aFormsCte[Ord(tpMenuItensImagens)]) then
       begin

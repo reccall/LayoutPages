@@ -19,7 +19,7 @@ uses
 
 type
   TCmpMenuImage = class(TFormDefault)
-    Image1: TImage;
+    ImageMenu: TImage;
     lblMenu: TLabel;
   private
     { Private declarations }
