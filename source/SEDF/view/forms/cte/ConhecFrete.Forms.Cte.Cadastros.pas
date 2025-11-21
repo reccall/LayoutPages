@@ -1,4 +1,4 @@
-unit ConhecFrete.Forms.Cte.CadastroFornecedores;
+unit ConhecFrete.Forms.Cte.Cadastros;
 
 interface
 
@@ -16,18 +16,18 @@ uses
   ,Vcl.ExtCtrls
   ,Vcl.StdCtrls
   ,dxGDIPlusClasses
-  ,ConhecFrete.Controller.Cadastros.Fornecedores
+  ,ConhecFrete.Controller.Cadastros
   ,ConhecFrete.Model.Types.Constantes
   ,LayoutPages.View.Forms.CadastroPrincipal;
 
 type
-  TFormCadastrosFornecedores = class(TFormCadastrosPrincipal)
+  TFormCteCadastros = class(TFormCadastrosPrincipal)
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    FController :IControllerCadastrosFornecedores;
+    FController :IControllerCadastros;
     constructor Create(pArrayFormsCte :array of TForm); overload;
   end;
 
@@ -35,16 +35,16 @@ implementation
 
 {$R *.dfm}
 
-{ TFormCadastrosFornecedores }
+{ TFormCteCadastros }
 
-constructor TFormCadastrosFornecedores.Create(pArrayFormsCte: array of TForm);
+constructor TFormCteCadastros.Create(pArrayFormsCte :array of TForm);
 begin
-  pArrayFormsCte[Ord(tpCadastroFornecedores)] := Self;
+  pArrayFormsCte[Ord(tpCteCadastros)] := Self;
   Inherited Create(nil);
-  FController := TControllerCadastrosFornecedores.New(pArrayFormsCte);
+  FController := TControllerCadastros.New(pArrayFormsCte);
 end;
 
-procedure TFormCadastrosFornecedores.FormShow(Sender: TObject);
+procedure TFormCteCadastros.FormShow(Sender: TObject);
 begin
   inherited;
   FController.Iniciar;

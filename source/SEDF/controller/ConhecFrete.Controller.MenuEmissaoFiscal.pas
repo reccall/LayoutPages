@@ -42,6 +42,7 @@ type
 
     procedure CloseForms(pParam :TpOpcaoMenuEmissaoFis);
     function GetFormMenuCadastros :TForm;
+    procedure IniciarAmbiente(pSender :TObject);
   public
   class function New(pArrayForms: array of TForm) :IControllerMenuEmissaoFiscal overload;
     constructor Create(pArrayForms: array of TForm); overload;
@@ -58,47 +59,27 @@ uses
   ,ConhecFrete.Forms.Cte.MenuCadastros
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
   ,ConhecFrete.Forms.Cte.MenuItensImagens
+  ,ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo;
 
 { TControllerMenuEmissaoFiscal }
 
 procedure TControllerMenuEmissaoFiscal.CloseForms(pParam :TpOpcaoMenuEmissaoFis);
 begin
-  if Assigned(aFormsCte[Ord(tpCadastroMarcas)]) then
+  if Assigned(aFormsCte[Ord(tpCteCadastros)]) then
   begin
-    if aFormsCte[Ord(tpCadastroMarcas)].Showing then
-      aFormsCte[Ord(tpCadastroMarcas)].Close;
+    with TFormCteCadastros(aFormsCte[Ord(tpCteCadastros)]) do
+    begin
+      if Showing then
+      begin
+        FController.SetFormOwner(tpFDefault);
+        FController.ResetComponentsItens;
+        aFormsCte[Ord(tpCmpCabCadastros)].Close;
+        Close;
+      end;
+    end;
   end;
-  if Assigned(aFormsCte[Ord(tpCadastroClientes)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroClientes)].Showing then
-      aFormsCte[Ord(tpCadastroClientes)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroProduto)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroProduto)].Showing then
-      aFormsCte[Ord(tpCadastroProduto)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroServicos)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroServicos)].Showing then
-      aFormsCte[Ord(tpCadastroServicos)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroFornecedores)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroFornecedores)].Showing then
-      aFormsCte[Ord(tpCadastroFornecedores)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroTransportadoras)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroTransportadoras)].Showing then
-      aFormsCte[Ord(tpCadastroTransportadoras)].Close;
-  end;
-  if Assigned(aFormsCte[Ord(tpCadastroUnidadesDeMedida)]) then
-  begin
-    if aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Showing then
-      aFormsCte[Ord(tpCadastroUnidadesDeMedida)].Close;
-  end;
+
   case pParam of
     tpMenuNFe:
     begin
@@ -198,6 +179,51 @@ begin
   end;
 end;
 
+procedure TControllerMenuEmissaoFiscal.IniciarAmbiente(pSender :TObject);
+begin
+  CloseForms(tpMenuNFCe);
+  with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
+  begin
+    if TPanel(pSender).Name = 'pnlNFCe' then
+      SetOpcaoMenuItem(pnlNFCe)
+    else
+    if TPanel(pSender).Name = 'pnlCte' then
+      SetOpcaoMenuItem(pnlCte)
+    else
+    if TPanel(pSender).Name = 'pnlNFe' then
+      SetOpcaoMenuItem(pnlNFe)
+    else
+    if TPanel(pSender).Name = 'pnlNFSe' then
+      SetOpcaoMenuItem(pnlNFSe);
+
+    Close;
+  end;
+
+  FMenuCadastros := GetFormMenuCadastros;
+  if Assigned(FMenuCadastros) then
+  begin
+    with TFormMenuCadastros(FMenuCadastros) do
+    begin
+      FController.SetOpcaoMenuItemCad(TPanel(pSender));
+    end;
+  end;
+
+  if not Assigned(FMenuPrincipal) then
+  begin
+    FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
+  end;
+
+  with TFormMenuPrincipal(FMenuPrincipal) do
+  begin
+    FController.SetItemActive(pnlEmissor);
+  end;
+
+  with TFormMenuItensImagens(FMenuItensImagens) do
+  begin
+    FController.SetActiveImage(ImgEmissaoFiscal);
+  end;
+end;
+
 class function TControllerMenuEmissaoFiscal.New(pArrayForms: array of TForm): IControllerMenuEmissaoFiscal;
 begin
   Result := Self.Create(pArrayForms);
@@ -207,31 +233,12 @@ procedure TControllerMenuEmissaoFiscal.OnClickInicioCte(Sender: TObject);
 begin
   Screen.Cursor := crHourGlass;
   try
-    CloseForms(tpOpcaoMenuCte);
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      SetOpcaoMenuItem(pnlCte);
-      Close;
-    end;
+    IniciarAmbiente(Sender);
 
-    FMenuCadastros := GetFormMenuCadastros;
-    if Assigned(FMenuCadastros) then
+    if not Assigned(aFormsCte[Ord(tpFormCte)]) then
     begin
-      with TFormMenuCadastros(FMenuCadastros) do
-      begin
-        FController.SetOpcaoMenuItemCad(TPanel(Sender));
-      end;
-    end;
-
-    if not Assigned(FFormCte) then
-    begin
+      aFormsCte[Ord(tpFormCte)] := TfrmCteOpcoesInicio.Create(aFormsCte);
       FFormCte := aFormsCte[Ord(tpFormCte)];
-
-      if not Assigned(FFormCte) then
-      begin
-        FFormCte := TfrmCteOpcoesInicio.Create(aFormsCte);
-        aFormsCte[Ord(tpFormCte)] := FFormCte;
-      end;
     end;
 
     if (FFormCte.Showing) then
@@ -243,20 +250,6 @@ begin
     begin
       if FOpcoesCteItens.Showing then
         Exit;
-    end;
-
-    with TFormMenuItensImagens(FMenuItensImagens) do
-    begin
-      FController.SetActiveImage(ImgEmissaoFiscal);
-    end;
-
-    if not Assigned(FMenuPrincipal) then
-    begin
-      FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
-    end;
-    with TFormMenuPrincipal(FMenuPrincipal) do
-    begin
-      FController.SetItemActive(pnlEmissor);
     end;
 
     with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
@@ -272,13 +265,7 @@ begin
       if not Assigned(FOpcoesCteItens) then
         Exit;
     end;
-
     FOpcoesCteItens.Close;
-    if not Assigned(FFormCte) then
-    begin
-      FFormCte := aFormsCte[Ord(tpFormCte)];
-    end;
-
     TfrmCteOpcoesInicio(FFormCte).FController.Iniciar;
   finally
     Screen.Cursor := crDefault;
@@ -289,26 +276,7 @@ procedure TControllerMenuEmissaoFiscal.OnClickInicioNFCe(Sender: TObject);
 begin
   try
     Screen.Cursor := crHourGlass;
-    CloseForms(tpMenuNFCe);
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      SetOpcaoMenuItem(pnlNFCe);
-      Close;
-    end;
-
-    FMenuCadastros := GetFormMenuCadastros;
-    if Assigned(FMenuCadastros) then
-    begin
-      with TFormMenuCadastros(FMenuCadastros) do
-      begin
-        FController.SetOpcaoMenuItemCad(TPanel(Sender));
-      end;
-    end;
-
-    with TFormMenuPrincipal(FMenuPrincipal) do
-    begin
-      FController.SetItemActive(pnlEmissor);
-    end;
+    IniciarAmbiente(Sender);
     with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
     begin
       pnlMainTopRight.Visible := False;
@@ -323,26 +291,7 @@ procedure TControllerMenuEmissaoFiscal.OnClickInicioNFe(Sender: TObject);
 begin
   try
     Screen.Cursor := crHourGlass;
-    CloseForms(tpMenuNFe);
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      SetOpcaoMenuItem(pnlNFe);
-      Close;
-    end;
-
-    FMenuCadastros := GetFormMenuCadastros;
-    if Assigned(FMenuCadastros) then
-    begin
-      with TFormMenuCadastros(FMenuCadastros) do
-      begin
-        FController.SetOpcaoMenuItemCad(TPanel(Sender));
-      end;
-    end;
-
-    with TFormMenuPrincipal(FMenuPrincipal) do
-    begin
-      FController.SetItemActive(pnlEmissor);
-    end;
+    IniciarAmbiente(Sender);
     with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
     begin
       pnlMainTopRight.Visible := False;
@@ -357,26 +306,7 @@ procedure TControllerMenuEmissaoFiscal.OnClickInicioNFSe(Sender: TObject);
 begin
   try
     Screen.Cursor := crHourGlass;
-    CloseForms(tpMenuNFSe);
-    with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
-    begin
-      SetOpcaoMenuItem(pnlNFSe);
-      Close;
-    end;
-
-    FMenuCadastros := GetFormMenuCadastros;
-    if Assigned(FMenuCadastros) then
-    begin
-      with TFormMenuCadastros(FMenuCadastros) do
-      begin
-        FController.SetOpcaoMenuItemCad(TPanel(Sender));
-      end;
-    end;
-
-    with TFormMenuPrincipal(FMenuPrincipal) do
-    begin
-      FController.SetItemActive(pnlEmissor);
-    end;
+    IniciarAmbiente(Sender);
     with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
     begin
       pnlMainTopRight.Visible := False;

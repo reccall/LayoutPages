@@ -1,4 +1,4 @@
-unit ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
+unit ConhecFrete.View.Componentes.BarraItemCadastroFornecedores;
 
 interface
 
@@ -6,29 +6,28 @@ uses
    Winapi.Windows
   ,Winapi.Messages
   ,System.SysUtils
+  ,System.StrUtils
   ,System.Variants
   ,System.Classes
   ,Vcl.Graphics
   ,Vcl.Controls
   ,Vcl.Forms
-  ,Vcl.Dialogs
-  ,Vcl.AppEvnts
   ,Vcl.ExtCtrls
+  ,Vcl.Dialogs
   ,Vcl.StdCtrls
   ,dxGDIPlusClasses
   ,LayoutPages.View.Forms.FormDefault;
 
 type
-  TCmpBarraItemCadastroProdutos = class(TFormDefault)
+  TCmpBarraItemCadastroFornecedores = class(TFormDefault)
     pnlMainCad: TPanel;
     lblCodigo: TLabel;
     lblDesc: TLabel;
-    lblVl: TLabel;
     lblAtivo: TLabel;
-    pnlLine: TPanel;
     imgEdit: TImage;
     imgTrash: TImage;
     imgIndice: TImage;
+    pnlLine: TPanel;
     chkItem: TCheckBox;
     procedure lblCodigoMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
@@ -43,14 +42,14 @@ implementation
 
 {$R *.dfm}
 
-procedure TCmpBarraItemCadastroProdutos.lblCodigoMouseLeave(Sender: TObject);
+procedure TCmpBarraItemCadastroFornecedores.lblCodigoMouseLeave(Sender: TObject);
 begin
   inherited;
   if not chkItem.Checked then
     OnMouseLeaveItem(pnlMainCad);
 end;
 
-procedure TCmpBarraItemCadastroProdutos.lblCodigoMouseMove(Sender: TObject;
+procedure TCmpBarraItemCadastroFornecedores.lblCodigoMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   inherited;

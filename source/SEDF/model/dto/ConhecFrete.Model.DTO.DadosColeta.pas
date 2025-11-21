@@ -1,12 +1,3 @@
-{**************************************************}
-{                                                  }
-{                     Winthor                      }
-{                                                  }
-{ Classe que compõe o model DadosColeta            }
-{ para gerar o CTe Simplificado                    }
-{ Autor: Luiz Fernando Cândido Machado             }
-{ Data: 15/10/2025                                 }
-{**************************************************}
 unit ConhecFrete.Model.DTO.DadosColeta;
 
 interface
@@ -14,8 +5,6 @@ interface
 uses
    SysUtils
    ,Ora;
-  //,untDMPrincipal
-  //,uDMLoginODAC;
 
 type
   TDadosColeta = class

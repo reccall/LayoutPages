@@ -1,4 +1,4 @@
-unit LayoutPages.View.Componentes.MenuImage;
+unit LayoutPages.View.Componentes.CabecalhoCadastroPrincipal;
 
 interface
 
@@ -6,21 +6,29 @@ uses
    Winapi.Windows
   ,Winapi.Messages
   ,System.SysUtils
+  ,System.StrUtils
   ,System.Variants
   ,System.Classes
   ,Vcl.Graphics
   ,Vcl.Controls
   ,Vcl.Forms
+  ,Vcl.ExtCtrls
   ,Vcl.Dialogs
   ,Vcl.StdCtrls
-  ,Vcl.ExtCtrls
   ,dxGDIPlusClasses
   ,LayoutPages.View.Forms.FormDefault;
 
 type
-  TCmpMenuImage = class(TFormDefault)
-    ImageMenu: TImage;
-    lblMenu: TLabel;
+  TCmpCabCadastros = class(TFormDefault)
+    pnlCadTop: TPanel;
+    pnlConsulta: TPanel;
+    lblConsulta: TLabel;
+    pnlRegiaoPesq: TPanel;
+    imgLupa: TImage;
+    pnlIncluirRegistro: TPanel;
+    lblInserir: TLabel;
+    Image1: TImage;
+    pnlControlGrid: TPanel;
   private
     { Private declarations }
   public

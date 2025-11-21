@@ -1,13 +1,3 @@
-{**********************************************}
-{                                              }
-{                  Winthor                     }
-{                                              }
-{ Classe destinada a acessar os registros      }
-{ que compõe o CTe Simplificado                }
-{ Autor: Luiz Fernando Cândido Machado         }
-{ Data: 15/10/2025                             }
-{**********************************************}
-
 unit ConhecFrete.Model.DAO.Simplificado;
 
 interface

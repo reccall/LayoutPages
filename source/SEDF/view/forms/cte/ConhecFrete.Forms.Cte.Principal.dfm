@@ -2,7 +2,6 @@ inherited frmCtePrincipal: TfrmCtePrincipal
   Caption = 'frmCtePrincipal'
   ClientHeight = 511
   ClientWidth = 908
-  ExplicitLeft = 8
   ExplicitWidth = 908
   ExplicitHeight = 511
   PixelsPerInch = 96
@@ -14,9 +13,9 @@ inherited frmCtePrincipal: TfrmCtePrincipal
     Height = 382
     BevelOuter = bvNone
     Caption = ''
-    ExplicitLeft = 231
+    ExplicitLeft = 180
     ExplicitTop = 129
-    ExplicitWidth = 677
+    ExplicitWidth = 728
     ExplicitHeight = 382
     inherited pnlMainTopB: TPanel
       Left = 0
@@ -27,7 +26,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       Caption = ''
       ExplicitLeft = 0
       ExplicitTop = 0
-      ExplicitWidth = 677
+      ExplicitWidth = 728
       ExplicitHeight = 64
       object pnlMainTopRight: TPanel [0]
         Left = 341
@@ -37,7 +36,6 @@ inherited frmCtePrincipal: TfrmCtePrincipal
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitLeft = 290
         object pnlBotoes: TPanel
           Left = 16
           Top = 6
@@ -52,7 +50,6 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       inherited pnlMainTopLeft: TPanel
         Left = 0
         Top = 0
-        Width = 40
         Height = 64
         BevelOuter = bvNone
         Caption = ''
@@ -64,7 +61,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
         ParentFont = False
         TabOrder = 1
         ExplicitLeft = 0
-        ExplicitWidth = 40
+        ExplicitTop = 0
         ExplicitHeight = 64
       end
       inherited pnlMainTop: TPanel
@@ -74,15 +71,13 @@ inherited frmCtePrincipal: TfrmCtePrincipal
         Height = 64
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitLeft = 40
-        ExplicitWidth = 250
+        ExplicitWidth = 301
         ExplicitHeight = 64
       end
     end
     inherited pnlMainLeft: TPanel
       Left = 0
       Top = 64
-      Width = 40
       Height = 318
       BevelOuter = bvNone
       Caption = ''
@@ -91,7 +86,6 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       ParentBackground = False
       ExplicitLeft = 0
       ExplicitTop = 64
-      ExplicitWidth = 40
       ExplicitHeight = 318
     end
   end
@@ -101,20 +95,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
     BevelOuter = bvNone
     ExplicitWidth = 908
     ExplicitHeight = 129
-    inherited Image1: TImage
-      Width = 180
-      Height = 160
-      Cursor = crHandPoint
-      ExplicitWidth = 180
-      ExplicitHeight = 160
-    end
-    inherited pnlLineOpcoes: TPanel
-      Left = 12
-      Top = 107
-      ExplicitLeft = 12
-      ExplicitTop = 107
-    end
-    object pnlTopLeft: TPanel
+    object pnlTopLeft: TPanel [0]
       Left = 369
       Top = 0
       Width = 539
@@ -123,7 +104,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       BevelOuter = bvNone
       Color = clWhite
       ParentBackground = False
-      TabOrder = 1
+      TabOrder = 0
       object pnlUserInfo: TPanel
         Left = 120
         Top = 17
@@ -144,6 +125,16 @@ inherited frmCtePrincipal: TfrmCtePrincipal
         ParentBackground = False
         TabOrder = 1
       end
+    end
+    inherited pnlLogo: TPanel
+      Left = 0
+      Top = 0
+      Height = 129
+      Caption = ''
+      TabOrder = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitHeight = 129
     end
   end
   inherited pnlBackMenu: TPanel [2]

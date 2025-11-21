@@ -13,7 +13,9 @@ uses
 type
   IControllerCadastrosUnidadesDeMedida = interface
   ['{A644751A-BEE8-41E3-8EB9-CE17234B8D85}']
-    procedure Iniciar;
+    procedure SetItensUnidadesDeMedida;
+    procedure ResetComponentsItens;
+    procedure OnClickCheckBox(Sender :TObject);
     procedure DestroyComponents;
   end;
 
@@ -22,12 +24,14 @@ type
     FFormCte :TForm;
     FCmpTituloPrincipal :TForm;
     FFormCadUnidadesDeMedida :TForm;
-    FCmpTituloCadProd :TForm;
+    FCmpTitulo :TForm;
+    FCmpFormGrid :TForm;
+    FCmpControlGrid :TForm;
 
-    aCmpItensCadProd :array of TForm;
-    procedure Iniciar;
+    aCmpItensCadUnidadesDeMedida :array of TForm;
     procedure DestroyComponents;
-    procedure SetItensProdutos;
+    procedure SetItensUnidadesDeMedida;
+    procedure ResetComponentsItens;
     procedure OnClickCheckBox(Sender :TObject);
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosUnidadesDeMedida overload;
@@ -38,11 +42,13 @@ end;
 implementation
 
 uses
-   ConhecFrete.Forms.Cte.CadastroUnidadesDeMedida
+   ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
-  ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
-  ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
+  ,LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.ControlGrid
+  ,LayoutPages.View.Componentes.TituloDescricaoSimples
+  ,ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida;
 
 { TControllerCadastrosUnidadesDeMedida }
 
@@ -50,40 +56,21 @@ constructor TControllerCadastrosUnidadesDeMedida.Create(pArrayFormsCte :array of
 begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCadastroUnidadesDeMedida)];
-  FCmpTituloCadProd := TCmpBarraTituloCadastroProdutos.Create(nil);
+  FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCteCadastros)];
+  FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
 destructor TControllerCadastrosUnidadesDeMedida.Destroy;
 begin
-  with TFormCadastrosUnidadesDeMedida(FFormCadUnidadesDeMedida) do
-  begin
-    if Assigned(FController) then
-      FreeAndNil(FController);
-  end;
+  inherited;
 end;
 
 procedure TControllerCadastrosUnidadesDeMedida.DestroyComponents;
 begin
-  FCmpTituloCadProd.Close;
-  FreeAndNil(FCmpTituloCadProd);
-end;
-
-procedure TControllerCadastrosUnidadesDeMedida.Iniciar;
-begin
-  Screen.Cursor := crHourGlass;
-  with TFormCadastrosUnidadesDeMedida(FFormCadUnidadesDeMedida) do
-  begin
-    MakeRounded(pnlConsulta,20);
-    MakeRounded(pnlRegiaoPesq,20);
-    MakeRounded(pnlTopMainCad,10);
-    FCmpTituloCadProd.Parent := pnlTopMainCad;
-    Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensProdutos;
-    Show;
-    FCmpTituloCadProd.Show;
-  end;
-  Screen.Cursor := crDefault;
+  FCmpTitulo.Close;
+  FreeAndNil(FCmpTitulo);
 end;
 
 class function TControllerCadastrosUnidadesDeMedida.New(pArrayFormsCte :array of TForm): IControllerCadastrosUnidadesDeMedida;
@@ -97,36 +84,60 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
-  for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+  for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
   begin
-    with TCmpBarraTituloCadastroProdutos(FCmpTituloCadProd),
-         TCmpBarraItemCadastroProdutos(aCmpItensCadProd[iIdx]) do
+    with TCmpTituloDescSimples(FCmpTitulo),
+         TCmpGridControl(FCmpControlGrid),
+         TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
     begin
-      //chkItem.Checked := chkTituloSelect.Checked;
-      case chkItem.Checked of
-        True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
-        False: OnMouseLeaveItem(pnlMainCad);
+      if Assigned(aCmpItensCadUnidadesDeMedida[iIdx]) then
+      begin
+        chkItem.Checked := chkControl.Checked;
+        case chkItem.Checked of
+          True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
+          False: OnMouseLeaveItem(pnlMainCad);
+        end;
       end;
     end;
   end;
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.SetItensProdutos;
+procedure TControllerCadastrosUnidadesDeMedida.ResetComponentsItens;
 var
   iIdx :Integer;
 begin
-  with TFormCadastrosUnidadesDeMedida(FFormCadUnidadesDeMedida) do
+  for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
   begin
-    SetLength(aCmpItensCadProd,20);
-    for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+    FreeAndNil(aCmpItensCadUnidadesDeMedida[iIdx]);
+  end;
+  aCmpItensCadUnidadesDeMedida := nil;
+end;
+
+procedure TControllerCadastrosUnidadesDeMedida.SetItensUnidadesDeMedida;
+var
+  iIdx :Integer;
+begin
+  with TFormCteCadastros(FFormCadUnidadesDeMedida), TCmpFormGrid(FCmpFormGrid) do
+  begin
+    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
+    FCmpTitulo.Parent := pnlCmpGridTop;
+    SetLength(aCmpItensCadUnidadesDeMedida,20);
+    for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
     begin
-      if not Assigned(aCmpItensCadProd[iIdx]) then
+      if not Assigned(aCmpItensCadUnidadesDeMedida[iIdx]) then
       begin
-        aCmpItensCadProd[iIdx] := TCmpBarraItemCadastroProdutos.Create(nil);
-        aCmpItensCadProd[iIdx].Parent := scrlbxMain;
+        aCmpItensCadUnidadesDeMedida[iIdx] := TCmpBarraItemCadastroUnidadesDeMedida.Create(nil);
+        with TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblCodigo.Caption := 'UN - '+FormatFloat('000000',High(aCmpItensCadUnidadesDeMedida) - iIdx);
+        end;
+        aCmpItensCadUnidadesDeMedida[iIdx].Parent := scrlbxCmpMain;
       end;
-      aCmpItensCadProd[iIdx].Show;
+      aCmpItensCadUnidadesDeMedida[iIdx].Show;
     end;
+    FCmpTitulo.Show;
+    FCmpFormGrid.Show;
   end;
 end;
 

@@ -13,7 +13,9 @@ uses
 type
   IControllerCadastrosServicos = interface
   ['{1924679B-498C-4482-AB31-D628C4D6743C}']
-    procedure Iniciar;
+    procedure SetItensServicos;
+    procedure OnClickCheckBox(Sender :TObject);
+    procedure ResetComponentsItens;
     procedure DestroyComponents;
   end;
 
@@ -22,14 +24,16 @@ type
     FFormCte :TForm;
     FCmpTituloPrincipal :TForm;
     FFormCadServicos :TForm;
-    FCmpTituloCadProd :TForm;
+    FCmpTitulo :TForm;
+    FCmpFormGrid :TForm;
+    FCmpControlGrid :TForm;
 
-    aCmpItensCadProd :array of TForm;
-    procedure Iniciar;
+    procedure ResetComponentsItens;
     procedure DestroyComponents;
-    procedure SetItensProdutos;
+    procedure SetItensServicos;
     procedure OnClickCheckBox(Sender :TObject);
   public
+    aCmpItensCadServ :array of TForm;
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosServicos overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
      destructor Destroy; override;
@@ -38,12 +42,14 @@ end;
 implementation
 
 uses
-   ConhecFrete.Forms.Cte.CadastroServicos
+   ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Forms.CadastroPrincipal
-  ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
-  ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
+  ,LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.ControlGrid
+  ,LayoutPages.View.Componentes.TituloDescricaoSimples
+  ,ConhecFrete.View.Componentes.BarraItemCadastroServicos;
 
 { TControllerCadastrosServicos }
 
@@ -51,13 +57,15 @@ constructor TControllerCadastrosServicos.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCte   := pArrayFormsCte[Ord(tpOwner)];
   FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
-  FFormCadServicos := pArrayFormsCte[Ord(tpCadastroServicos)];
-  FCmpTituloCadProd := TCmpBarraTituloCadastroProdutos.Create(nil);
+  FFormCadServicos := pArrayFormsCte[Ord(tpCteCadastros)];
+  FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
 end;
 
 destructor TControllerCadastrosServicos.Destroy;
 begin
-  with TFormCadastrosServicos(FFormCadServicos) do
+  with TFormCteCadastros(FFormCadServicos) do
   begin
     if Assigned(FController) then
       FreeAndNil(FController);
@@ -66,25 +74,10 @@ end;
 
 procedure TControllerCadastrosServicos.DestroyComponents;
 begin
-  FCmpTituloCadProd.Close;
-  FreeAndNil(FCmpTituloCadProd);
-end;
-
-procedure TControllerCadastrosServicos.Iniciar;
-begin
-  Screen.Cursor := crHourGlass;
-  with TFormCadastrosServicos(FFormCadServicos) do
-  begin
-    MakeRounded(pnlConsulta,20);
-    MakeRounded(pnlRegiaoPesq,20);
-    MakeRounded(pnlTopMainCad,10);
-    FCmpTituloCadProd.Parent := pnlTopMainCad;
-    Parent := TfrmCtePrincipal(FFormCte).pnlMain;
-    SetItensProdutos;
-    Show;
-    FCmpTituloCadProd.Show;
-  end;
-  Screen.Cursor := crDefault;
+  ResetComponentsItens;
+  FCmpTitulo.Close;
+  FreeAndNil(FCmpTitulo);
+  FCmpControlGrid.Close;
 end;
 
 class function TControllerCadastrosServicos.New(pArrayFormsCte :array of TForm): IControllerCadastrosServicos;
@@ -98,36 +91,61 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
-  for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+  for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
   begin
-    with TCmpBarraTituloCadastroProdutos(FCmpTituloCadProd),
-         TCmpBarraItemCadastroProdutos(aCmpItensCadProd[iIdx]) do
+    with TCmpTituloDescSimples(FCmpTitulo),
+         TCmpGridControl(FCmpControlGrid),
+         TCmpBarraItemCadastroServicos(aCmpItensCadServ[iIdx]) do
     begin
-      //chkItem.Checked := chkTituloSelect.Checked;
-      case chkItem.Checked of
-        True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
-        False: OnMouseLeaveItem(pnlMainCad);
+      if Assigned(aCmpItensCadServ[iIdx]) then
+      begin
+        chkItem.Checked := chkControl.Checked;
+        case chkItem.Checked of
+          True:  OnMouseMoveItem(pnlMainCad,Shift,X,Y);
+          False: OnMouseLeaveItem(pnlMainCad);
+        end;
       end;
     end;
   end;
 end;
 
-procedure TControllerCadastrosServicos.SetItensProdutos;
+procedure TControllerCadastrosServicos.ResetComponentsItens;
 var
   iIdx :Integer;
 begin
-  with TFormCadastrosServicos(FFormCadServicos) do
+  FCmpTitulo.Close;
+  for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
   begin
-    SetLength(aCmpItensCadProd,20);
-    for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+    FreeAndNil(aCmpItensCadServ[iIdx]);
+  end;
+  aCmpItensCadServ := nil;
+end;
+
+procedure TControllerCadastrosServicos.SetItensServicos;
+var
+  iIdx :Integer;
+begin
+  with TFormCteCadastros(FFormCadServicos), TCmpFormGrid(FCmpFormGrid) do
+  begin
+    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
+    FCmpTitulo.Parent := pnlCmpGridTop;
+    SetLength(aCmpItensCadServ,20);
+    for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
     begin
-      if not Assigned(aCmpItensCadProd[iIdx]) then
+      if not Assigned(aCmpItensCadServ[iIdx]) then
       begin
-        aCmpItensCadProd[iIdx] := TCmpBarraItemCadastroProdutos.Create(nil);
-        aCmpItensCadProd[iIdx].Parent := scrlbxMain;
+        aCmpItensCadServ[iIdx] := TCmpBarraItemCadastroServicos.Create(nil);
+        with TCmpBarraItemCadastroServicos(aCmpItensCadServ[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblCodigo.Caption := 'SV - '+FormatFloat('000000',High(aCmpItensCadServ) - iIdx);
+        end;
+        aCmpItensCadServ[iIdx].Parent := scrlbxCmpMain;
       end;
-      aCmpItensCadProd[iIdx].Show;
+      aCmpItensCadServ[iIdx].Show;
     end;
+    FCmpTitulo.Show;
+    FCmpFormGrid.Show;
   end;
 end;
 

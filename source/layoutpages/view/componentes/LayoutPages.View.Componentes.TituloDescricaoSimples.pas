@@ -1,26 +1,28 @@
-unit LayoutPages.View.Componentes.MenuImage;
+unit LayoutPages.View.Componentes.TituloDescricaoSimples;
 
 interface
 
 uses
-   Winapi.Windows
+  Winapi.Windows
   ,Winapi.Messages
   ,System.SysUtils
+  ,System.StrUtils
   ,System.Variants
   ,System.Classes
   ,Vcl.Graphics
   ,Vcl.Controls
   ,Vcl.Forms
+  ,Vcl.ExtCtrls
   ,Vcl.Dialogs
   ,Vcl.StdCtrls
-  ,Vcl.ExtCtrls
   ,dxGDIPlusClasses
   ,LayoutPages.View.Forms.FormDefault;
 
 type
-  TCmpMenuImage = class(TFormDefault)
-    ImageMenu: TImage;
-    lblMenu: TLabel;
+  TCmpTituloDescSimples = class(TFormDefault)
+    lblAtivo: TLabel;
+    lblDesc: TLabel;
+    lblCodigo: TLabel;
   private
     { Private declarations }
   public
