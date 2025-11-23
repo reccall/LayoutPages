@@ -23,7 +23,7 @@ inherited CmpCabCadastros: TCmpCabCadastros
       ParentBackground = False
       TabOrder = 0
       object lblConsulta: TLabel
-        Left = 373
+        Left = 385
         Top = 7
         Width = 79
         Height = 34

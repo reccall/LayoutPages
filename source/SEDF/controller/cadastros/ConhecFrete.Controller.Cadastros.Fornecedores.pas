@@ -5,9 +5,11 @@ interface
 uses
    Forms
   ,Graphics
+  ,Dialogs
   ,System.Classes
   ,System.SysUtils
   ,Vcl.Controls
+  ,ConhecFrete.Controller.Consultas
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -15,24 +17,31 @@ type
   ['{9AAAEAD9-D607-439E-A431-409DA5605D4D}']
     procedure SetItensFornecedores;
     procedure ResetComponentsItens;
-    procedure OnClickCheckBox(Sender :TObject);
     procedure DestroyComponents;
+    procedure OnClickConsulta(Sender: TObject);
+    procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
   end;
 
   TControllerCadastrosFornecedores = class(TInterfacedObject, IControllerCadastrosFornecedores)
   private
-    FFormCte :TForm;
     FCmpTitulo :TForm;
-    FCmpTituloPrincipal :TForm;
     FFormCadFornecedores :TForm;
     FCmpFormGrid :TForm;
+    FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
+
+    FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadFornecedores :array of TForm;
     procedure DestroyComponents;
     procedure SetItensFornecedores;
     procedure ResetComponentsItens;
+    procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
+    procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
+                                 Shift: TShiftState);
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosFornecedores overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
@@ -46,6 +55,7 @@ uses
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroFornecedores;
@@ -54,12 +64,17 @@ uses
 
 constructor TControllerCadastrosFornecedores.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormCte   := pArrayFormsCte[Ord(tpOwner)];
-  FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadFornecedores := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
+
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 destructor TControllerCadastrosFornecedores.Destroy;
@@ -71,6 +86,19 @@ procedure TControllerCadastrosFornecedores.DestroyComponents;
 begin
   FCmpTitulo.Close;
   FreeAndNil(FCmpTitulo);
+end;
+
+procedure TControllerCadastrosFornecedores.edtPesquisaKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  case Key of
+    13: OnClickConsulta(Sender);
+  end;
+end;
+
+procedure TControllerCadastrosFornecedores.OnClickInserirRegistro(Sender :TObject);
+begin
+
 end;
 
 class function TControllerCadastrosFornecedores.New(pArrayFormsCte :array of TForm): IControllerCadastrosFornecedores;
@@ -100,6 +128,12 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TControllerCadastrosFornecedores.OnClickConsulta(Sender: TObject);
+begin
+  FControllerConsultas.OnClickConsulta(Sender);
+  ShowMessage('Up Fornecedores');
 end;
 
 procedure TControllerCadastrosFornecedores.ResetComponentsItens;

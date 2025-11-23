@@ -7,6 +7,7 @@ uses
   ,Winapi.Windows
   ,Winapi.Messages
   ,Graphics
+  ,Dialogs
   ,System.Classes
   ,System.SysUtils
   ,Vcl.Controls
@@ -37,10 +38,10 @@ type
     FFormCte :TForm;
     FCmpFormGrid :TForm;
     FFormCadastros :TForm;
+    FCmpEditTexto :TForm;
     FCmpCabCadastro :TForm;
     FCmpControlGrid :TForm;
-    FCmpTituloPrincipal :TForm;
-    FCmpTituloDescSimples :TForm;
+    FPanelConsultaPesq :TForm;
 
     FControllerCadastrosMarcas :IControllerCadastrosMarcas;
     FControllerCadastrosServicos :IControllerCadastrosServicos;
@@ -54,8 +55,11 @@ type
     procedure ResetComponentsItens;
     procedure DestroyComponents;
     procedure SetInterfaces;
+    procedure SetVariaveisArray;
     procedure SetArrayItens;
+    procedure OnClickConsulta(Sender :TObject);
     procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
     function GetFormOwner :TpForms;
     function SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
     procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
@@ -72,9 +76,11 @@ uses
    ConhecFrete.Forms.Cte.Cadastros
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TLabelTitulo
+  ,LayoutPages.View.Componentes.PanelConsultaPesq
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,LayoutPages.View.Componentes.CabecalhoCadastroPrincipal;
 
@@ -85,31 +91,12 @@ begin
   FFormCte            := pArrayFormsCte[Ord(tpOwner)];
   FFormCadastros      := pArrayFormsCte[Ord(tpCteCadastros)];
   FTpOwnerCadastro    := tpFDefault;
-  FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
 
-  if not Assigned(aFormsCte[Ord(tpCmpFormGrid)]) then
-  begin
-    aFormsCte[Ord(tpCmpFormGrid)] := TCmpFormGrid.Create(nil);
-  end;
-  FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
-
-  if not Assigned(aFormsCte[Ord(tpCmpCabCadastros)]) then
-  begin
-    aFormsCte[Ord(tpCmpCabCadastros)] := TCmpCabCadastros.Create(nil);
-  end;
-  FCmpCabCadastro := aFormsCte[Ord(tpCmpCabCadastros)];
-
-  if not Assigned(aFormsCte[Ord(tpCmpControlGrid)]) then
-  begin
-    aFormsCte[Ord(tpCmpControlGrid)] := TCmpGridControl.Create(nil);
-  end;
-  FCmpControlGrid := aFormsCte[Ord(tpCmpControlGrid)];
-
-  if not Assigned(aFormsCte[Ord(tpCmpTituloDescSimples)]) then
-  begin
-    aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
-  end;
-  FCmpTituloDescSimples := aFormsCte[Ord(tpCmpTituloDescSimples)];
+  aFormsCte[Ord(tpCmpFormGrid)]          := TCmpFormGrid.Create(nil);
+  aFormsCte[Ord(tpCmpEditTexto)]         := TCmpEditTexto.Create(nil);
+  aFormsCte[Ord(tpCmpControlGrid)]       := TCmpGridControl.Create(nil);
+  aFormsCte[Ord(tpCmpCabCadastros)]      := TCmpCabCadastros.Create(nil);
+  aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
 end;
 
 class function TControllerCadastros.New(pArrayFormsCte :array of TForm): IControllerCadastros;
@@ -121,14 +108,26 @@ procedure TControllerCadastros.Iniciar;
 begin
   Screen.Cursor := crHourGlass;
   SetInterfaces;
+  SetVariaveisArray;
   with TFormCteCadastros(FFormCadastros) do
   begin
-    FCmpCabCadastro.Parent := pnlCadTop;
-    with TCmpCabCadastros(FCmpCabCadastro) do
+    if not FCmpCabCadastro.Showing then
     begin
-      FCmpControlGrid.Parent := pnlControlGrid;
-      MakeRounded(pnlConsulta,20);
-      MakeRounded(pnlRegiaoPesq,20);
+      FCmpCabCadastro.Parent := pnlCadTop;
+      with TCmpCabCadastros(FCmpCabCadastro) do
+      begin
+        FCmpControlGrid.Parent := pnlControlGrid;
+        MakeRounded(pnlConsulta,20);
+        MakeRounded(pnlRegiaoPesq,20);
+        imgLupa.OnClick := OnClickConsulta;
+        pnlIncluirRegistro.OnClick := OnClickInserirRegistro;
+      end;
+    end;
+    with TCmpCabCadastros(FCmpCabCadastro), TCmpEditTexto(FCmpEditTexto) do
+    begin
+
+      FCmpEditTexto.Parent := pnlRegiaoPesq;
+      edtPesquisa.Text := EmptyStr;
     end;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     SetArrayItens;
@@ -137,9 +136,12 @@ begin
       chkControl.Checked := False;
       chkControl.OnClick := OnClickCheckBox;
     end;
+
     Show;
     FCmpControlGrid.Show;
     FCmpCabCadastro.Show;
+    FCmpEditTexto.Show;
+    FCmpControlGrid.SetFocus;
     with TCmpFormGrid(FCmpFormGrid) do
     begin
       ApplicationEvents1.OnMessage := ApplicationEvents1Message;
@@ -160,6 +162,34 @@ begin
     tpCadastroFornecedores:     FControllerCadastrosFornecedores.OnClickCheckBox(Sender);
     tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.OnClickCheckBox(Sender);
     tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.OnClickCheckBox(Sender);
+  end;
+end;
+
+procedure TControllerCadastros.OnClickConsulta(Sender: TObject);
+begin
+  Screen.Cursor := crHourGlass;
+  case FTpOwnerCadastro of
+    tpCadastroMarcas:           FControllerCadastrosMarcas.OnClickConsulta(Sender);
+    tpCadastroProdutos:         FControllerCadastrosProdutos.OnClickConsulta(Sender);
+    tpCadastroClientes:         FControllerCadastrosClientes.OnClickConsulta(Sender);
+    tpCadastroServicos:         FControllerCadastrosServicos.OnClickConsulta(Sender);
+    tpCadastroFornecedores:     FControllerCadastrosFornecedores.OnClickConsulta(Sender);
+    tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.OnClickConsulta(Sender);
+    tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.OnClickConsulta(Sender);
+  end;
+  Screen.Cursor := crDefault;
+end;
+
+procedure TControllerCadastros.OnClickInserirRegistro(Sender: TObject);
+begin
+  case FTpOwnerCadastro of
+    tpCadastroMarcas:           FControllerCadastrosMarcas.OnClickInserirRegistro(Sender);
+    tpCadastroProdutos:         FControllerCadastrosProdutos.OnClickInserirRegistro(Sender);
+    tpCadastroClientes:         FControllerCadastrosClientes.OnClickInserirRegistro(Sender);
+    tpCadastroServicos:         FControllerCadastrosServicos.OnClickInserirRegistro(Sender);
+    tpCadastroFornecedores:     FControllerCadastrosFornecedores.OnClickInserirRegistro(Sender);
+    tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.OnClickInserirRegistro(Sender);
+    tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.OnClickInserirRegistro(Sender);
   end;
 end;
 
@@ -241,6 +271,18 @@ begin
   end;
 end;
 
+procedure TControllerCadastros.SetVariaveisArray;
+begin
+  if not Assigned(FCmpFormGrid) then
+    FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
+  if not Assigned(FCmpCabCadastro) then
+    FCmpCabCadastro := aFormsCte[Ord(tpCmpCabCadastros)];
+  if not Assigned(FCmpControlGrid) then
+    FCmpControlGrid := aFormsCte[Ord(tpCmpControlGrid)];
+  if not Assigned(FCmpEditTexto) then
+    FCmpEditTexto := aFormsCte[Ord(tpCmpEditTexto)];
+end;
+
 destructor TControllerCadastros.Destroy;
 begin
   with TFormCteCadastros(FFormCadastros) do
@@ -253,6 +295,10 @@ end;
 procedure TControllerCadastros.DestroyComponents;
 begin
   ResetComponentsItens;
+  FCmpEditTexto.Close;
+  FreeAndNil(FCmpEditTexto);
+  FPanelConsultaPesq.Close;
+  FreeAndNil(FPanelConsultaPesq);
   FCmpControlGrid.Close;
   FreeAndNil(FCmpControlGrid);
   FCmpFormGrid.Close;

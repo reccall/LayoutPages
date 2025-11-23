@@ -5,9 +5,11 @@ interface
 uses
    Forms
   ,Graphics
+  ,Dialogs
   ,System.Classes
   ,System.SysUtils
   ,Vcl.Controls
+  ,ConhecFrete.Controller.Consultas
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -15,24 +17,31 @@ type
   ['{A644751A-BEE8-41E3-8EB9-CE17234B8D85}']
     procedure SetItensUnidadesDeMedida;
     procedure ResetComponentsItens;
-    procedure OnClickCheckBox(Sender :TObject);
     procedure DestroyComponents;
+    procedure OnClickConsulta(Sender: TObject);
+    procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
   end;
 
   TControllerCadastrosUnidadesDeMedida = class(TInterfacedObject, IControllerCadastrosUnidadesDeMedida)
   private
-    FFormCte :TForm;
-    FCmpTituloPrincipal :TForm;
     FFormCadUnidadesDeMedida :TForm;
     FCmpTitulo :TForm;
     FCmpFormGrid :TForm;
+    FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
+
+    FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadUnidadesDeMedida :array of TForm;
     procedure DestroyComponents;
     procedure SetItensUnidadesDeMedida;
     procedure ResetComponentsItens;
+    procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
+    procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
+                                 Shift: TShiftState);
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosUnidadesDeMedida overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
@@ -47,6 +56,7 @@ uses
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
+  ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida;
 
@@ -54,12 +64,16 @@ uses
 
 constructor TControllerCadastrosUnidadesDeMedida.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormCte   := pArrayFormsCte[Ord(tpOwner)];
-  FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 destructor TControllerCadastrosUnidadesDeMedida.Destroy;
@@ -71,6 +85,19 @@ procedure TControllerCadastrosUnidadesDeMedida.DestroyComponents;
 begin
   FCmpTitulo.Close;
   FreeAndNil(FCmpTitulo);
+end;
+
+procedure TControllerCadastrosUnidadesDeMedida.edtPesquisaKeyDown(
+  Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  case Key of
+    13: OnClickConsulta(Sender);
+  end;
+end;
+
+procedure TControllerCadastrosUnidadesDeMedida.OnClickInserirRegistro(Sender :TObject);
+begin
+
 end;
 
 class function TControllerCadastrosUnidadesDeMedida.New(pArrayFormsCte :array of TForm): IControllerCadastrosUnidadesDeMedida;
@@ -100,6 +127,12 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TControllerCadastrosUnidadesDeMedida.OnClickConsulta(Sender: TObject);
+begin
+  FControllerConsultas.OnClickConsulta(Sender);
+  ShowMessage('Up Unidade de Medida');
 end;
 
 procedure TControllerCadastrosUnidadesDeMedida.ResetComponentsItens;

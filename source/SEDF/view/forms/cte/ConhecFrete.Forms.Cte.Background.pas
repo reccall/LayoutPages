@@ -20,6 +20,7 @@ uses
 type
   TFormCteBackground = class(TFormBackgroundLayout)
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,6 +46,11 @@ begin
   pnlMain.Height := Height -6;
   inherited;
   FController := TControllerPrincipal.New(Self);
+end;
+
+procedure TFormCteBackground.FormShow(Sender: TObject);
+begin
+  inherited;
   FController.Iniciar;
 end;
 

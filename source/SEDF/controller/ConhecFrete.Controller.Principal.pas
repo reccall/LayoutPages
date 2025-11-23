@@ -8,8 +8,7 @@ uses
   ,Vcl.Forms
   ,Vcl.ExtCtrls
   ,Vcl.Graphics
-  ,System.SysUtils
-  ,ConhecFrete.Model.Types.Constantes;
+  ,System.SysUtils;
 
 type
   IControllerPrincipal = interface
@@ -51,7 +50,8 @@ end;
 implementation
 
 uses
-    ConhecFrete.Forms.Cte.OpcoesInicio
+    ConhecFrete.Model.Types.Constantes
+   ,ConhecFrete.Forms.Cte.OpcoesInicio
    ,ConhecFrete.Forms.Cte.Background
    ,ConhecFrete.Forms.Cte.MenuCadastros
    ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal

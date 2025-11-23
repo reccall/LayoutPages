@@ -5,9 +5,11 @@ interface
 uses
    Forms
   ,Graphics
+  ,Dialogs
   ,System.Classes
   ,System.SysUtils
   ,Vcl.Controls
+  ,ConhecFrete.Controller.Consultas
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -15,24 +17,31 @@ type
   ['{B9DAA2F4-9EF9-410C-88F0-A63B693CE845}']
     procedure SetItensClientes;
     procedure ResetComponentsItens;
-    procedure OnClickCheckBox(Sender :TObject);
     procedure DestroyComponents;
+    procedure OnClickConsulta(Sender: TObject);
+    procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
   end;
 
   TControllerCadastrosClientes = class(TInterfacedObject, IControllerCadastrosClientes)
   private
-    FFormCte :TForm;
-    FCmpTituloPrincipal :TForm;
     FFormCadClientes :TForm;
     FCmpTitulo :TForm;
     FCmpFormGrid :TForm;
+    FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
+
+    FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadClientes :array of TForm;
     procedure DestroyComponents;
     procedure SetItensClientes;
     procedure ResetComponentsItens;
+    procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
+    procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
+                                 Shift: TShiftState);
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosClientes overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
@@ -46,6 +55,7 @@ uses
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
@@ -55,12 +65,16 @@ uses
 
 constructor TControllerCadastrosClientes.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormCte   := pArrayFormsCte[Ord(tpOwner)];
-  FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadClientes := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
+    with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 destructor TControllerCadastrosClientes.Destroy;
@@ -72,6 +86,19 @@ procedure TControllerCadastrosClientes.DestroyComponents;
 begin
   FCmpTitulo.Close;
   FreeAndNil(FCmpTitulo);
+end;
+
+procedure TControllerCadastrosClientes.edtPesquisaKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  case Key of
+    13: OnClickConsulta(Sender);
+  end;
+end;
+
+procedure TControllerCadastrosClientes.OnClickInserirRegistro(Sender :TObject);
+begin
+
 end;
 
 class function TControllerCadastrosClientes.New(pArrayFormsCte :array of TForm): IControllerCadastrosClientes;
@@ -101,6 +128,12 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TControllerCadastrosClientes.OnClickConsulta(Sender: TObject);
+begin
+  FControllerConsultas.OnClickConsulta(Sender);
+  ShowMessage('Up Clientes');
 end;
 
 procedure TControllerCadastrosClientes.ResetComponentsItens;

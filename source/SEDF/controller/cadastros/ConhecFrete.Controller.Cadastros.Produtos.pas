@@ -5,34 +5,43 @@ interface
 uses
    Forms
   ,Graphics
+  ,Dialogs
   ,System.Classes
   ,System.SysUtils
   ,Vcl.Controls
+  ,ConhecFrete.Controller.Consultas
   ,ConhecFrete.Model.Types.Constantes;
 
 type
   IControllerCadastrosProdutos = interface
   ['{E1E4251F-26BC-4BE5-B9D3-47DEB4A0B66F}']
     procedure SetItensProdutos;
-    procedure OnClickCheckBox(Sender :TObject);
     procedure ResetComponentsItens;
     procedure DestroyComponents;
+    procedure OnClickConsulta(Sender: TObject);
+    procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
   end;
 
   TControllerCadastrosProdutos = class(TInterfacedObject, IControllerCadastrosProdutos)
   private
-    FFormCte :TForm;
-    FCmpTituloPrincipal :TForm;
-    FFormCadProdutos :TForm;
     FCmpTitulo :TForm;
     FCmpFormGrid :TForm;
+    FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
+    FFormCadProdutos :TForm;
+
+    FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadProd :array of TForm;
     procedure ResetComponentsItens;
     procedure DestroyComponents;
     procedure SetItensProdutos;
+    procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
+    procedure OnClickInserirRegistro(Sender :TObject);
+    procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
+                                 Shift: TShiftState);
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosProdutos overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
@@ -43,24 +52,30 @@ implementation
 
 uses
    ConhecFrete.Forms.Cte.Cadastros
-  ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos
+  ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
-  ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
-  ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos;
+  ,LayoutPages.View.Componentes.TLabelTitulo;
 
 { TControllerCadastrosProdutos }
 
 constructor TControllerCadastrosProdutos.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormCte   := pArrayFormsCte[Ord(tpOwner)];
-  FCmpTituloPrincipal := pArrayFormsCte[Ord(tpCmpTitulo)];
   FFormCadProdutos := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := TCmpBarraTituloCadastroProdutos.Create(nil);
   FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
+
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 destructor TControllerCadastrosProdutos.Destroy;
@@ -71,6 +86,19 @@ end;
 procedure TControllerCadastrosProdutos.DestroyComponents;
 begin
   ResetComponentsItens;
+end;
+
+procedure TControllerCadastrosProdutos.edtPesquisaKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  case Key of
+    13: OnClickConsulta(Sender);
+  end;
+end;
+
+procedure TControllerCadastrosProdutos.OnClickInserirRegistro(Sender :TObject);
+begin
+
 end;
 
 class function TControllerCadastrosProdutos.New(pArrayFormsCte :array of TForm): IControllerCadastrosProdutos;
@@ -100,6 +128,12 @@ begin
       end;
     end;
   end;
+end;
+
+procedure TControllerCadastrosProdutos.OnClickConsulta(Sender: TObject);
+begin
+  FControllerConsultas.OnClickConsulta(Sender);
+  ShowMessage('Up Produtos');
 end;
 
 procedure TControllerCadastrosProdutos.ResetComponentsItens;
