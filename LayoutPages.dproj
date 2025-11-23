@@ -210,14 +210,14 @@
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuEmissaoFiscal.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.MenuItensImagens.pas"/>
         <DCCReference Include="source\SEDF\controller\consultas\ConhecFrete.Controller.Consultas.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Produtos.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Servicos.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Clientes.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Marcas.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Transportadoras.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.Fornecedores.pas"/>
-        <DCCReference Include="source\SEDF\controller\cadastros\ConhecFrete.Controller.Cadastros.UnidadesDeMedida.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Cadastros.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Clientes.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Fornecedores.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Marcas.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Produtos.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Servicos.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Transportadoras.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.UnidadesDeMedida.pas"/>
         <DCCReference Include="source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas">
             <Form>frmClienteDadosCte</Form>
         </DCCReference>

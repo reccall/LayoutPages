@@ -1,4 +1,4 @@
-unit ConhecFrete.Controller.Cadastros.UnidadesDeMedida;
+unit ConhecFrete.Controller.UnidadesDeMedida;
 
 interface
 
@@ -13,7 +13,7 @@ uses
   ,ConhecFrete.Model.Types.Constantes;
 
 type
-  IControllerCadastrosUnidadesDeMedida = interface
+  IControllerUnidadesDeMedida = interface
   ['{A644751A-BEE8-41E3-8EB9-CE17234B8D85}']
     procedure SetItensUnidadesDeMedida;
     procedure ResetComponentsItens;
@@ -23,7 +23,7 @@ type
     procedure OnClickInserirRegistro(Sender :TObject);
   end;
 
-  TControllerCadastrosUnidadesDeMedida = class(TInterfacedObject, IControllerCadastrosUnidadesDeMedida)
+  TControllerUnidadesDeMedida = class(TInterfacedObject, IControllerUnidadesDeMedida)
   private
     FFormCadUnidadesDeMedida :TForm;
     FCmpTitulo :TForm;
@@ -43,7 +43,7 @@ type
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
                                  Shift: TShiftState);
   public
-  class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosUnidadesDeMedida overload;
+  class function New(pArrayFormsCte :array of TForm) :IControllerUnidadesDeMedida overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
      destructor Destroy; override;
 end;
@@ -60,9 +60,9 @@ uses
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida;
 
-{ TControllerCadastrosUnidadesDeMedida }
+{ TControllerUnidadesDeMedida }
 
-constructor TControllerCadastrosUnidadesDeMedida.Create(pArrayFormsCte :array of TForm);
+constructor TControllerUnidadesDeMedida.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
@@ -76,18 +76,18 @@ begin
   end;
 end;
 
-destructor TControllerCadastrosUnidadesDeMedida.Destroy;
+destructor TControllerUnidadesDeMedida.Destroy;
 begin
   inherited;
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.DestroyComponents;
+procedure TControllerUnidadesDeMedida.DestroyComponents;
 begin
   FCmpTitulo.Close;
   FreeAndNil(FCmpTitulo);
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.edtPesquisaKeyDown(
+procedure TControllerUnidadesDeMedida.edtPesquisaKeyDown(
   Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   case Key of
@@ -95,17 +95,17 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.OnClickInserirRegistro(Sender :TObject);
+procedure TControllerUnidadesDeMedida.OnClickInserirRegistro(Sender :TObject);
 begin
 
 end;
 
-class function TControllerCadastrosUnidadesDeMedida.New(pArrayFormsCte :array of TForm): IControllerCadastrosUnidadesDeMedida;
+class function TControllerUnidadesDeMedida.New(pArrayFormsCte :array of TForm): IControllerUnidadesDeMedida;
 begin
   Result := Self.Create(pArrayFormsCte);
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.OnClickCheckBox(Sender: TObject);
+procedure TControllerUnidadesDeMedida.OnClickCheckBox(Sender: TObject);
 var
   iIdx :Integer;
   Shift: TShiftState;
@@ -129,13 +129,13 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.OnClickConsulta(Sender: TObject);
+procedure TControllerUnidadesDeMedida.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
   ShowMessage('Up Unidade de Medida');
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.ResetComponentsItens;
+procedure TControllerUnidadesDeMedida.ResetComponentsItens;
 var
   iIdx :Integer;
 begin
@@ -146,7 +146,7 @@ begin
   aCmpItensCadUnidadesDeMedida := nil;
 end;
 
-procedure TControllerCadastrosUnidadesDeMedida.SetItensUnidadesDeMedida;
+procedure TControllerUnidadesDeMedida.SetItensUnidadesDeMedida;
 var
   iIdx :Integer;
 begin

@@ -1,4 +1,4 @@
-unit ConhecFrete.Controller.Cadastros.Marcas;
+unit ConhecFrete.Controller.Servicos;
 
 interface
 
@@ -13,19 +13,19 @@ uses
   ,ConhecFrete.Model.Types.Constantes;
 
 type
-  IControllerCadastrosMarcas = interface
-  ['{00A26260-D4A1-46F5-8967-453D25542D5E}']
-    procedure DestroyComponents;
-    procedure SetItensMarcas;
+  IControllerServicos = interface
+  ['{1924679B-498C-4482-AB31-D628C4D6743C}']
+    procedure SetItensServicos;
     procedure ResetComponentsItens;
+    procedure DestroyComponents;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
   end;
 
-  TControllerCadastrosMarcas = class(TInterfacedObject, IControllerCadastrosMarcas)
+  TControllerServicos = class(TInterfacedObject, IControllerServicos)
   private
-    FFormCadMarcas :TForm;
+    FFormCadServicos :TForm;
     FCmpTitulo :TForm;
     FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
@@ -33,17 +33,18 @@ type
 
     FControllerConsultas :IControllerConsultas;
 
-    aCmpItensCadMarcas :array of TForm;
-    procedure DestroyComponents;
-    procedure SetItensMarcas;
+    aCmpItensCadServ :array of TForm;
     procedure ResetComponentsItens;
+    procedure DestroyComponents;
+    procedure SetItensServicos;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
                                  Shift: TShiftState);
   public
-  class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosMarcas overload;
+
+  class function New(pArrayFormsCte :array of TForm) :IControllerServicos overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
      destructor Destroy; override;
 end;
@@ -59,36 +60,43 @@ uses
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
-  ,ConhecFrete.View.Componentes.BarraItemCadastroMarcas;
+  ,ConhecFrete.View.Componentes.BarraItemCadastroServicos;
 
-{ TControllerCadastrosMarcas }
+{ TControllerServicos }
 
-constructor TControllerCadastrosMarcas.Create(pArrayFormsCte :array of TForm);
+constructor TControllerServicos.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormCadMarcas := pArrayFormsCte[Ord(tpCteCadastros)];
+  FFormCadServicos := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
 
-  with TCmpEditTexto(FCmpEditTexto) do
+   with TCmpEditTexto(FCmpEditTexto) do
   begin
     edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
   end;
 end;
 
-destructor TControllerCadastrosMarcas.Destroy;
+destructor TControllerServicos.Destroy;
 begin
-  inherited;
+  with TFormCteCadastros(FFormCadServicos) do
+  begin
+    if Assigned(FController) then
+      FreeAndNil(FController);
+  end;
 end;
 
-procedure TControllerCadastrosMarcas.DestroyComponents;
+procedure TControllerServicos.DestroyComponents;
 begin
+  ResetComponentsItens;
   FCmpTitulo.Close;
+  FreeAndNil(FCmpTitulo);
+  FCmpControlGrid.Close;
 end;
 
-procedure TControllerCadastrosMarcas.edtPesquisaKeyDown(Sender: TObject;
+procedure TControllerServicos.edtPesquisaKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   case Key of
@@ -96,29 +104,29 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosMarcas.OnClickInserirRegistro(Sender :TObject);
+procedure TControllerServicos.OnClickInserirRegistro(Sender :TObject);
 begin
 
 end;
 
-class function TControllerCadastrosMarcas.New(pArrayFormsCte :array of TForm): IControllerCadastrosMarcas;
+class function TControllerServicos.New(pArrayFormsCte :array of TForm): IControllerServicos;
 begin
   Result := Self.Create(pArrayFormsCte);
 end;
 
-procedure TControllerCadastrosMarcas.OnClickCheckBox(Sender: TObject);
+procedure TControllerServicos.OnClickCheckBox(Sender: TObject);
 var
   iIdx :Integer;
   Shift: TShiftState;
   X, Y: Integer;
 begin
-  for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
+  for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
   begin
     with TCmpTituloDescSimples(FCmpTitulo),
          TCmpGridControl(FCmpControlGrid),
-         TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]) do
+         TCmpBarraItemCadastroServicos(aCmpItensCadServ[iIdx]) do
     begin
-      if Assigned(aCmpItensCadMarcas[iIdx]) then
+      if Assigned(aCmpItensCadServ[iIdx]) then
       begin
         chkItem.Checked := chkControl.Checked;
         case chkItem.Checked of
@@ -130,45 +138,46 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosMarcas.OnClickConsulta(Sender: TObject);
+procedure TControllerServicos.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
-  ShowMessage('Up Marcas');
+  ShowMessage('Up Servicos');
 end;
 
-procedure TControllerCadastrosMarcas.ResetComponentsItens;
+procedure TControllerServicos.ResetComponentsItens;
 var
   iIdx :Integer;
 begin
-  for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
+  FCmpTitulo.Close;
+  for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
   begin
-    FreeAndNil(aCmpItensCadMarcas[iIdx]);
+    FreeAndNil(aCmpItensCadServ[iIdx]);
   end;
-  aCmpItensCadMarcas := nil;
+  aCmpItensCadServ := nil;
 end;
 
-procedure TControllerCadastrosMarcas.SetItensMarcas;
+procedure TControllerServicos.SetItensServicos;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadMarcas), TCmpFormGrid(FCmpFormGrid) do
+  with TFormCteCadastros(FFormCadServicos), TCmpFormGrid(FCmpFormGrid) do
   begin
     TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
     FCmpTitulo.Parent := pnlCmpGridTop;
-    SetLength(aCmpItensCadMarcas,20);
-    for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
+    SetLength(aCmpItensCadServ,20);
+    for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
     begin
-      if not Assigned(aCmpItensCadMarcas[iIdx]) then
+      if not Assigned(aCmpItensCadServ[iIdx]) then
       begin
-        aCmpItensCadMarcas[iIdx] := TCmpBarraItemCadastroMarcas.Create(nil);
-        with TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]) do
+        aCmpItensCadServ[iIdx] := TCmpBarraItemCadastroServicos.Create(nil);
+        with TCmpBarraItemCadastroServicos(aCmpItensCadServ[iIdx]) do
         begin
           lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-          lblCodigo.Caption := 'MR - '+FormatFloat('000000',High(aCmpItensCadMarcas) - iIdx);
+          lblCodigo.Caption := 'SV - '+FormatFloat('000000',High(aCmpItensCadServ) - iIdx);
         end;
-        aCmpItensCadMarcas[iIdx].Parent := scrlbxCmpMain;
+        aCmpItensCadServ[iIdx].Parent := scrlbxCmpMain;
       end;
-      aCmpItensCadMarcas[iIdx].Show;
+      aCmpItensCadServ[iIdx].Show;
     end;
     FCmpTitulo.Show;
     FCmpFormGrid.Show;

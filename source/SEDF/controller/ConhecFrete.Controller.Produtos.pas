@@ -1,4 +1,4 @@
-unit ConhecFrete.Controller.Cadastros.Produtos;
+unit ConhecFrete.Controller.Produtos;
 
 interface
 
@@ -13,7 +13,7 @@ uses
   ,ConhecFrete.Model.Types.Constantes;
 
 type
-  IControllerCadastrosProdutos = interface
+  IControllerProdutos = interface
   ['{E1E4251F-26BC-4BE5-B9D3-47DEB4A0B66F}']
     procedure SetItensProdutos;
     procedure ResetComponentsItens;
@@ -23,7 +23,7 @@ type
     procedure OnClickInserirRegistro(Sender :TObject);
   end;
 
-  TControllerCadastrosProdutos = class(TInterfacedObject, IControllerCadastrosProdutos)
+  TControllerProdutos = class(TInterfacedObject, IControllerProdutos)
   private
     FCmpTitulo :TForm;
     FCmpFormGrid :TForm;
@@ -43,7 +43,7 @@ type
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
                                  Shift: TShiftState);
   public
-  class function New(pArrayFormsCte :array of TForm) :IControllerCadastrosProdutos overload;
+  class function New(pArrayFormsCte :array of TForm) :IControllerProdutos overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
      destructor Destroy; override;
 end;
@@ -61,9 +61,9 @@ uses
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TLabelTitulo;
 
-{ TControllerCadastrosProdutos }
+{ TControllerProdutos }
 
-constructor TControllerCadastrosProdutos.Create(pArrayFormsCte :array of TForm);
+constructor TControllerProdutos.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCadProdutos := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := TCmpBarraTituloCadastroProdutos.Create(nil);
@@ -78,17 +78,17 @@ begin
   end;
 end;
 
-destructor TControllerCadastrosProdutos.Destroy;
+destructor TControllerProdutos.Destroy;
 begin
   inherited;
 end;
 
-procedure TControllerCadastrosProdutos.DestroyComponents;
+procedure TControllerProdutos.DestroyComponents;
 begin
   ResetComponentsItens;
 end;
 
-procedure TControllerCadastrosProdutos.edtPesquisaKeyDown(Sender: TObject;
+procedure TControllerProdutos.edtPesquisaKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   case Key of
@@ -96,17 +96,17 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosProdutos.OnClickInserirRegistro(Sender :TObject);
+procedure TControllerProdutos.OnClickInserirRegistro(Sender :TObject);
 begin
 
 end;
 
-class function TControllerCadastrosProdutos.New(pArrayFormsCte :array of TForm): IControllerCadastrosProdutos;
+class function TControllerProdutos.New(pArrayFormsCte :array of TForm): IControllerProdutos;
 begin
   Result := Self.Create(pArrayFormsCte);
 end;
 
-procedure TControllerCadastrosProdutos.OnClickCheckBox(Sender: TObject);
+procedure TControllerProdutos.OnClickCheckBox(Sender: TObject);
 var
   iIdx :Integer;
   Shift: TShiftState;
@@ -130,13 +130,13 @@ begin
   end;
 end;
 
-procedure TControllerCadastrosProdutos.OnClickConsulta(Sender: TObject);
+procedure TControllerProdutos.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
   ShowMessage('Up Produtos');
 end;
 
-procedure TControllerCadastrosProdutos.ResetComponentsItens;
+procedure TControllerProdutos.ResetComponentsItens;
 var
   iIdx :Integer;
 begin
@@ -148,7 +148,7 @@ begin
   aCmpItensCadProd := nil;
 end;
 
-procedure TControllerCadastrosProdutos.SetItensProdutos;
+procedure TControllerProdutos.SetItensProdutos;
 var
   iIdx :Integer;
 begin

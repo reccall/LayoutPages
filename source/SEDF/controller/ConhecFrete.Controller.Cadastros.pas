@@ -12,13 +12,13 @@ uses
   ,System.SysUtils
   ,Vcl.Controls
   ,ConhecFrete.Model.Types.Constantes
-  ,ConhecFrete.Controller.Cadastros.Marcas
-  ,ConhecFrete.Controller.Cadastros.Servicos
-  ,ConhecFrete.Controller.Cadastros.Clientes
-  ,ConhecFrete.Controller.Cadastros.Produtos
-  ,ConhecFrete.Controller.Cadastros.Fornecedores
-  ,ConhecFrete.Controller.Cadastros.Transportadoras
-  ,ConhecFrete.Controller.Cadastros.UnidadesDeMedida;
+  ,ConhecFrete.Controller.Marcas
+  ,ConhecFrete.Controller.Servicos
+  ,ConhecFrete.Controller.Clientes
+  ,ConhecFrete.Controller.Produtos
+  ,ConhecFrete.Controller.Fornecedores
+  ,ConhecFrete.Controller.Transportadoras
+  ,ConhecFrete.Controller.UnidadesDeMedida;
 
 type
   IControllerCadastros = interface
@@ -43,13 +43,13 @@ type
     FCmpControlGrid :TForm;
     FPanelConsultaPesq :TForm;
 
-    FControllerCadastrosMarcas :IControllerCadastrosMarcas;
-    FControllerCadastrosServicos :IControllerCadastrosServicos;
-    FControllerCadastrosClientes :IControllerCadastrosClientes;
-    FControllerCadastrosProdutos :IControllerCadastrosProdutos;
-    FControllerCadastrosFornecedores :IControllerCadastrosFornecedores;
-    FControllerCadastrosTranportadoras :IControllerCadastrosTransportadoras;
-    FControllerCadastrosUnidadesDeMedida :IControllerCadastrosUnidadesDeMedida;
+    FControllerMarcas :IControllerMarcas;
+    FControllerServicos :IControllerServicos;
+    FControllerClientes :IControllerClientes;
+    FControllerProdutos :IControllerProdutos;
+    FControllerFornecedores :IControllerFornecedores;
+    FControllerTranportadoras :IControllerTransportadoras;
+    FControllerUnidadesDeMedida :IControllerUnidadesDeMedida;
 
     procedure Iniciar;
     procedure ResetComponentsItens;
@@ -155,13 +155,13 @@ end;
 procedure TControllerCadastros.OnClickCheckBox(Sender: TObject);
 begin
   case FTpOwnerCadastro of
-    tpCadastroMarcas:           FControllerCadastrosMarcas.OnClickCheckBox(Sender);
-    tpCadastroProdutos:         FControllerCadastrosProdutos.OnClickCheckBox(Sender);
-    tpCadastroServicos:         FControllerCadastrosServicos.OnClickCheckBox(Sender);
-    tpCadastroClientes:         FControllerCadastrosClientes.OnClickCheckBox(Sender);
-    tpCadastroFornecedores:     FControllerCadastrosFornecedores.OnClickCheckBox(Sender);
-    tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.OnClickCheckBox(Sender);
-    tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.OnClickCheckBox(Sender);
+    tpCadastroMarcas:           FControllerMarcas.OnClickCheckBox(Sender);
+    tpCadastroProdutos:         FControllerProdutos.OnClickCheckBox(Sender);
+    tpCadastroServicos:         FControllerServicos.OnClickCheckBox(Sender);
+    tpCadastroClientes:         FControllerClientes.OnClickCheckBox(Sender);
+    tpCadastroFornecedores:     FControllerFornecedores.OnClickCheckBox(Sender);
+    tpCadastroTransportadoras:  FControllerTranportadoras.OnClickCheckBox(Sender);
+    tpCadastroUnidadesDeMedida: FControllerUnidadesDeMedida.OnClickCheckBox(Sender);
   end;
 end;
 
@@ -169,13 +169,13 @@ procedure TControllerCadastros.OnClickConsulta(Sender: TObject);
 begin
   Screen.Cursor := crHourGlass;
   case FTpOwnerCadastro of
-    tpCadastroMarcas:           FControllerCadastrosMarcas.OnClickConsulta(Sender);
-    tpCadastroProdutos:         FControllerCadastrosProdutos.OnClickConsulta(Sender);
-    tpCadastroClientes:         FControllerCadastrosClientes.OnClickConsulta(Sender);
-    tpCadastroServicos:         FControllerCadastrosServicos.OnClickConsulta(Sender);
-    tpCadastroFornecedores:     FControllerCadastrosFornecedores.OnClickConsulta(Sender);
-    tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.OnClickConsulta(Sender);
-    tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.OnClickConsulta(Sender);
+    tpCadastroMarcas:           FControllerMarcas.OnClickConsulta(Sender);
+    tpCadastroProdutos:         FControllerProdutos.OnClickConsulta(Sender);
+    tpCadastroClientes:         FControllerClientes.OnClickConsulta(Sender);
+    tpCadastroServicos:         FControllerServicos.OnClickConsulta(Sender);
+    tpCadastroFornecedores:     FControllerFornecedores.OnClickConsulta(Sender);
+    tpCadastroTransportadoras:  FControllerTranportadoras.OnClickConsulta(Sender);
+    tpCadastroUnidadesDeMedida: FControllerUnidadesDeMedida.OnClickConsulta(Sender);
   end;
   Screen.Cursor := crDefault;
 end;
@@ -183,44 +183,44 @@ end;
 procedure TControllerCadastros.OnClickInserirRegistro(Sender: TObject);
 begin
   case FTpOwnerCadastro of
-    tpCadastroMarcas:           FControllerCadastrosMarcas.OnClickInserirRegistro(Sender);
-    tpCadastroProdutos:         FControllerCadastrosProdutos.OnClickInserirRegistro(Sender);
-    tpCadastroClientes:         FControllerCadastrosClientes.OnClickInserirRegistro(Sender);
-    tpCadastroServicos:         FControllerCadastrosServicos.OnClickInserirRegistro(Sender);
-    tpCadastroFornecedores:     FControllerCadastrosFornecedores.OnClickInserirRegistro(Sender);
-    tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.OnClickInserirRegistro(Sender);
-    tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.OnClickInserirRegistro(Sender);
+    tpCadastroMarcas:           FControllerMarcas.OnClickInserirRegistro(Sender);
+    tpCadastroProdutos:         FControllerProdutos.OnClickInserirRegistro(Sender);
+    tpCadastroClientes:         FControllerClientes.OnClickInserirRegistro(Sender);
+    tpCadastroServicos:         FControllerServicos.OnClickInserirRegistro(Sender);
+    tpCadastroFornecedores:     FControllerFornecedores.OnClickInserirRegistro(Sender);
+    tpCadastroTransportadoras:  FControllerTranportadoras.OnClickInserirRegistro(Sender);
+    tpCadastroUnidadesDeMedida: FControllerUnidadesDeMedida.OnClickInserirRegistro(Sender);
   end;
 end;
 
 procedure TControllerCadastros.ResetComponentsItens;
 begin
-  if Assigned(FControllerCadastrosMarcas) then
-    FControllerCadastrosMarcas.ResetComponentsItens;
-  if Assigned(FControllerCadastrosProdutos) then
-    FControllerCadastrosProdutos.ResetComponentsItens;
-  if Assigned(FControllerCadastrosClientes) then
-    FControllerCadastrosClientes.ResetComponentsItens;
-  if Assigned(FControllerCadastrosServicos) then
-    FControllerCadastrosServicos.ResetComponentsItens;
-  if Assigned(FControllerCadastrosFornecedores) then
-    FControllerCadastrosFornecedores.ResetComponentsItens;
-  if Assigned(FControllerCadastrosTranportadoras) then
-    FControllerCadastrosTranportadoras.ResetComponentsItens;
-  if Assigned(FControllerCadastrosUnidadesDeMedida) then
-    FControllerCadastrosUnidadesDeMedida.ResetComponentsItens;
+  if Assigned(FControllerMarcas) then
+    FControllerMarcas.ResetComponentsItens;
+  if Assigned(FControllerProdutos) then
+    FControllerProdutos.ResetComponentsItens;
+  if Assigned(FControllerClientes) then
+    FControllerClientes.ResetComponentsItens;
+  if Assigned(FControllerServicos) then
+    FControllerServicos.ResetComponentsItens;
+  if Assigned(FControllerFornecedores) then
+    FControllerFornecedores.ResetComponentsItens;
+  if Assigned(FControllerTranportadoras) then
+    FControllerTranportadoras.ResetComponentsItens;
+  if Assigned(FControllerUnidadesDeMedida) then
+    FControllerUnidadesDeMedida.ResetComponentsItens;
 end;
 
 procedure TControllerCadastros.SetArrayItens;
 begin
   case FTpOwnerCadastro of
-    tpCadastroMarcas:           FControllerCadastrosMarcas.SetItensMarcas;
-    tpCadastroProdutos:         FControllerCadastrosProdutos.SetItensProdutos;
-    tpCadastroClientes:         FControllerCadastrosClientes.SetItensClientes;
-    tpCadastroServicos:         FControllerCadastrosServicos.SetItensServicos;
-    tpCadastroFornecedores:     FControllerCadastrosFornecedores.SetItensFornecedores;
-    tpCadastroTransportadoras:  FControllerCadastrosTranportadoras.SetItensTransportadoras;
-    tpCadastroUnidadesDeMedida: FControllerCadastrosUnidadesDeMedida.SetItensUnidadesDeMedida;
+    tpCadastroMarcas:           FControllerMarcas.SetItensMarcas;
+    tpCadastroProdutos:         FControllerProdutos.SetItensProdutos;
+    tpCadastroClientes:         FControllerClientes.SetItensClientes;
+    tpCadastroServicos:         FControllerServicos.SetItensServicos;
+    tpCadastroFornecedores:     FControllerFornecedores.SetItensFornecedores;
+    tpCadastroTransportadoras:  FControllerTranportadoras.SetItensTransportadoras;
+    tpCadastroUnidadesDeMedida: FControllerUnidadesDeMedida.SetItensUnidadesDeMedida;
   end;
 end;
 
@@ -235,38 +235,38 @@ begin
   case FTpOwnerCadastro of
     tpCadastroMarcas:
     begin
-      if not Assigned(FControllerCadastrosMarcas) then
-        FControllerCadastrosMarcas := TControllerCadastrosMarcas.New(aFormsCte);
+      if not Assigned(FControllerMarcas) then
+        FControllerMarcas := TControllerMarcas.New(aFormsCte);
     end;
     tpCadastroServicos:
     begin
-      if not Assigned(FControllerCadastrosServicos) then
-        FControllerCadastrosServicos := TControllerCadastrosServicos.New(aFormsCte);
+      if not Assigned(FControllerServicos) then
+        FControllerServicos := TControllerServicos.New(aFormsCte);
     end;
     tpCadastroProdutos:
     begin
-      if not Assigned(FControllerCadastrosProdutos) then
-        FControllerCadastrosProdutos := TControllerCadastrosProdutos.New(aFormsCte);
+      if not Assigned(FControllerProdutos) then
+        FControllerProdutos := TControllerProdutos.New(aFormsCte);
     end;
     tpCadastroClientes:
     begin
-      if not Assigned(FControllerCadastrosClientes) then
-        FControllerCadastrosClientes := TControllerCadastrosClientes.New(aFormsCte);
+      if not Assigned(FControllerClientes) then
+        FControllerClientes := TControllerClientes.New(aFormsCte);
     end;
     tpCadastroFornecedores:
     begin
-      if not Assigned(FControllerCadastrosFornecedores) then
-        FControllerCadastrosFornecedores := TControllerCadastrosFornecedores.New(aFormsCte);
+      if not Assigned(FControllerFornecedores) then
+        FControllerFornecedores := TControllerFornecedores.New(aFormsCte);
     end;
     tpCadastroTransportadoras:
     begin
-      if not Assigned(FControllerCadastrosTranportadoras) then
-        FControllerCadastrosTranportadoras := TControllerCadastrosTransportadoras.New(aFormsCte);
+      if not Assigned(FControllerTranportadoras) then
+        FControllerTranportadoras := TControllerTransportadoras.New(aFormsCte);
     end;
     tpCadastroUnidadesDeMedida:
     begin
-      if not Assigned(FControllerCadastrosUnidadesDeMedida) then
-        FControllerCadastrosUnidadesDeMedida := TControllerCadastrosUnidadesDeMedida.New(aFormsCte);
+      if not Assigned(FControllerUnidadesDeMedida) then
+        FControllerUnidadesDeMedida := TControllerUnidadesDeMedida.New(aFormsCte);
     end;
   end;
 end;
