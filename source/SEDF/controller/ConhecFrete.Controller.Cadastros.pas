@@ -128,32 +128,33 @@ begin
         imgLupa.OnClick := OnClickConsulta;
         pnlIncluirRegistro.OnClick := OnClickInserirRegistro;
       end;
-    end;
 
-    with TCmpCabCadastros(FCmpCabCadastro), TCmpEditTexto(FCmpEditTexto) do
-    begin
-      FCmpEditTexto.Parent := pnlRegiaoPesq;
-      edtPesquisa.Text := EmptyStr;
+      with TCmpFormGrid(FCmpFormGrid) do
+      begin
+        ApplicationEvents1.OnMessage := ApplicationEvents1Message;
+        MakeRounded(pnlCmpGridTop,10);
+        scrlbxCmpMain.Realign;
+      end;
+
+      with TCmpCabCadastros(FCmpCabCadastro), TCmpEditTexto(FCmpEditTexto) do
+      begin
+        FCmpEditTexto.Parent := pnlRegiaoPesq;
+        edtPesquisa.Text := EmptyStr;
+      end;
+
+      with TCmpGridControl(FCmpControlGrid) do
+      begin
+        chkControl.Checked := False;
+        chkControl.OnClick := OnClickCheckBox;
+      end;
     end;
     Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     SetArrayItens;
-    with TCmpGridControl(FCmpControlGrid) do
-    begin
-      chkControl.Checked := False;
-      chkControl.OnClick := OnClickCheckBox;
-    end;
-
     Show;
     FCmpControlGrid.Show;
     FCmpCabCadastro.Show;
     FCmpEditTexto.Show;
     FCmpControlGrid.SetFocus;
-    with TCmpFormGrid(FCmpFormGrid) do
-    begin
-      ApplicationEvents1.OnMessage := ApplicationEvents1Message;
-      MakeRounded(pnlCmpGridTop,10);
-      scrlbxCmpMain.Realign;
-    end;
   end;
   Screen.Cursor := crDefault;
 end;

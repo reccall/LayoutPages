@@ -27,11 +27,13 @@ type
 
   TControllerUnidadesDeMedida = class(TInterfacedObject, IControllerUnidadesDeMedida)
   private
-    FFormCadUnidadesDeMedida :TForm;
+
     FCmpTitulo :TForm;
     FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
+    FFormCadUnidadesDeMedida :TForm;
+    FFormPesquisaNaoEncontrada :TForm;
 
     FControllerConsultas :IControllerConsultas;
 
@@ -61,6 +63,7 @@ uses
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TEditTexto
+  ,LayoutPages.View.Forms.PesquisaNaoEcontrada
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroUnidadesDeMedida;
 
@@ -74,6 +77,9 @@ begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
+  if not Assigned(aFormsCte[Ord(tpFormPesqNaoEncontrada)]) then
+    aFormsCte[Ord(tpFormPesqNaoEncontrada)] := TFormPesquisaNaoEncontrada.Create(pArrayFormsCte);
+  FFormPesquisaNaoEncontrada := aFormsCte[Ord(tpFormPesqNaoEncontrada)];
   SetEvents;
 end;
 
@@ -135,6 +141,10 @@ end;
 procedure TControllerUnidadesDeMedida.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
+  with TFormPesquisaNaoEncontrada(FFormPesquisaNaoEncontrada) do
+  begin
+    FController.Iniciar;
+  end;
   ShowMessage('Up Unidade de Medida');
 end;
 

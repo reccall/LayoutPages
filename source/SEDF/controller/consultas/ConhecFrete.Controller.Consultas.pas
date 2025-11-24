@@ -20,7 +20,6 @@ type
     FCmpEditTexto :TForm;
     FFormCadastros :TForm;
     FCmpCabCadastro :TForm;
-    FFormNaoEncontrado :TForm;
     FPanelConsultaPesq :TForm;
 
     procedure SetClearPesquisa;
@@ -55,8 +54,6 @@ end;
 
 destructor TControllerConsultas.Destroy;
 begin
-  if Assigned(FFormNaoEncontrado) then
-    FFormNaoEncontrado := nil;
   inherited;
 end;
 
@@ -66,6 +63,39 @@ begin
 end;
 
 procedure TControllerConsultas.OnClickClearPesquisa(Sender: TObject);
+begin
+  SetClearPesquisa;
+end;
+
+procedure TControllerConsultas.OnClickConsulta(Sender: TObject);
+begin
+  if Assigned(FPanelConsultaPesq) then
+    FreeAndNil(FPanelConsultaPesq);
+
+  FPanelConsultaPesq := TCmpPanelConsultaPesq.Create(nil);
+
+  with TCmpCabCadastros(FCmpCabCadastro), TCmpPanelConsultaPesq(FPanelConsultaPesq) do
+  begin
+    Image1.OnClick := OnClickClearPesquisa;
+    pnlPesquisa.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
+
+    case Length(UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text)) of
+        0..5: FPanelConsultaPesq.Width := 100;
+       6..10: FPanelConsultaPesq.Width := 170;
+      11..20: FPanelConsultaPesq.Width := 270;
+      21..27: FPanelConsultaPesq.Width := 400;
+      28..35: FPanelConsultaPesq.Width := 450;
+    else
+      FPanelConsultaPesq.Width := 550;
+    end;
+    TCmpEditTexto(FCmpEditTexto).Close;
+    FPanelConsultaPesq.Parent := pnlRegiaoPesq;
+    FPanelConsultaPesq.Show;
+    FCmpFormGrid.Close;
+  end;
+end;
+
+procedure TControllerConsultas.SetClearPesquisa;
 begin
   with TCmpEditTexto(FCmpEditTexto) do
   begin
@@ -78,51 +108,6 @@ begin
     Show;
     edtPesquisa.SetFocus;
   end;
-end;
-
-procedure TControllerConsultas.OnClickConsulta(Sender: TObject);
-begin
-  if Assigned(FPanelConsultaPesq) then
-    FreeAndNil(FPanelConsultaPesq);
-
-  if Assigned(FFormNaoEncontrado) then
-    FreeAndNil(FFormNaoEncontrado);
-
-  FPanelConsultaPesq := TCmpPanelConsultaPesq.Create(nil);
-  FFormNaoEncontrado := TFormPesquisaNaoEncontrada.Create(nil);
-  with TCmpCabCadastros(FCmpCabCadastro), TCmpPanelConsultaPesq(FPanelConsultaPesq) do
-  begin
-    Image1.OnClick := OnClickClearPesquisa;
-    pnlPesquisa.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
-
-    case Length(UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text)) of
-        0..5: FPanelConsultaPesq.Width := 100;
-       6..10: FPanelConsultaPesq.Width := 160;
-      11..20: FPanelConsultaPesq.Width := 250;
-      21..27: FPanelConsultaPesq.Width := 400;
-      28..35: FPanelConsultaPesq.Width := 450;
-    else
-      FPanelConsultaPesq.Width := 550;
-    end;
-    TCmpEditTexto(FCmpEditTexto).Close;
-    FPanelConsultaPesq.Parent := pnlRegiaoPesq;
-    FPanelConsultaPesq.Show;
-    FCmpFormGrid.Close;
-
-    with TCmpEditTexto(FCmpEditTexto),
-         TFormCteCadastros(FFormCadastros),
-         TFormPesquisaNaoEncontrada(FFormNaoEncontrado) do
-    begin
-      lblPesquisa.Caption := Format('Pesquisando por: %s',[edtPesquisa.Text]);
-      FFormNaoEncontrado.Parent := pnlMain;
-      FFormNaoEncontrado.Show;
-    end;
-  end;
-end;
-
-procedure TControllerConsultas.SetClearPesquisa;
-begin
-  OnClickClearPesquisa(FCmpEditTexto);
 end;
 
 end.

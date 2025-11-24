@@ -28,11 +28,12 @@ type
 
   TControllerServicos = class(TInterfacedObject, IControllerServicos)
   private
-    FFormCadServicos :TForm;
     FCmpTitulo :TForm;
     FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
+    FFormCadServicos :TForm;
+    FFormPesquisaNaoEncontrada :TForm;
 
     FControllerConsultas :IControllerConsultas;
 
@@ -64,6 +65,7 @@ uses
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
+  ,LayoutPages.View.Forms.PesquisaNaoEcontrada
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroServicos;
 
@@ -77,6 +79,9 @@ begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
+  if not Assigned(aFormsCte[Ord(tpFormPesqNaoEncontrada)]) then
+    aFormsCte[Ord(tpFormPesqNaoEncontrada)] := TFormPesquisaNaoEncontrada.Create(pArrayFormsCte);
+  FFormPesquisaNaoEncontrada := aFormsCte[Ord(tpFormPesqNaoEncontrada)];
   SetEvents;
 end;
 
@@ -144,6 +149,10 @@ end;
 procedure TControllerServicos.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
+  with TFormPesquisaNaoEncontrada(FFormPesquisaNaoEncontrada) do
+  begin
+    FController.Iniciar;
+  end;
   ShowMessage('Up Servicos');
 end;
 

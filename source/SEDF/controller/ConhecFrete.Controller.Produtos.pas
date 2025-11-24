@@ -32,6 +32,7 @@ type
     FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
     FFormCadProdutos :TForm;
+    FFormPesquisaNaoEncontrada :TForm;
 
     FControllerConsultas :IControllerConsultas;
 
@@ -63,7 +64,8 @@ uses
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
-  ,LayoutPages.View.Componentes.TLabelTitulo;
+  ,LayoutPages.View.Componentes.TLabelTitulo
+  ,LayoutPages.View.Forms.PesquisaNaoEcontrada;
 
 { TControllerProdutos }
 
@@ -75,6 +77,9 @@ begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
+  if not Assigned(aFormsCte[Ord(tpFormPesqNaoEncontrada)]) then
+    aFormsCte[Ord(tpFormPesqNaoEncontrada)] := TFormPesquisaNaoEncontrada.Create(pArrayFormsCte);
+  FFormPesquisaNaoEncontrada := aFormsCte[Ord(tpFormPesqNaoEncontrada)];
   SetEvents;
 end;
 
@@ -135,6 +140,10 @@ end;
 procedure TControllerProdutos.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
+  with TFormPesquisaNaoEncontrada(FFormPesquisaNaoEncontrada) do
+  begin
+    FController.Iniciar;
+  end;
   ShowMessage('Up Produtos');
 end;
 

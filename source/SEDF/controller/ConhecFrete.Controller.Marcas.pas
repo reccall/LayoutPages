@@ -27,11 +27,12 @@ type
 
   TControllerMarcas = class(TInterfacedObject, IControllerMarcas)
   private
-    FFormCadMarcas :TForm;
     FCmpTitulo :TForm;
     FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
+    FFormCadMarcas :TForm;
     FCmpControlGrid :TForm;
+    FFormPesquisaNaoEncontrada :TForm;
 
     FControllerConsultas :IControllerConsultas;
 
@@ -62,6 +63,7 @@ uses
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
+  ,LayoutPages.View.Forms.PesquisaNaoEcontrada
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroMarcas;
 
@@ -74,6 +76,10 @@ begin
   FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  if not Assigned(aFormsCte[Ord(tpFormPesqNaoEncontrada)]) then
+    aFormsCte[Ord(tpFormPesqNaoEncontrada)] := TFormPesquisaNaoEncontrada.Create(pArrayFormsCte);
+
+  FFormPesquisaNaoEncontrada := aFormsCte[Ord(tpFormPesqNaoEncontrada)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
   SetEvents;
 end;
@@ -135,6 +141,12 @@ end;
 procedure TControllerMarcas.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
+
+  with TFormPesquisaNaoEncontrada(FFormPesquisaNaoEncontrada) do
+  begin
+    FController.Iniciar;
+  end;
+
   FCmpFormGrid.Close;
   ShowMessage('Up Marcas');
 end;
