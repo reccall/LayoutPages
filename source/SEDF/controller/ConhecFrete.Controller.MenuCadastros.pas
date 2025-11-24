@@ -61,9 +61,10 @@ end;
 implementation
 
 uses
-   LayoutPages.View.Componentes.TLabelTitulo
+   LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
-  ,LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.TLabelTitulo
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuCadastros
@@ -84,6 +85,7 @@ begin
       if Showing then
       begin
         FController.ResetComponentsItens;
+        FController.SetClearPesquisa;
         if not Assigned(FCmpFormGrid) then
         begin
           FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];

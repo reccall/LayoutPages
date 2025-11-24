@@ -77,6 +77,7 @@ end;
 
 function TControllerMenuItensImagens.GetIdxImage(pParam :TImage; pEvent :String) :Integer;
 begin
+  Result := 0;
   case AnsiIndexText(pParam.Name,aImageNames) of
     0: Result := IfThen(pEvent = 'Move',0,1);
     1: Result := IfThen(pEvent = 'Move',2,3);
@@ -228,6 +229,8 @@ procedure TControllerMenuItensImagens.SetActiveImage(pParam :TImage);
 var
   Shift: TShiftState; X, Y: Integer;
 begin
+  X := 0;
+  Y := 0;
   if not Assigned(FMenuItensImagens) then
   begin
     FMenuItensImagens := aFormsCte[Ord(tpMenuItensImagens)];

@@ -15,9 +15,11 @@ uses
 type
   IControllerFornecedores = interface
   ['{9AAAEAD9-D607-439E-A431-409DA5605D4D}']
+    procedure SetEvents;
+    procedure SetClearPesquisa;
+    procedure DestroyComponents;
     procedure SetItensFornecedores;
     procedure ResetComponentsItens;
-    procedure DestroyComponents;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -34,6 +36,8 @@ type
     FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadFornecedores :array of TForm;
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure DestroyComponents;
     procedure SetItensFornecedores;
     procedure ResetComponentsItens;
@@ -41,7 +45,7 @@ type
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
-                                 Shift: TShiftState);
+      Shift: TShiftState);
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerFornecedores overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
@@ -70,11 +74,7 @@ begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
-
-  with TCmpEditTexto(FCmpEditTexto) do
-  begin
-    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
-  end;
+  SetEvents;
 end;
 
 destructor TControllerFornecedores.Destroy;
@@ -112,6 +112,8 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
+  X := 0;
+  Y := 0;
   for iIdx := Low(aCmpItensCadFornecedores) to High(aCmpItensCadFornecedores) do
   begin
     with TCmpTituloDescSimples(FCmpTitulo),
@@ -145,6 +147,19 @@ begin
     FreeAndNil(aCmpItensCadFornecedores[iIdx]);
   end;
   aCmpItensCadFornecedores := nil;
+end;
+
+procedure TControllerFornecedores.SetClearPesquisa;
+begin
+  FControllerConsultas.SetClearPesquisa;
+end;
+
+procedure TControllerFornecedores.SetEvents;
+begin
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 procedure TControllerFornecedores.SetItensFornecedores;

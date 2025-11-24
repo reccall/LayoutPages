@@ -15,9 +15,11 @@ uses
 type
   IControllerUnidadesDeMedida = interface
   ['{A644751A-BEE8-41E3-8EB9-CE17234B8D85}']
-    procedure SetItensUnidadesDeMedida;
-    procedure ResetComponentsItens;
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure DestroyComponents;
+    procedure ResetComponentsItens;
+    procedure SetItensUnidadesDeMedida;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -34,9 +36,11 @@ type
     FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadUnidadesDeMedida :array of TForm;
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure DestroyComponents;
-    procedure SetItensUnidadesDeMedida;
     procedure ResetComponentsItens;
+    procedure SetItensUnidadesDeMedida;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -70,10 +74,7 @@ begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
-  with TCmpEditTexto(FCmpEditTexto) do
-  begin
-    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
-  end;
+  SetEvents;
 end;
 
 destructor TControllerUnidadesDeMedida.Destroy;
@@ -111,6 +112,8 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
+  X := 0;
+  Y := 0;
   for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
   begin
     with TCmpTituloDescSimples(FCmpTitulo),
@@ -144,6 +147,19 @@ begin
     FreeAndNil(aCmpItensCadUnidadesDeMedida[iIdx]);
   end;
   aCmpItensCadUnidadesDeMedida := nil;
+end;
+
+procedure TControllerUnidadesDeMedida.SetClearPesquisa;
+begin
+  FControllerConsultas.SetClearPesquisa;
+end;
+
+procedure TControllerUnidadesDeMedida.SetEvents;
+begin
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 procedure TControllerUnidadesDeMedida.SetItensUnidadesDeMedida;

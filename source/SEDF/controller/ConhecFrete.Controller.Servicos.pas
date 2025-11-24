@@ -15,12 +15,15 @@ uses
 type
   IControllerServicos = interface
   ['{1924679B-498C-4482-AB31-D628C4D6743C}']
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure SetItensServicos;
-    procedure ResetComponentsItens;
     procedure DestroyComponents;
+    procedure ResetComponentsItens;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
+
   end;
 
   TControllerServicos = class(TInterfacedObject, IControllerServicos)
@@ -34,9 +37,11 @@ type
     FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadServ :array of TForm;
-    procedure ResetComponentsItens;
-    procedure DestroyComponents;
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure SetItensServicos;
+    procedure DestroyComponents;
+    procedure ResetComponentsItens;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -72,11 +77,7 @@ begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
-
-   with TCmpEditTexto(FCmpEditTexto) do
-  begin
-    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
-  end;
+  SetEvents;
 end;
 
 destructor TControllerServicos.Destroy;
@@ -120,6 +121,8 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
+  X := 0;
+  Y := 0;
   for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
   begin
     with TCmpTituloDescSimples(FCmpTitulo),
@@ -154,6 +157,19 @@ begin
     FreeAndNil(aCmpItensCadServ[iIdx]);
   end;
   aCmpItensCadServ := nil;
+end;
+
+procedure TControllerServicos.SetClearPesquisa;
+begin
+  FControllerConsultas.SetClearPesquisa;
+end;
+
+procedure TControllerServicos.SetEvents;
+begin
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 procedure TControllerServicos.SetItensServicos;

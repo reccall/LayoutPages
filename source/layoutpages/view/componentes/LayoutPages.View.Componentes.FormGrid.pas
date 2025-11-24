@@ -28,7 +28,6 @@ type
     { Private declarations }
   public
     { Public declarations }
-    FPosition :Integer;
   end;
 
 implementation

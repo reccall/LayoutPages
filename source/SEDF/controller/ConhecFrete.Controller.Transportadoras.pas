@@ -15,9 +15,11 @@ uses
 type
   IControllerTransportadoras = interface
   ['{B9DAA2F4-9EF9-410C-88F0-A63B693CE845}']
-    procedure SetItensTransportadoras;
-    procedure ResetComponentsItens;
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure DestroyComponents;
+    procedure ResetComponentsItens;
+    procedure SetItensTransportadoras;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -34,9 +36,11 @@ type
     FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadTransportadoras :array of TForm;
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure DestroyComponents;
-    procedure SetItensTransportadoras;
     procedure ResetComponentsItens;
+    procedure SetItensTransportadoras;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -70,11 +74,7 @@ begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
-
-  with TCmpEditTexto(FCmpEditTexto) do
-  begin
-    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
-  end;
+  SetEvents;
 end;
 
 destructor TControllerTransportadoras.Destroy;
@@ -112,6 +112,8 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
+  X := 0;
+  Y := 0;
   for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
   begin
     with TCmpTituloDescSimples(FCmpTitulo),
@@ -145,6 +147,19 @@ begin
     FreeAndNil(aCmpItensCadTransportadoras[iIdx]);
   end;
   aCmpItensCadTransportadoras := nil;
+end;
+
+procedure TControllerTransportadoras.SetClearPesquisa;
+begin
+  FControllerConsultas.SetClearPesquisa;
+end;
+
+procedure TControllerTransportadoras.SetEvents;
+begin
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 procedure TControllerTransportadoras.SetItensTransportadoras;

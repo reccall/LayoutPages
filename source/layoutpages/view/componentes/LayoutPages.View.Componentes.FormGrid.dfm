@@ -28,7 +28,6 @@ inherited CmpFormGrid: TCmpFormGrid
       Color = clWhite
       ParentColor = False
       TabOrder = 0
-      ExplicitTop = 49
     end
     object pnlCmpGridTop: TPanel
       Left = 1
@@ -39,8 +38,6 @@ inherited CmpFormGrid: TCmpFormGrid
       Color = clMenu
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 9
-      ExplicitTop = -14
     end
     object pnlLinha: TPanel
       Left = 1

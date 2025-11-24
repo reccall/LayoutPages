@@ -24,8 +24,9 @@ type
   IControllerCadastros = interface
   ['{1924679B-498C-4482-AB31-D628C4D6743C}']
     procedure Iniciar;
-    procedure ResetComponentsItens;
+    procedure SetClearPesquisa;
     procedure DestroyComponents;
+    procedure ResetComponentsItens;
     function GetFormOwner :TpForms;
     function SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
   end;
@@ -52,17 +53,21 @@ type
     FControllerUnidadesDeMedida :IControllerUnidadesDeMedida;
 
     procedure Iniciar;
-    procedure ResetComponentsItens;
-    procedure DestroyComponents;
-    procedure SetInterfaces;
-    procedure SetVariaveisArray;
     procedure SetArrayItens;
+    procedure SetInterfaces;
+    procedure SetClearPesquisa;
+    procedure SetVariaveisArray;
+    procedure DestroyComponents;
+    procedure SetInterfacesEvents;
+    procedure ResetComponentsItens;
+
     procedure OnClickConsulta(Sender :TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
+    procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
+
     function GetFormOwner :TpForms;
     function SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
-    procedure ApplicationEvents1Message(var Msg: tagMSG; var Handled: Boolean);
   public
 
   class function New(pArrayFormsCte :array of TForm) :IControllerCadastros overload;
@@ -88,9 +93,9 @@ uses
 
 constructor TControllerCadastros.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormCte            := pArrayFormsCte[Ord(tpOwner)];
-  FFormCadastros      := pArrayFormsCte[Ord(tpCteCadastros)];
-  FTpOwnerCadastro    := tpFDefault;
+  FFormCte         := pArrayFormsCte[Ord(tpOwner)];
+  FFormCadastros   := pArrayFormsCte[Ord(tpCteCadastros)];
+  FTpOwnerCadastro := tpFDefault;
 
   aFormsCte[Ord(tpCmpFormGrid)]          := TCmpFormGrid.Create(nil);
   aFormsCte[Ord(tpCmpEditTexto)]         := TCmpEditTexto.Create(nil);
@@ -108,6 +113,7 @@ procedure TControllerCadastros.Iniciar;
 begin
   Screen.Cursor := crHourGlass;
   SetInterfaces;
+  SetInterfacesEvents;
   SetVariaveisArray;
   with TFormCteCadastros(FFormCadastros) do
   begin
@@ -123,9 +129,9 @@ begin
         pnlIncluirRegistro.OnClick := OnClickInserirRegistro;
       end;
     end;
+
     with TCmpCabCadastros(FCmpCabCadastro), TCmpEditTexto(FCmpEditTexto) do
     begin
-
       FCmpEditTexto.Parent := pnlRegiaoPesq;
       edtPesquisa.Text := EmptyStr;
     end;
@@ -224,6 +230,19 @@ begin
   end;
 end;
 
+procedure TControllerCadastros.SetClearPesquisa;
+begin
+  case FTpOwnerCadastro of
+    tpCadastroMarcas:           FControllerMarcas.SetClearPesquisa;
+    tpCadastroProdutos:         FControllerProdutos.SetClearPesquisa;
+    tpCadastroClientes:         FControllerClientes.SetClearPesquisa;
+    tpCadastroServicos:         FControllerServicos.SetClearPesquisa;
+    tpCadastroFornecedores:     FControllerFornecedores.SetClearPesquisa;
+    tpCadastroTransportadoras:  FControllerTranportadoras.SetClearPesquisa;
+    tpCadastroUnidadesDeMedida: FControllerUnidadesDeMedida.SetClearPesquisa;
+  end;
+end;
+
 function TControllerCadastros.SetFormOwner(pFormOwnerCadastro :TpForms) :IControllerCadastros;
 begin
   Result := Self;
@@ -268,6 +287,19 @@ begin
       if not Assigned(FControllerUnidadesDeMedida) then
         FControllerUnidadesDeMedida := TControllerUnidadesDeMedida.New(aFormsCte);
     end;
+  end;
+end;
+
+procedure TControllerCadastros.SetInterfacesEvents;
+begin
+  case FTpOwnerCadastro of
+    tpCadastroMarcas:           FControllerMarcas.SetEvents;
+    tpCadastroClientes:         FControllerClientes.SetEvents;
+    tpCadastroProdutos:         FControllerProdutos.SetEvents;
+    tpCadastroServicos:         FControllerServicos.SetEvents;
+    tpCadastroFornecedores:     FControllerFornecedores.SetEvents;
+    tpCadastroTransportadoras:  FControllerTranportadoras.SetEvents;
+    tpCadastroUnidadesDeMedida: FControllerUnidadesDeMedida.SetEvents;
   end;
 end;
 

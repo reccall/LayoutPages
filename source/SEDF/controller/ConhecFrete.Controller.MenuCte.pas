@@ -23,9 +23,7 @@ type
     FCtePrincipal      :TForm;
     FMenuPrincipal     :TForm;
     FMenuCadastros     :TForm;
-    FMenuItensImagens  :TForm;
     FMenuEmissaoFiscal :TForm;
-
 
     FPanelActive :TPanel;
     procedure Iniciar;

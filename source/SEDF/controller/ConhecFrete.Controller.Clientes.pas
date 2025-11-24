@@ -15,9 +15,11 @@ uses
 type
   IControllerClientes = interface
   ['{B9DAA2F4-9EF9-410C-88F0-A63B693CE845}']
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure SetItensClientes;
-    procedure ResetComponentsItens;
     procedure DestroyComponents;
+    procedure ResetComponentsItens;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -34,8 +36,10 @@ type
     FControllerConsultas :IControllerConsultas;
 
     aCmpItensCadClientes :array of TForm;
-    procedure DestroyComponents;
+    procedure SetEvents;
+    procedure SetClearPesquisa;
     procedure SetItensClientes;
+    procedure DestroyComponents;
     procedure ResetComponentsItens;
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
@@ -71,10 +75,7 @@ begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
-    with TCmpEditTexto(FCmpEditTexto) do
-  begin
-    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
-  end;
+  SetEvents;
 end;
 
 destructor TControllerClientes.Destroy;
@@ -112,6 +113,8 @@ var
   Shift: TShiftState;
   X, Y: Integer;
 begin
+  X := 0;
+  Y := 0;
   for iIdx := Low(aCmpItensCadClientes) to High(aCmpItensCadClientes) do
   begin
     with TCmpTituloDescSimples(aCmpItensCadClientes),
@@ -145,6 +148,19 @@ begin
     FreeAndNil(aCmpItensCadClientes[iIdx]);
   end;
   aCmpItensCadClientes := nil;
+end;
+
+procedure TControllerClientes.SetClearPesquisa;
+begin
+  FControllerConsultas.SetClearPesquisa;
+end;
+
+procedure TControllerClientes.SetEvents;
+begin
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
 end;
 
 procedure TControllerClientes.SetItensClientes;
