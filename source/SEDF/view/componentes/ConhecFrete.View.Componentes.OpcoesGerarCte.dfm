@@ -1,18 +1,34 @@
 inherited CmpOpcoesGerarCte: TCmpOpcoesGerarCte
-  ClientHeight = 55
-  ClientWidth = 307
+  ClientHeight = 50
+  ClientWidth = 328
   OnCreate = FormCreate
-  ExplicitWidth = 307
-  ExplicitHeight = 55
+  ExplicitWidth = 328
+  ExplicitHeight = 50
   PixelsPerInch = 96
   TextHeight = 16
   inherited pnlBackGround: TPanel
-    Left = 1
-    ExplicitLeft = 1
+    Width = 328
+    Height = 50
+    Align = alClient
+    ExplicitLeft = -1
+    ExplicitWidth = 321
+    ExplicitHeight = 50
+    inherited pnlInicioB: TPanel
+      Left = 28
+      ExplicitLeft = 28
+    end
+    inherited pnlGerarCteB: TPanel
+      Left = 236
+      ExplicitLeft = 236
+    end
+    inherited pnlSimuB: TPanel
+      Left = 147
+      ExplicitLeft = 147
+    end
     object pnlLineBotoes: TPanel
-      Left = 0
-      Top = 53
-      Width = 305
+      Left = 28
+      Top = 46
+      Width = 293
       Height = 1
       BevelOuter = bvNone
       Color = clMenu

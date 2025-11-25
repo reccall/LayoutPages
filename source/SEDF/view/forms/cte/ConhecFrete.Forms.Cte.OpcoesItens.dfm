@@ -1,18 +1,18 @@
 inherited FormOpcoesItensCte: TFormOpcoesItensCte
   Align = alClient
-  ClientHeight = 351
-  ClientWidth = 627
+  ClientHeight = 415
+  ClientWidth = 630
   Font.Color = clNone
   OnCreate = FormCreate
-  ExplicitWidth = 627
-  ExplicitHeight = 351
+  ExplicitWidth = 630
+  ExplicitHeight = 415
   PixelsPerInch = 96
   TextHeight = 16
   object pnlBackGround: TPanel
     Left = 0
-    Top = 0
-    Width = 627
-    Height = 40
+    Top = 49
+    Width = 630
+    Height = 49
     Align = alTop
     BevelOuter = bvNone
     Color = clWhite
@@ -24,11 +24,13 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
+    ExplicitLeft = -1
+    ExplicitTop = 110
     object pnlDadosCteG: TPanel
       Left = 0
       Top = 0
       Width = 98
-      Height = 40
+      Height = 49
       Cursor = crHandPoint
       Align = alLeft
       BevelOuter = bvNone
@@ -81,7 +83,7 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
       Left = 98
       Top = 0
       Width = 92
-      Height = 40
+      Height = 49
       Cursor = crHandPoint
       Align = alLeft
       BevelOuter = bvNone
@@ -94,7 +96,6 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
       ParentBackground = False
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 100
       object pnlTomadorB: TPanel
         Left = 1
         Top = 4
@@ -135,7 +136,7 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
       Left = 190
       Top = 0
       Width = 93
-      Height = 40
+      Height = 49
       Cursor = crHandPoint
       Align = alLeft
       BevelOuter = bvNone
@@ -148,7 +149,6 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
       ParentBackground = False
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 192
       object pnlMotoristaB: TPanel
         Left = 4
         Top = 4
@@ -189,7 +189,7 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
       Left = 283
       Top = 0
       Width = 196
-      Height = 40
+      Height = 49
       Cursor = crHandPoint
       Align = alLeft
       BevelOuter = bvNone
@@ -202,7 +202,7 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
       ParentBackground = False
       ParentFont = False
       TabOrder = 3
-      ExplicitLeft = 285
+      ExplicitTop = 4
       object pnlDadosSeguroCteB: TPanel
         Left = 4
         Top = 4
@@ -222,7 +222,7 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
         object pnlDadosSeguroCte: TPanel
           Left = 2
           Top = 2
-          Width = 185
+          Width = 186
           Height = 27
           Cursor = crHandPoint
           BevelOuter = bvNone
@@ -239,11 +239,11 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
         end
       end
     end
-    object Panel13: TPanel
+    object pnlParametros: TPanel
       Left = 479
       Top = 0
       Width = 121
-      Height = 40
+      Height = 49
       Cursor = crHandPoint
       Align = alLeft
       BevelOuter = bvNone
@@ -256,7 +256,6 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
       ParentBackground = False
       ParentFont = False
       TabOrder = 4
-      ExplicitLeft = 481
       object pnlParametrosCteB: TPanel
         Left = 6
         Top = 4
@@ -297,9 +296,9 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
   end
   object pnlMain: TPanel
     Left = 0
-    Top = 40
-    Width = 627
-    Height = 311
+    Top = 98
+    Width = 630
+    Height = 317
     Align = alClient
     Caption = 'pnlMain'
     Color = clWhite
@@ -311,5 +310,26 @@ inherited FormOpcoesItensCte: TFormOpcoesItensCte
     ParentBackground = False
     ParentFont = False
     TabOrder = 1
+    ExplicitTop = 49
+    ExplicitWidth = 1040
+    ExplicitHeight = 366
+  end
+  object pnlBotoesB: TPanel
+    Left = 0
+    Top = 0
+    Width = 630
+    Height = 49
+    Align = alTop
+    TabOrder = 2
+    object pnlBotoes: TPanel
+      Left = 184
+      Top = -2
+      Width = 324
+      Height = 42
+      Align = alCustom
+      Color = clWhite
+      ParentBackground = False
+      TabOrder = 0
+    end
   end
 end

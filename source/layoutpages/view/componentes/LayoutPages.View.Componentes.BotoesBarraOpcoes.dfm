@@ -1,16 +1,17 @@
 inherited CmpBotoesBarra: TCmpBotoesBarra
   Align = alClient
   ClientHeight = 44
-  ClientWidth = 310
-  ExplicitWidth = 310
+  ClientWidth = 341
+  ExplicitWidth = 341
   ExplicitHeight = 44
   PixelsPerInch = 96
   TextHeight = 16
   object pnlBackGround: TPanel
     Left = 0
     Top = 0
-    Width = 305
-    Height = 54
+    Width = 341
+    Height = 44
+    Align = alClient
     BevelOuter = bvNone
     Color = clWhite
     Font.Charset = DEFAULT_CHARSET
@@ -21,6 +22,7 @@ inherited CmpBotoesBarra: TCmpBotoesBarra
     ParentBackground = False
     ParentFont = False
     TabOrder = 0
+    ExplicitWidth = 441
     object pnlInicioB: TPanel
       Left = 2
       Top = 3
@@ -57,7 +59,7 @@ inherited CmpBotoesBarra: TCmpBotoesBarra
       end
     end
     object pnlGerarCteB: TPanel
-      Left = 220
+      Left = 250
       Top = 3
       Width = 85
       Height = 40
@@ -92,7 +94,7 @@ inherited CmpBotoesBarra: TCmpBotoesBarra
       end
     end
     object pnlSimuB: TPanel
-      Left = 130
+      Left = 150
       Top = 3
       Width = 84
       Height = 40

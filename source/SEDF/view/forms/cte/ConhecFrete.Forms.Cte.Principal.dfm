@@ -8,9 +8,9 @@ inherited frmCtePrincipal: TfrmCtePrincipal
   TextHeight = 16
   inherited pnlMain: TPanel [0]
     Left = 180
-    Top = 129
+    Top = 113
     Width = 728
-    Height = 382
+    Height = 398
     BevelOuter = bvNone
     Caption = ''
     ExplicitLeft = 180
@@ -28,25 +28,6 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       ExplicitTop = 0
       ExplicitWidth = 728
       ExplicitHeight = 64
-      object pnlMainTopRight: TPanel [0]
-        Left = 341
-        Top = 0
-        Width = 387
-        Height = 64
-        Align = alRight
-        BevelOuter = bvNone
-        TabOrder = 0
-        object pnlBotoes: TPanel
-          Left = 16
-          Top = 6
-          Width = 305
-          Height = 56
-          BevelOuter = bvNone
-          Color = clWhite
-          ParentBackground = False
-          TabOrder = 0
-        end
-      end
       inherited pnlMainTopLeft: TPanel
         Left = 0
         Top = 0
@@ -59,7 +40,6 @@ inherited frmCtePrincipal: TfrmCtePrincipal
         Font.Style = [fsBold]
         ParentBackground = False
         ParentFont = False
-        TabOrder = 1
         ExplicitLeft = 0
         ExplicitTop = 0
         ExplicitHeight = 64
@@ -67,10 +47,11 @@ inherited frmCtePrincipal: TfrmCtePrincipal
       inherited pnlMainTop: TPanel
         Left = 40
         Top = 0
-        Width = 301
+        Width = 688
         Height = 64
         BevelOuter = bvNone
-        TabOrder = 2
+        ExplicitLeft = 40
+        ExplicitTop = 0
         ExplicitWidth = 301
         ExplicitHeight = 64
       end
@@ -78,7 +59,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
     inherited pnlMainLeft: TPanel
       Left = 0
       Top = 64
-      Height = 318
+      Height = 334
       BevelOuter = bvNone
       Caption = ''
       Color = clWhite
@@ -91,20 +72,21 @@ inherited frmCtePrincipal: TfrmCtePrincipal
   end
   inherited pnlTop: TPanel [1]
     Width = 908
-    Height = 129
+    Height = 113
     BevelOuter = bvNone
     ExplicitWidth = 908
-    ExplicitHeight = 129
+    ExplicitHeight = 113
     object pnlTopLeft: TPanel [0]
       Left = 369
       Top = 0
       Width = 539
-      Height = 129
+      Height = 113
       Align = alRight
       BevelOuter = bvNone
       Color = clWhite
       ParentBackground = False
       TabOrder = 0
+      ExplicitHeight = 129
       object pnlUserInfo: TPanel
         Left = 120
         Top = 17
@@ -129,7 +111,7 @@ inherited frmCtePrincipal: TfrmCtePrincipal
     inherited pnlLogo: TPanel
       Left = 0
       Top = 0
-      Height = 129
+      Height = 113
       Caption = ''
       TabOrder = 1
       ExplicitLeft = 0
@@ -138,9 +120,9 @@ inherited frmCtePrincipal: TfrmCtePrincipal
     end
   end
   inherited pnlBackMenu: TPanel [2]
-    Top = 129
+    Top = 113
     Width = 180
-    Height = 382
+    Height = 398
     BevelOuter = bvNone
     Caption = ''
     ExplicitTop = 129

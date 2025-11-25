@@ -254,7 +254,6 @@ begin
 
     with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
     begin
-      pnlMainTopRight.Visible := False;
       lblTitulo.Caption := 'Opções de emissão do CT-e';
     end;
 
@@ -279,7 +278,6 @@ begin
     IniciarAmbiente(Sender);
     with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
     begin
-      pnlMainTopRight.Visible := False;
       lblTitulo.Caption := 'Opções de emissão do NFC-e';
     end;
   finally
@@ -294,7 +292,6 @@ begin
     IniciarAmbiente(Sender);
     with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
     begin
-      pnlMainTopRight.Visible := False;
       lblTitulo.Caption := 'Opções de emissão do NF-e';
     end;
   finally
@@ -309,7 +306,6 @@ begin
     IniciarAmbiente(Sender);
     with TfrmCtePrincipal(FCtePrincipal), TCmpTLabelTitulo(FCmpTituloOpcao) do
     begin
-      pnlMainTopRight.Visible := False;
       lblTitulo.Caption := 'Opções de emissão do NFS-e';
     end;
   finally

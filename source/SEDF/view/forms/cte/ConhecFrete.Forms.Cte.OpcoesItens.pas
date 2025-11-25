@@ -24,7 +24,7 @@ type
     pnlTomadorG: TPanel;
     pnlMotoristaG: TPanel;
     pnlDadosSeg: TPanel;
-    Panel13: TPanel;
+    pnlParametros: TPanel;
     pnlDadosCteB: TPanel;
     pnlDadosCte: TPanel;
     pnlTomadorB: TPanel;
@@ -36,6 +36,8 @@ type
     pnlParametrosCteB: TPanel;
     pnlParametrosCte: TPanel;
     pnlMain: TPanel;
+    pnlBotoesB: TPanel;
+    pnlBotoes: TPanel;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private

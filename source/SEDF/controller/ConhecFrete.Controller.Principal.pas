@@ -141,7 +141,6 @@ begin
   begin
     FCmpTopLogo.Parent := pnlLogo;
     FWidthMenuImg := pnlBackMenu.Width;
-    pnlMainTopRight.Visible := False;
     FCmpCardInfoUser.Parent := pnlUserInfo;
     FCmpTituloOpcao.Parent  := pnlMainTop;
   end;

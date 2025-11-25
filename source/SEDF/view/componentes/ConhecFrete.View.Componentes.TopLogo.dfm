@@ -14,12 +14,11 @@ inherited CmpTopLogo: TCmpTopLogo
     Height = 122
     Align = alLeft
     TabOrder = 0
-    ExplicitHeight = 71
     object Image1: TImage
       Left = 3
       Top = -39
-      Width = 200
-      Height = 200
+      Width = 180
+      Height = 180
       Cursor = crHandPoint
       Picture.Data = {
         0B546478504E47496D61676589504E470D0A1A0A0000000D49484452000001F4

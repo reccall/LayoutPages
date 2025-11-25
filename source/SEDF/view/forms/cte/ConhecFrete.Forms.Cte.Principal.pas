@@ -21,8 +21,6 @@ type
     pnlTopLeft: TPanel;
     pnlUserInfo: TPanel;
     pnlConfig: TPanel;
-    pnlMainTopRight: TPanel;
-    pnlBotoes: TPanel;
     pnlMenu: TPanel;
     pnlLineMenu: TPanel;
     pnlTopMenu: TPanel;

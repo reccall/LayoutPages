@@ -112,7 +112,6 @@ begin
 
   with TfrmCtePrincipal(FFormOwner) do
   begin
-    pnlMainTopRight.Visible := False;
     TfrmCteOpcoesInicio(FFormCte).Parent := pnlMain;
   end;
 end;
@@ -151,13 +150,6 @@ end;
 
 procedure TControllerOpcoesCte.Iniciar;
 begin
- with TfrmCtePrincipal(FFormOwner) do
- begin
-   FBotoesBarraCte.Parent := pnlBotoes;
-   FBotoesBarraCte.pnlInicio.OnClick := OnClickInicioCte;
-   FBotoesBarraCte.Show;
- end;
-
   with FOpcoesCteItens do
   begin
     pnlTomador.OnClick        := OnClickTomadorCte;
@@ -165,11 +157,13 @@ begin
     pnlMotorista.OnClick      := OnClickMotoristaCte;
     pnlParametrosCte.OnClick  := OnClickParamsGeraisCte;
     pnlDadosSeguroCte.OnClick := OnClickDadosSeguroCte;
+    FBotoesBarraCte.Parent := pnlBotoes;
+    FBotoesBarraCte.pnlInicio.OnClick := OnClickInicioCte;
+    FBotoesBarraCte.Show;
   end;
 
   with TfrmCtePrincipal(FFormOwner) do
   begin
-    pnlMainTopRight.Visible := False;
     TfrmCteOpcoesInicio(FFormCte).Parent := pnlMain;
   end;
 
@@ -229,7 +223,6 @@ begin
 
   with TfrmCtePrincipal(FFormOwner) do
   begin
-    pnlMainTopRight.Visible := True;
     FOpcoesCteItens.Parent := pnlMain;
     FOpcoesCteItens.Show;
   end;
@@ -294,7 +287,6 @@ begin
 
   with TfrmCtePrincipal(FFormOwner), TCmpTLabelTitulo(FCmpTituloOpcao) do
   begin
-    pnlMainTopRight.Visible := False;
     lblTitulo.Caption := 'Opções de emissão do CT-e';
   end;
 
