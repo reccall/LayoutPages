@@ -74,6 +74,7 @@ uses
   ConhecFrete.Controller.Transportadoras in 'source\SEDF\controller\ConhecFrete.Controller.Transportadoras.pas',
   ConhecFrete.Controller.UnidadesDeMedida in 'source\SEDF\controller\ConhecFrete.Controller.UnidadesDeMedida.pas',
   ConhecFrete.Controller.PesquisaNaoEncontrada in 'source\SEDF\controller\ConhecFrete.Controller.PesquisaNaoEncontrada.pas',
+  ConhecFrete.Controller.FormGrid in 'source\SEDF\controller\ConhecFrete.Controller.FormGrid.pas',
   ConhecFrete.Forms.Cte.Cliente.DadosCte in 'source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas' {frmClienteDadosCte},
   ConhecFrete.Forms.Cte.RegiaoDadosCte in 'source\SEDF\view\forms\cte\regiao\ConhecFrete.Forms.Cte.RegiaoDadosCte.pas' {frmRegiaoDadosCte},
   ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte in 'source\SEDF\view\forms\cte\ufglobalizado\ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte.pas' {frmUFGlobalizadoDadosCte},

@@ -221,6 +221,7 @@
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.Transportadoras.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.UnidadesDeMedida.pas"/>
         <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.PesquisaNaoEncontrada.pas"/>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.FormGrid.pas"/>
         <DCCReference Include="source\SEDF\view\forms\cte\cliente\ConhecFrete.Forms.Cte.Cliente.DadosCte.pas">
             <Form>frmClienteDadosCte</Form>
         </DCCReference>

@@ -176,27 +176,23 @@ procedure TControllerUnidadesDeMedida.SetItensUnidadesDeMedida;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadUnidadesDeMedida), TCmpFormGrid(FCmpFormGrid) do
+  SetLength(aCmpItensCadUnidadesDeMedida,20);
+  for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
   begin
-    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
-    FCmpTitulo.Parent := pnlCmpGridTop;
-    SetLength(aCmpItensCadUnidadesDeMedida,20);
-    for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
+    if not Assigned(aCmpItensCadUnidadesDeMedida[iIdx]) then
     begin
-      if not Assigned(aCmpItensCadUnidadesDeMedida[iIdx]) then
+      aCmpItensCadUnidadesDeMedida[iIdx] := TCmpBarraItemCadastroUnidadesDeMedida.Create(nil);
+      with TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
       begin
-        aCmpItensCadUnidadesDeMedida[iIdx] := TCmpBarraItemCadastroUnidadesDeMedida.Create(nil);
-        with TCmpBarraItemCadastroUnidadesDeMedida(aCmpItensCadUnidadesDeMedida[iIdx]) do
-        begin
-          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-          lblCodigo.Caption := 'UN - '+FormatFloat('000000',High(aCmpItensCadUnidadesDeMedida) - iIdx);
-        end;
-        aCmpItensCadUnidadesDeMedida[iIdx].Parent := scrlbxCmpMain;
+        lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        lblCodigo.Caption := 'UN - '+FormatFloat('000000',High(aCmpItensCadUnidadesDeMedida) - iIdx);
       end;
-      aCmpItensCadUnidadesDeMedida[iIdx].Show;
     end;
-    FCmpTitulo.Show;
-    FCmpFormGrid.Show;
+  end;
+
+  with TCmpFormGrid(FCmpFormGrid) do
+  begin
+    FController.SetItensGrid(FCmpTitulo, aCmpItensCadUnidadesDeMedida);
   end;
 end;
 

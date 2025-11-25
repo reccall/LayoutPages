@@ -97,11 +97,12 @@ begin
   FFormCadastros   := pArrayFormsCte[Ord(tpCteCadastros)];
   FTpOwnerCadastro := tpFDefault;
 
-  aFormsCte[Ord(tpCmpFormGrid)]          := TCmpFormGrid.Create(nil);
   aFormsCte[Ord(tpCmpEditTexto)]         := TCmpEditTexto.Create(nil);
   aFormsCte[Ord(tpCmpControlGrid)]       := TCmpGridControl.Create(nil);
   aFormsCte[Ord(tpCmpCabCadastros)]      := TCmpCabCadastros.Create(nil);
   aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
+
+  aFormsCte[Ord(tpCmpFormGrid)] := TCmpFormGrid.Create(aFormsCte);
 end;
 
 class function TControllerCadastros.New(pArrayFormsCte :array of TForm): IControllerCadastros;
@@ -120,40 +121,33 @@ begin
     if not FCmpCabCadastro.Showing then
     begin
       FCmpCabCadastro.Parent := pnlCadTop;
-      with TCmpCabCadastros(FCmpCabCadastro) do
+      with TCmpCabCadastros(FCmpCabCadastro), TCmpEditTexto(FCmpEditTexto) do
       begin
         FCmpControlGrid.Parent := pnlControlGrid;
         MakeRounded(pnlConsulta,20);
         MakeRounded(pnlRegiaoPesq,20);
         imgLupa.OnClick := OnClickConsulta;
         pnlIncluirRegistro.OnClick := OnClickInserirRegistro;
-      end;
-
-      with TCmpFormGrid(FCmpFormGrid) do
-      begin
-        ApplicationEvents1.OnMessage := ApplicationEvents1Message;
-        MakeRounded(pnlCmpGridTop,10);
-        scrlbxCmpMain.Realign;
-      end;
-
-      with TCmpCabCadastros(FCmpCabCadastro), TCmpEditTexto(FCmpEditTexto) do
-      begin
         FCmpEditTexto.Parent := pnlRegiaoPesq;
         edtPesquisa.Text := EmptyStr;
       end;
 
-      with TCmpGridControl(FCmpControlGrid) do
+      with TCmpFormGrid(FCmpFormGrid), TCmpGridControl(FCmpControlGrid) do
       begin
         chkControl.Checked := False;
         chkControl.OnClick := OnClickCheckBox;
+
+        ApplicationEvents1.OnMessage := ApplicationEvents1Message;
+        MakeRounded(pnlCmpGridTop,10);
+        scrlbxCmpMain.Realign;
       end;
+      Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     end;
-    Parent := TfrmCtePrincipal(FFormCte).pnlMain;
     SetArrayItens;
-    Show;
     FCmpControlGrid.Show;
     FCmpCabCadastro.Show;
     FCmpEditTexto.Show;
+    Show;
     FCmpControlGrid.SetFocus;
   end;
   Screen.Cursor := crDefault;

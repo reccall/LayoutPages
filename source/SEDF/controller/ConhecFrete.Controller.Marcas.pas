@@ -179,27 +179,23 @@ procedure TControllerMarcas.SetItensMarcas;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadMarcas), TCmpFormGrid(FCmpFormGrid) do
+  SetLength(aCmpItensCadMarcas,20);
+  for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
   begin
-    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
-    FCmpTitulo.Parent := pnlCmpGridTop;
-    SetLength(aCmpItensCadMarcas,20);
-    for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
+    if not Assigned(aCmpItensCadMarcas[iIdx]) then
     begin
-      if not Assigned(aCmpItensCadMarcas[iIdx]) then
+      aCmpItensCadMarcas[iIdx] := TCmpBarraItemCadastroMarcas.Create(nil);
+      with TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]) do
       begin
-        aCmpItensCadMarcas[iIdx] := TCmpBarraItemCadastroMarcas.Create(nil);
-        with TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]) do
-        begin
-          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-          lblCodigo.Caption := 'MR - '+FormatFloat('000000',High(aCmpItensCadMarcas) - iIdx);
-        end;
-        aCmpItensCadMarcas[iIdx].Parent := scrlbxCmpMain;
+        lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        lblCodigo.Caption := 'MR - '+FormatFloat('000000',High(aCmpItensCadMarcas) - iIdx);
       end;
-      aCmpItensCadMarcas[iIdx].Show;
     end;
-    FCmpTitulo.Show;
-    FCmpFormGrid.Show;
+  end;
+
+  with TCmpFormGrid(FCmpFormGrid) do
+  begin
+    FController.SetItensGrid(FCmpTitulo, aCmpItensCadMarcas);
   end;
 end;
 

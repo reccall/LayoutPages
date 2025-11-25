@@ -175,27 +175,23 @@ procedure TControllerFornecedores.SetItensFornecedores;
 var
   iIdx :Integer;
 begin
-  with TFormCteCadastros(FFormCadFornecedores), TCmpFormGrid(FCmpFormGrid) do
+  SetLength(aCmpItensCadFornecedores,20);
+  for iIdx := Low(aCmpItensCadFornecedores) to High(aCmpItensCadFornecedores) do
   begin
-    TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
-    FCmpTitulo.Parent := pnlCmpGridTop;
-    SetLength(aCmpItensCadFornecedores,20);
-    for iIdx := Low(aCmpItensCadFornecedores) to High(aCmpItensCadFornecedores) do
+    if not Assigned(aCmpItensCadFornecedores[iIdx]) then
     begin
-      if not Assigned(aCmpItensCadFornecedores[iIdx]) then
+      aCmpItensCadFornecedores[iIdx] := TCmpBarraItemCadastroFornecedores.Create(nil);
+      with TCmpBarraItemCadastroFornecedores(aCmpItensCadFornecedores[iIdx]) do
       begin
-        aCmpItensCadFornecedores[iIdx] := TCmpBarraItemCadastroFornecedores.Create(nil);
-        with TCmpBarraItemCadastroFornecedores(aCmpItensCadFornecedores[iIdx]) do
-        begin
-          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-          lblCodigo.Caption := 'FN - '+FormatFloat('000000',High(aCmpItensCadFornecedores) - iIdx);
-        end;
-        aCmpItensCadFornecedores[iIdx].Parent := scrlbxCmpMain;
+        lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        lblCodigo.Caption := 'FN - '+FormatFloat('000000',High(aCmpItensCadFornecedores) - iIdx);
       end;
-      aCmpItensCadFornecedores[iIdx].Show;
     end;
-    FCmpTitulo.Show;
-    FCmpFormGrid.Show;
+  end;
+
+  with TCmpFormGrid(FCmpFormGrid) do
+  begin
+    FController.SetItensGrid(FCmpTitulo, aCmpItensCadFornecedores);
   end;
 end;
 

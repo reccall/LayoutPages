@@ -3,7 +3,6 @@ inherited CmpBarraTituloCadastroProdutos: TCmpBarraTituloCadastroProdutos
   ClientHeight = 40
   ClientWidth = 842
   Color = clMenu
-  Visible = True
   ExplicitWidth = 842
   ExplicitHeight = 40
   PixelsPerInch = 96

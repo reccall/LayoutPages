@@ -1,6 +1,5 @@
 inherited CmpFormGrid: TCmpFormGrid
   Align = alClient
-  Caption = 'CmpFormGrid'
   ClientHeight = 300
   ClientWidth = 964
   ExplicitWidth = 964
