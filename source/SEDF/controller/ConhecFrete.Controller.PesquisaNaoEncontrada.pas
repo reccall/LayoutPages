@@ -5,10 +5,7 @@ interface
 uses
    Forms
   ,Graphics
-  ,System.SysUtils
-  ,LayoutPages.View.Componentes.TEditTitulo
-  ,LayoutPages.View.Componentes.TLabelTitulo
-  ,LayoutPages.View.Componentes.TEditPesquisa;
+  ,System.SysUtils;
 
 type
   IControllerPesquisaNaoEncontrada = interface
@@ -21,6 +18,7 @@ type
   private
     FCmpEditTexto :TForm;
     FFormCadastros :TForm;
+    FCmpControlGrid :TForm;
     FFormNaoEncontrado :TForm;
     procedure Iniciar;
     procedure DestroyComponents;
@@ -36,6 +34,7 @@ uses
    ConhecFrete.Model.Types.Constantes
   ,ConhecFrete.Forms.Cte.Cadastros
   ,LayoutPages.View.Componentes.TEditTexto
+  ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Forms.PesquisaNaoEcontrada;
 
 { TControllerPesquisaNaoEncontrada }
@@ -44,14 +43,15 @@ constructor TControllerPesquisaNaoEncontrada.Create(pArrayFormsCte :array of TFo
 begin
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FFormCadastros := pArrayFormsCte[Ord(tpCteCadastros)];
-  FFormNaoEncontrado := pArrayFormsCte[Ord(tpFormPesqNaoEncontrada)];
+  FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  FFormNaoEncontrado := TFormPesquisaNaoEncontrada.Create(pArrayFormsCte);
 end;
 
 destructor TControllerPesquisaNaoEncontrada.Destroy;
 begin
+  inherited;
   with TFormPesquisaNaoEncontrada(FFormNaoEncontrado) do
   begin
-    FreeAndNil(FController);
     Close;
   end;
 end;
@@ -67,6 +67,7 @@ begin
        TCmpEditTexto(FCmpEditTexto),
        TFormCteCadastros(FFormCadastros) do
   begin
+    FCmpControlGrid.Close;
     lblPesquisa.Caption := Format('Pesquisando por: %s',[edtPesquisa.Text]);
     FFormNaoEncontrado.Parent := pnlMain;
     FFormNaoEncontrado.Show;

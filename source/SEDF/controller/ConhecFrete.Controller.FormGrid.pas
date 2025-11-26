@@ -42,7 +42,7 @@ uses
 
 constructor TControllerFormGrid.Create(pArrayFormsCte: array of TForm);
 begin
-  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)]
 end;
 
 destructor TControllerFormGrid.Destroy;
@@ -76,8 +76,10 @@ var
 begin
   if not Assigned(FCteCadastros) then
     FCteCadastros := aFormsCte[Ord(tpCteCadastros)];
+
   with TFormCteCadastros(FCteCadastros), TCmpFormGrid(FCmpFormGrid) do
   begin
+    MakeRounded(pCmpTitulo,10);
     TCmpFormGrid(FCmpFormGrid).Parent := pnlMain;
     pCmpTitulo.Parent := pnlCmpGridTop;
     for iIdx := Low(pCmpItensFormGrid) to High(pCmpItensFormGrid) do

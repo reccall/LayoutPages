@@ -16,21 +16,18 @@ uses
   ,Vcl.Dialogs
   ,Vcl.StdCtrls
   ,LayoutPages.View.Forms.FormDefault
-  ,ConhecFrete.Controller.PesquisaNaoEncontrada, dxGDIPlusClasses;
+  ,dxGDIPlusClasses;
 
 type
   TFormPesquisaNaoEncontrada = class(TFormDefault)
     lblInfo: TLabel;
     lblPesquisa: TLabel;
     Image1: TImage;
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    FController :IControllerPesquisaNaoEncontrada;
     constructor Create(pArrayFormsCte :array of TForm);
-
   end;
 
 implementation
@@ -46,13 +43,6 @@ constructor TFormPesquisaNaoEncontrada.Create(pArrayFormsCte: array of TForm);
 begin
   pArrayFormsCte[Ord(tpFormPesqNaoEncontrada)] := Self;
   Inherited Create(nil);
-  FController := TControllerPesquisaNaoEncontrada.New(pArrayFormsCte);
-end;
-
-procedure TFormPesquisaNaoEncontrada.FormShow(Sender: TObject);
-begin
-  inherited;
-  FController.Iniciar;
 end;
 
 end.

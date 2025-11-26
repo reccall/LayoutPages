@@ -29,8 +29,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    FController :IControllerFormGrid;
-    constructor Create(pArrayFormsCte :array of TForm);
+    constructor Create(pArrayFormsCte :array of TForm); overload;
 
   end;
 
@@ -47,7 +46,7 @@ constructor TCmpFormGrid.Create(pArrayFormsCte: array of TForm);
 begin
   pArrayFormsCte[Ord(tpCmpFormGrid)] := Self;
   Inherited Create(nil);
-  FController := TControllerFormGrid.New(pArrayFormsCte);
 end;
+
 
 end.

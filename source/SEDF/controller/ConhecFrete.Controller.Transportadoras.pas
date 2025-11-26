@@ -9,7 +9,9 @@ uses
   ,System.Classes
   ,System.SysUtils
   ,Vcl.Controls
+  ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
+  ,ConhecFrete.Controller.PesquisaNaoEncontrada
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -28,13 +30,13 @@ type
   TControllerTransportadoras = class(TInterfacedObject, IControllerTransportadoras)
   private
     FCmpTitulo :TForm;
-    FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
     FFormCadTransportadoras :TForm;
-    FFormPesquisaNaoEncontrada :TForm;
 
+    FControllerFormGrid :IControllerFormGrid;
     FControllerConsultas :IControllerConsultas;
+    FControllerPesquisaNaoEncontrada :IControllerPesquisaNaoEncontrada;
 
     aCmpItensCadTransportadoras :array of TForm;
     procedure SetEvents;
@@ -47,6 +49,7 @@ type
     procedure OnClickInserirRegistro(Sender :TObject);
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
                                  Shift: TShiftState);
+    function FindRegister :Boolean;
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerTransportadoras overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
@@ -62,7 +65,6 @@ uses
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
-  ,LayoutPages.View.Forms.PesquisaNaoEcontrada
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroTransportadoras;
 
@@ -72,19 +74,20 @@ constructor TControllerTransportadoras.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCadTransportadoras := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
-  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  FControllerFormGrid := TControllerFormGrid.New(pArrayFormsCte);
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
-  if not Assigned(aFormsCte[Ord(tpFormPesqNaoEncontrada)]) then
-    aFormsCte[Ord(tpFormPesqNaoEncontrada)] := TFormPesquisaNaoEncontrada.Create(pArrayFormsCte);
-  FFormPesquisaNaoEncontrada := aFormsCte[Ord(tpFormPesqNaoEncontrada)];
+  FControllerPesquisaNaoEncontrada := TControllerPesquisaNaoEncontrada.New(pArrayFormsCte);
   SetEvents;
 end;
 
 destructor TControllerTransportadoras.Destroy;
 begin
   inherited;
+  FControllerFormGrid := nil;
+  FControllerConsultas := nil;
+  FControllerPesquisaNaoEncontrada := nil;
 end;
 
 procedure TControllerTransportadoras.DestroyComponents;
@@ -98,6 +101,33 @@ procedure TControllerTransportadoras.edtPesquisaKeyDown(
 begin
   case Key of
     13: OnClickConsulta(Sender);
+  end;
+end;
+
+function TControllerTransportadoras.FindRegister: Boolean;
+var
+  iIdx :Integer;
+begin
+  Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
+  if Result then
+  begin
+    ResetComponentsItens;
+    SetLength(aCmpItensCadTransportadoras,15);
+    for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
+    begin
+      if not Assigned(aCmpItensCadTransportadoras[iIdx]) then
+      begin
+        aCmpItensCadTransportadoras[iIdx] := TCmpBarraItemCadastroTransportadoras.Create(nil);
+        with TCmpBarraItemCadastroTransportadoras(aCmpItensCadTransportadoras[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblDesc.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
+          lblCodigo.Caption := 'TR - '+FormatFloat('000000',High(aCmpItensCadTransportadoras) - iIdx);
+        end;
+      end;
+    end;
+    FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadTransportadoras);
+    FCmpControlGrid.Show;
   end;
 end;
 
@@ -140,11 +170,8 @@ end;
 procedure TControllerTransportadoras.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
-  with TFormPesquisaNaoEncontrada(FFormPesquisaNaoEncontrada) do
-  begin
-    FController.Iniciar;
-  end;
-  ShowMessage('Up Transportadoras');
+  if not FindRegister then
+    FControllerPesquisaNaoEncontrada.Iniciar;
 end;
 
 procedure TControllerTransportadoras.ResetComponentsItens;
@@ -188,11 +215,7 @@ begin
       end;
     end;
   end;
-
-  with TCmpFormGrid(FCmpFormGrid) do
-  begin
-    FController.SetItensGrid(FCmpTitulo, aCmpItensCadTransportadoras);
-  end;
+  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadTransportadoras);
 end;
 
 end.

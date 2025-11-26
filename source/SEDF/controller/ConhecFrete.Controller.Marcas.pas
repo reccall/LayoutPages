@@ -9,7 +9,9 @@ uses
   ,System.Classes
   ,System.SysUtils
   ,Vcl.Controls
+  ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
+  ,ConhecFrete.Controller.PesquisaNaoEncontrada
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -32,9 +34,10 @@ type
     FCmpEditTexto :TForm;
     FFormCadMarcas :TForm;
     FCmpControlGrid :TForm;
-    FFormPesquisaNaoEncontrada :TForm;
 
+    FControllerFormGrid :IControllerFormGrid;
     FControllerConsultas :IControllerConsultas;
+    FControllerPesquisaNaoEncontrada :IControllerPesquisaNaoEncontrada;
 
     aCmpItensCadMarcas :array of TForm;
     procedure SetEvents;
@@ -47,6 +50,7 @@ type
     procedure OnClickInserirRegistro(Sender :TObject);
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
                                  Shift: TShiftState);
+    function FindRegister :Boolean;
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerMarcas overload;
     constructor Create(pArrayFormsCte :array of TForm); overload;
@@ -60,10 +64,8 @@ uses
   ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
   ,LayoutPages.View.Forms.CadastroPrincipal
-  ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
-  ,LayoutPages.View.Forms.PesquisaNaoEcontrada
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroMarcas;
 
@@ -73,20 +75,20 @@ constructor TControllerMarcas.Create(pArrayFormsCte :array of TForm);
 begin
   FFormCadMarcas := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
-  FCmpFormGrid := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
-  if not Assigned(aFormsCte[Ord(tpFormPesqNaoEncontrada)]) then
-    aFormsCte[Ord(tpFormPesqNaoEncontrada)] := TFormPesquisaNaoEncontrada.Create(pArrayFormsCte);
-
-  FFormPesquisaNaoEncontrada := aFormsCte[Ord(tpFormPesqNaoEncontrada)];
+  FControllerFormGrid := TControllerFormGrid.New(pArrayFormsCte);
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
+  FControllerPesquisaNaoEncontrada := TControllerPesquisaNaoEncontrada.New(pArrayFormsCte);
   SetEvents;
 end;
 
 destructor TControllerMarcas.Destroy;
 begin
   inherited;
+  FControllerFormGrid := nil;
+  FControllerConsultas := nil;
+  FControllerPesquisaNaoEncontrada := nil;
 end;
 
 procedure TControllerMarcas.DestroyComponents;
@@ -99,6 +101,33 @@ procedure TControllerMarcas.edtPesquisaKeyDown(Sender: TObject;
 begin
   case Key of
     13: OnClickConsulta(Sender);
+  end;
+end;
+
+function TControllerMarcas.FindRegister: Boolean;
+var
+  iIdx :Integer;
+begin
+  Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
+  if Result then
+  begin
+    ResetComponentsItens;
+    SetLength(aCmpItensCadMarcas,15);
+    for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
+    begin
+      if not Assigned(aCmpItensCadMarcas[iIdx]) then
+      begin
+        aCmpItensCadMarcas[iIdx] := TCmpBarraItemCadastroMarcas.Create(nil);
+        with TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]) do
+        begin
+          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+          lblDesc.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
+          lblCodigo.Caption := 'MR - '+FormatFloat('000000',High(aCmpItensCadMarcas) - iIdx);
+        end;
+      end;
+    end;
+    FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadMarcas);
+    FCmpControlGrid.Show;
   end;
 end;
 
@@ -141,14 +170,8 @@ end;
 procedure TControllerMarcas.OnClickConsulta(Sender: TObject);
 begin
   FControllerConsultas.OnClickConsulta(Sender);
-
-  with TFormPesquisaNaoEncontrada(FFormPesquisaNaoEncontrada) do
-  begin
-    FController.Iniciar;
-  end;
-
-  FCmpFormGrid.Close;
-  ShowMessage('Up Marcas');
+  if not FindRegister then
+    FControllerPesquisaNaoEncontrada.Iniciar;
 end;
 
 procedure TControllerMarcas.ResetComponentsItens;
@@ -192,11 +215,7 @@ begin
       end;
     end;
   end;
-
-  with TCmpFormGrid(FCmpFormGrid) do
-  begin
-    FController.SetItensGrid(FCmpTitulo, aCmpItensCadMarcas);
-  end;
+  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadMarcas);
 end;
 
 end.

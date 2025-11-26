@@ -124,8 +124,6 @@ begin
       with TCmpCabCadastros(FCmpCabCadastro), TCmpEditTexto(FCmpEditTexto) do
       begin
         FCmpControlGrid.Parent := pnlControlGrid;
-        MakeRounded(pnlConsulta,20);
-        MakeRounded(pnlRegiaoPesq,20);
         imgLupa.OnClick := OnClickConsulta;
         pnlIncluirRegistro.OnClick := OnClickInserirRegistro;
         FCmpEditTexto.Parent := pnlRegiaoPesq;
@@ -138,10 +136,16 @@ begin
         chkControl.OnClick := OnClickCheckBox;
 
         ApplicationEvents1.OnMessage := ApplicationEvents1Message;
-        MakeRounded(pnlCmpGridTop,10);
+
         scrlbxCmpMain.Realign;
       end;
       Parent := TfrmCtePrincipal(FFormCte).pnlMain;
+    end;
+    with TCmpCabCadastros(FCmpCabCadastro), TCmpFormGrid(FCmpFormGrid) do
+    begin
+      MakeRounded(pnlConsulta,20);
+      MakeRounded(pnlRegiaoPesq,20);
+      MakeRounded(pnlCmpGridTop,10);
     end;
     SetArrayItens;
     FCmpControlGrid.Show;
