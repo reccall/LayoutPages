@@ -8,6 +8,7 @@ uses
   LayoutPages.View.Forms.DefaultTemplate in 'source\layoutpages\view\forms\LayoutPages.View.Forms.DefaultTemplate.pas' {FormDefaultTemplate},
   LayoutPages.View.Forms.CadastroPrincipal in 'source\layoutpages\view\forms\LayoutPages.View.Forms.CadastroPrincipal.pas' {FormCadastrosPrincipal},
   LayoutPages.View.Forms.PesquisaNaoEcontrada in 'source\layoutpages\view\forms\LayoutPages.View.Forms.PesquisaNaoEcontrada.pas' {FormPesquisaNaoEncontrada},
+  LayoutPages.View.Forms.LoadingCSS in 'source\layoutpages\view\forms\LayoutPages.View.Forms.LoadingCSS.pas' {FormLoadCSS},
   LayoutPages.View.Componentes.BotoesBarraClose in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraClose.pas' {CmpBotoesBarraClose},
   LayoutPages.View.Componentes.TCheckbox in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TCheckbox.pas',
   LayoutPages.View.Componentes.TComboboxTitulo in 'source\layoutpages\view\componentes\LayoutPages.View.Componentes.TComboboxTitulo.pas',

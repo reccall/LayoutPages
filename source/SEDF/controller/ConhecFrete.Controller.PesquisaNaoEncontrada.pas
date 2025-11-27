@@ -5,7 +5,9 @@ interface
 uses
    Forms
   ,Graphics
-  ,System.SysUtils;
+  ,System.SysUtils
+  ,Vcl.Controls
+  ,Vcl.ExtCtrls;
 
 type
   IControllerPesquisaNaoEncontrada = interface
@@ -20,7 +22,11 @@ type
     FFormCadastros :TForm;
     FCmpControlGrid :TForm;
     FFormNaoEncontrado :TForm;
+    FFormLoadingCSS :TForm;
+    FTimer :TTimer;
     procedure Iniciar;
+    procedure LoadFormNaoEncontrado;
+    procedure OnTimerLoading(Sender :TObject);
     procedure DestroyComponents;
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerPesquisaNaoEncontrada overload;
@@ -33,6 +39,7 @@ implementation
 uses
    ConhecFrete.Model.Types.Constantes
   ,ConhecFrete.Forms.Cte.Cadastros
+  ,LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Forms.PesquisaNaoEcontrada;
@@ -45,11 +52,16 @@ begin
   FFormCadastros := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FFormNaoEncontrado := TFormPesquisaNaoEncontrada.Create(pArrayFormsCte);
+  FTimer := TTimer.Create(nil);
+  FTimer.OnTimer := OnTimerLoading;
+  FTimer.Enabled := False;
+  FTimer.Interval := 1800;
 end;
 
 destructor TControllerPesquisaNaoEncontrada.Destroy;
 begin
   inherited;
+  FreeAndNil(FTimer);
   with TFormPesquisaNaoEncontrada(FFormNaoEncontrado) do
   begin
     Close;
@@ -63,12 +75,29 @@ end;
 
 procedure TControllerPesquisaNaoEncontrada.Iniciar;
 begin
+  FTimer.Enabled := True;
+  if not Assigned(FFormLoadingCSS) then
+   FFormLoadingCSS := aFormsCte[Ord(tpFormLoadingCSS)];
+
+  with TFormCteCadastros(FFormCadastros) do
+  begin
+    TFormLoadCSS(FFormLoadingCSS).Parent := pnlMain;
+    TFormLoadCSS(FFormLoadingCSS).Show;
+  end;
+end;
+
+procedure TControllerPesquisaNaoEncontrada.LoadFormNaoEncontrado;
+begin
+  FTimer.Interval := 1000;
+  FTimer.Enabled := False;
+  TFormLoadCSS(FFormLoadingCSS).Close;
   with TFormPesquisaNaoEncontrada(FFormNaoEncontrado),
-       TCmpEditTexto(FCmpEditTexto),
-       TFormCteCadastros(FFormCadastros) do
+         TCmpEditTexto(FCmpEditTexto),
+         TFormCteCadastros(FFormCadastros) do
   begin
     FCmpControlGrid.Close;
     lblPesquisa.Caption := Format('Pesquisando por: %s',[edtPesquisa.Text]);
+
     FFormNaoEncontrado.Parent := pnlMain;
     FFormNaoEncontrado.Show;
   end;
@@ -77,6 +106,11 @@ end;
 class function TControllerPesquisaNaoEncontrada.New(pArrayFormsCte :array of TForm): IControllerPesquisaNaoEncontrada;
 begin
   Result := Self.Create(pArrayFormsCte);
+end;
+
+procedure TControllerPesquisaNaoEncontrada.OnTimerLoading(Sender: TObject);
+begin
+  LoadFormNaoEncontrado;
 end;
 
 end.

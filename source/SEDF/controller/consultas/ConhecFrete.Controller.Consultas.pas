@@ -20,6 +20,7 @@ type
     FCmpEditTexto :TForm;
     FFormCadastros :TForm;
     FCmpCabCadastro :TForm;
+    FFormLoadingCSS :TForm;
     FPanelConsultaPesq :TForm;
 
     procedure SetClearPesquisa;
@@ -34,9 +35,10 @@ type
 implementation
 
 uses
-   LayoutPages.View.Componentes.FormGrid
-  ,LayoutPages.View.Componentes.TEditTexto
+   LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Forms.PesquisaNaoEcontrada
+  ,LayoutPages.View.Componentes.FormGrid
+  ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.PanelConsultaPesq
   ,LayoutPages.View.Componentes.CabecalhoCadastroPrincipal
   ,ConhecFrete.Forms.Cte.Cadastros
@@ -69,6 +71,11 @@ end;
 
 procedure TControllerConsultas.OnClickConsulta(Sender: TObject);
 begin
+  if not Assigned(aFormsCte[Ord(tpFormLoadingCSS)]) then
+  begin
+    aFormsCte[Ord(tpFormLoadingCSS)] := TFormLoadCSS.Create(nil);
+  end;
+  FFormLoadingCSS := aFormsCte[Ord(tpFormLoadingCSS)];
   if Assigned(FPanelConsultaPesq) then
     FreeAndNil(FPanelConsultaPesq);
 

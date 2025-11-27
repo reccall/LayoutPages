@@ -124,9 +124,10 @@ end;
 
 constructor TControllerMenuCadastros.Create(pArrayFormsCte :array of TForm);
 begin
-  FMenuCadastros     := pArrayFormsCte[Ord(tpMenuCadastros)];
   FCmpTitulo         := pArrayFormsCte[Ord(tpCmpTitulo)];
+  FMenuCadastros     := pArrayFormsCte[Ord(tpMenuCadastros)];
   FMenuItensImagens  := pArrayFormsCte[Ord(tpMenuItensImagens)];
+
   if not Assigned(FMenuItensImagens) then
   begin
     FMenuItensImagens := TFormMenuItensImagens.Create(aFormsCte);

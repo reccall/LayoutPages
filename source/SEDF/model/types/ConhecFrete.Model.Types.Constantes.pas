@@ -26,7 +26,7 @@ type
              tpCadastroFornecedores, tpCadastroTransportadoras, tpCadastroMarcas,
              tpCadastroServicos, tpCadastroUnidadesDeMedida, tpCmpTituloDescSimples,
              tpCmpFormGrid, tpCmpControlGrid, tpCmpCabCadastros, tpCmpEditTexto,
-             tpFormPesqNaoEncontrada, tpFDefault);
+             tpFormPesqNaoEncontrada, tpFormLoadingCSS, tpFDefault);
 
 const
   aImageNames :array[0..4] of String = ('ImgCadastros','ImgEmissaoFiscal','ImgCertDigital','ImgRelatorios','ImgTutorial');

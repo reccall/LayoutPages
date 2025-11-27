@@ -6,9 +6,10 @@ uses
    Forms
   ,Graphics
   ,Dialogs
+  ,Vcl.Controls
+  ,Vcl.ExtCtrls
   ,System.Classes
   ,System.SysUtils
-  ,Vcl.Controls
   ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
   ,ConhecFrete.Controller.PesquisaNaoEncontrada
@@ -34,7 +35,9 @@ type
     FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
     FFormCadServicos :TForm;
-    FFormPesquisaNaoEncontrada :TForm;
+    FFormLoadingCSS :TForm;
+
+    FTimer :TTimer;
 
     FControllerFormGrid :IControllerFormGrid;
     FControllerConsultas :IControllerConsultas;
@@ -46,6 +49,10 @@ type
     procedure SetItensServicos;
     procedure DestroyComponents;
     procedure ResetComponentsItens;
+    procedure AbrirFormCarregando;
+    procedure SetFindResults;
+
+    procedure OnTimerLoading(Sender :TObject);
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -63,16 +70,30 @@ implementation
 
 uses
    ConhecFrete.Forms.Cte.Cadastros
-  ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
+  ,LayoutPages.View.Componentes.TLabelTitulo
   ,LayoutPages.View.Componentes.TituloDescricaoSimples
   ,ConhecFrete.View.Componentes.BarraItemCadastroServicos;
 
 { TControllerServicos }
+
+procedure TControllerServicos.AbrirFormCarregando;
+begin
+  FTimer.Enabled := True;
+  if not Assigned(FFormLoadingCSS) then
+   FFormLoadingCSS := aFormsCte[Ord(tpFormLoadingCSS)];
+
+  with TFormCteCadastros(FFormCadServicos) do
+  begin
+    TFormLoadCSS(FFormLoadingCSS).Parent := pnlMain;
+    TFormLoadCSS(FFormLoadingCSS).Show;
+  end;
+end;
 
 constructor TControllerServicos.Create(pArrayFormsCte :array of TForm);
 begin
@@ -111,35 +132,23 @@ begin
 end;
 
 function TControllerServicos.FindRegister: Boolean;
-var
-  iIdx :Integer;
 begin
   Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
   if Result then
   begin
     ResetComponentsItens;
-    SetLength(aCmpItensCadServ,15);
-    for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
-    begin
-      if not Assigned(aCmpItensCadServ[iIdx]) then
-      begin
-        aCmpItensCadServ[iIdx] := TCmpBarraItemCadastroServicos.Create(nil);
-        with TCmpBarraItemCadastroServicos(aCmpItensCadServ[iIdx]) do
-        begin
-          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-          lblCodigo.Caption := 'SV - '+FormatFloat('000000',High(aCmpItensCadServ) - iIdx);
-          lblDesc.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
-        end;
-      end;
-    end;
-    FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadServ);
-    FCmpControlGrid.Show;
+    AbrirFormCarregando;
   end;
 end;
 
 procedure TControllerServicos.OnClickInserirRegistro(Sender :TObject);
 begin
 
+end;
+
+procedure TControllerServicos.OnTimerLoading(Sender: TObject);
+begin
+  SetFindResults;
 end;
 
 class function TControllerServicos.New(pArrayFormsCte :array of TForm): IControllerServicos;
@@ -175,9 +184,11 @@ end;
 
 procedure TControllerServicos.OnClickConsulta(Sender: TObject);
 begin
+  Screen.Cursor := crHourGlass;
   FControllerConsultas.OnClickConsulta(Sender);
   if not FindRegister then
     FControllerPesquisaNaoEncontrada.Iniciar;
+  Screen.Cursor := crDefault;
 end;
 
 procedure TControllerServicos.ResetComponentsItens;
@@ -199,12 +210,39 @@ end;
 
 procedure TControllerServicos.SetEvents;
 begin
+  FTimer := TTimer.Create(nil);
+  FTimer.OnTimer := OnTimerLoading;
+  FTimer.Enabled := False;
+  FTimer.Interval := 1800;
   with TCmpEditTexto(FCmpEditTexto) do
   begin
     edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
   end;
 end;
 
+procedure TControllerServicos.SetFindResults;
+var
+  iIdx :Integer;
+begin
+  FTimer.Interval := 1000;
+  FTimer.Enabled := False;
+  SetLength(aCmpItensCadServ,15);
+  for iIdx := Low(aCmpItensCadServ) to High(aCmpItensCadServ) do
+  begin
+    if not Assigned(aCmpItensCadServ[iIdx]) then
+    begin
+      aCmpItensCadServ[iIdx] := TCmpBarraItemCadastroServicos.Create(nil);
+      with TCmpBarraItemCadastroServicos(aCmpItensCadServ[iIdx]) do
+      begin
+        lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        lblCodigo.Caption := 'SV - '+FormatFloat('000000',High(aCmpItensCadServ) - iIdx);
+        lblDesc.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
+      end;
+    end;
+  end;
+  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadServ);
+  FCmpControlGrid.Show;
+end;
 procedure TControllerServicos.SetItensServicos;
 var
   iIdx :Integer;

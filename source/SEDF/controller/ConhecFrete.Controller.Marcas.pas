@@ -6,9 +6,10 @@ uses
    Forms
   ,Graphics
   ,Dialogs
+  ,Vcl.Controls
+  ,Vcl.ExtCtrls
   ,System.Classes
   ,System.SysUtils
-  ,Vcl.Controls
   ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
   ,ConhecFrete.Controller.PesquisaNaoEncontrada
@@ -30,10 +31,12 @@ type
   TControllerMarcas = class(TInterfacedObject, IControllerMarcas)
   private
     FCmpTitulo :TForm;
-    FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
     FFormCadMarcas :TForm;
     FCmpControlGrid :TForm;
+    FFormLoadingCSS :TForm;
+
+    FTimer :TTimer;
 
     FControllerFormGrid :IControllerFormGrid;
     FControllerConsultas :IControllerConsultas;
@@ -45,11 +48,16 @@ type
     procedure SetClearPesquisa;
     procedure DestroyComponents;
     procedure ResetComponentsItens;
+    procedure AbrirFormCarregando;
+    procedure SetFindResults;
+
+    procedure OnTimerLoading(Sender :TObject);
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
                                  Shift: TShiftState);
+
     function FindRegister :Boolean;
   public
   class function New(pArrayFormsCte :array of TForm) :IControllerMarcas overload;
@@ -61,8 +69,8 @@ implementation
 
 uses
    ConhecFrete.Forms.Cte.Cadastros
-  ,LayoutPages.View.Componentes.TLabelTitulo
   ,ConhecFrete.Forms.Cte.Principal
+  ,LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
@@ -71,11 +79,24 @@ uses
 
 { TControllerMarcas }
 
+procedure TControllerMarcas.AbrirFormCarregando;
+begin
+  FTimer.Enabled := True;
+  if not Assigned(FFormLoadingCSS) then
+   FFormLoadingCSS := aFormsCte[Ord(tpFormLoadingCSS)];
+
+  with TFormCteCadastros(FFormCadMarcas) do
+  begin
+    TFormLoadCSS(FFormLoadingCSS).Parent := pnlMain;
+    TFormLoadCSS(FFormLoadingCSS).Show;
+  end;
+end;
+
 constructor TControllerMarcas.Create(pArrayFormsCte :array of TForm);
 begin
-  FFormCadMarcas := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
   FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
+  FFormCadMarcas := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerFormGrid := TControllerFormGrid.New(pArrayFormsCte);
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
@@ -105,35 +126,23 @@ begin
 end;
 
 function TControllerMarcas.FindRegister: Boolean;
-var
-  iIdx :Integer;
 begin
   Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
   if Result then
   begin
     ResetComponentsItens;
-    SetLength(aCmpItensCadMarcas,15);
-    for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
-    begin
-      if not Assigned(aCmpItensCadMarcas[iIdx]) then
-      begin
-        aCmpItensCadMarcas[iIdx] := TCmpBarraItemCadastroMarcas.Create(nil);
-        with TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]) do
-        begin
-          lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
-          lblDesc.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
-          lblCodigo.Caption := 'MR - '+FormatFloat('000000',High(aCmpItensCadMarcas) - iIdx);
-        end;
-      end;
-    end;
-    FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadMarcas);
-    FCmpControlGrid.Show;
+    AbrirFormCarregando;
   end;
 end;
 
 procedure TControllerMarcas.OnClickInserirRegistro(Sender :TObject);
 begin
 
+end;
+
+procedure TControllerMarcas.OnTimerLoading(Sender: TObject);
+begin
+  SetFindResults;
 end;
 
 class function TControllerMarcas.New(pArrayFormsCte :array of TForm): IControllerMarcas;
@@ -169,9 +178,11 @@ end;
 
 procedure TControllerMarcas.OnClickConsulta(Sender: TObject);
 begin
+  Screen.Cursor := crHourGlass;
   FControllerConsultas.OnClickConsulta(Sender);
   if not FindRegister then
     FControllerPesquisaNaoEncontrada.Iniciar;
+  Screen.Cursor := crDefault;
 end;
 
 procedure TControllerMarcas.ResetComponentsItens;
@@ -192,10 +203,38 @@ end;
 
 procedure TControllerMarcas.SetEvents;
 begin
+  FTimer := TTimer.Create(nil);
+  FTimer.OnTimer := OnTimerLoading;
+  FTimer.Enabled := False;
+  FTimer.Interval := 1800;
   with TCmpEditTexto(FCmpEditTexto) do
   begin
     edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
   end;
+end;
+
+procedure TControllerMarcas.SetFindResults;
+var
+  iIdx :Integer;
+begin
+  FTimer.Interval := 1000;
+  FTimer.Enabled := False;
+  SetLength(aCmpItensCadMarcas,15);
+  for iIdx := Low(aCmpItensCadMarcas) to High(aCmpItensCadMarcas) do
+  begin
+    if not Assigned(aCmpItensCadMarcas[iIdx]) then
+    begin
+      aCmpItensCadMarcas[iIdx] := TCmpBarraItemCadastroMarcas.Create(nil);
+      with TCmpBarraItemCadastroMarcas(aCmpItensCadMarcas[iIdx]) do
+      begin
+        lblAtivo.Left := TCmpTituloDescSimples(FCmpTitulo).lblAtivo.Left;
+        lblDesc.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
+        lblCodigo.Caption := 'MR - '+FormatFloat('000000',High(aCmpItensCadMarcas) - iIdx);
+      end;
+    end;
+  end;
+  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadMarcas);
+  FCmpControlGrid.Show;
 end;
 
 procedure TControllerMarcas.SetItensMarcas;

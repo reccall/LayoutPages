@@ -113,6 +113,9 @@
         <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.PesquisaNaoEcontrada.pas">
             <Form>FormPesquisaNaoEncontrada</Form>
         </DCCReference>
+        <DCCReference Include="source\layoutpages\view\forms\LayoutPages.View.Forms.LoadingCSS.pas">
+            <Form>FormLoadCSS</Form>
+        </DCCReference>
         <DCCReference Include="source\layoutpages\view\componentes\LayoutPages.View.Componentes.BotoesBarraClose.pas">
             <Form>CmpBotoesBarraClose</Form>
         </DCCReference>

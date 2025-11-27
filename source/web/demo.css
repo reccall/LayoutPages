@@ -1,0 +1,60 @@
+/**
+ *
+ *
+ */
+html,
+body {
+  padding: 20;
+  margin: 20;
+  height: 20%;
+
+  font-size: 16px;
+  background: #fff;
+  color: #fff;
+  font-family: 'Source Sans Pro'; }
+
+h1 {
+  font-size: 2.8em;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin: 0.6rem 0; }
+  h1 > span {
+    font-weight: 300; }
+
+h2 {
+  font-size: 1.15em;
+  font-weight: 300;
+  margin: 0.3rem 0; }
+
+main {
+  width: 95%;
+  max-width: 1000px;
+  margin: 4em auto;
+  align-items: center;
+  opacity: 0; }
+  main.loaded {
+    transition: opacity .25s linear;
+    opacity: 1; }
+  main header {
+    width: 100%; }
+    main header > div {
+      width: 50%; }
+    main header > .left,
+    main header > .right {
+      height: 100%; }
+  
+
+/**
+ * Util classes
+ */
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
+.cf, main header {
+  content: "";
+  display: table;
+  clear: both; }
+

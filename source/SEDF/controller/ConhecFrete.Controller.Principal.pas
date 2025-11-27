@@ -157,6 +157,13 @@ var
   iIdx :Integer;
 begin
   TFormCteBackground(FFormOwner).Close;
+
+  if Assigned(aFormsCte[Ord(tpFormLoadingCSS)]) then
+  begin
+    aFormsCte[Ord(tpFormLoadingCSS)].Close;
+    aFormsCte[Ord(tpFormLoadingCSS)].Free;
+    aFormsCte[Ord(tpFormLoadingCSS)] := nil;
+  end;
   for iIdx := Low(aFormsCte) to High(aFormsCte) do
   begin
     case TpForms(Ord(iIdx)) of

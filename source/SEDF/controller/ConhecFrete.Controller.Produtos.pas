@@ -9,6 +9,7 @@ uses
   ,System.Classes
   ,System.SysUtils
   ,Vcl.Controls
+  ,Vcl.ExtCtrls
   ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
   ,ConhecFrete.Controller.PesquisaNaoEncontrada
@@ -34,6 +35,9 @@ type
     FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
     FFormCadProdutos :TForm;
+    FFormLoadingCSS :TForm;
+
+    FTimer :TTimer;
 
     FControllerFormGrid :IControllerFormGrid;
     FControllerConsultas :IControllerConsultas;
@@ -45,6 +49,10 @@ type
     procedure SetItensProdutos;
     procedure DestroyComponents;
     procedure ResetComponentsItens;
+    procedure AbrirFormCarregando;
+    procedure SetFindResults;
+
+    procedure OnTimerLoading(Sender :TObject);
     procedure OnClickConsulta(Sender: TObject);
     procedure OnClickCheckBox(Sender :TObject);
     procedure OnClickInserirRegistro(Sender :TObject);
@@ -64,12 +72,26 @@ uses
   ,ConhecFrete.Forms.Cte.Principal
   ,ConhecFrete.View.Componentes.BarraItemCadastroProdutos
   ,ConhecFrete.View.Componentes.BarraTituloCadastroProdutos
+  ,LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TLabelTitulo;
 
 { TControllerProdutos }
+
+procedure TControllerProdutos.AbrirFormCarregando;
+begin
+  FTimer.Enabled := True;
+  if not Assigned(FFormLoadingCSS) then
+   FFormLoadingCSS := aFormsCte[Ord(tpFormLoadingCSS)];
+
+  with TFormCteCadastros(FFormCadProdutos) do
+  begin
+    TFormLoadCSS(FFormLoadingCSS).Parent := pnlMain;
+    TFormLoadCSS(FFormLoadingCSS).Show;
+  end;
+end;
 
 constructor TControllerProdutos.Create(pArrayFormsCte :array of TForm);
 begin
@@ -105,34 +127,23 @@ begin
 end;
 
 function TControllerProdutos.FindRegister: Boolean;
-var
-  iIdx :Integer;
 begin
   Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
   if Result then
   begin
     ResetComponentsItens;
-    SetLength(aCmpItensCadProd,15);
-    for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
-    begin
-      if not Assigned(aCmpItensCadProd[iIdx]) then
-      begin
-        aCmpItensCadProd[iIdx] := TCmpBarraItemCadastroProdutos.Create(nil);
-        with TCmpBarraItemCadastroProdutos(aCmpItensCadProd[iIdx]) do
-        begin
-          lblCodigo.Caption := 'PR - '+FormatFloat('000000',High(aCmpItensCadProd) - iIdx);
-          lblDesc.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
-        end;
-      end;
-    end;
-    FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadProd);
-    FCmpControlGrid.Show;
+    AbrirFormCarregando;
   end;
 end;
 
 procedure TControllerProdutos.OnClickInserirRegistro(Sender :TObject);
 begin
 
+end;
+
+procedure TControllerProdutos.OnTimerLoading(Sender: TObject);
+begin
+  SetFindResults;
 end;
 
 class function TControllerProdutos.New(pArrayFormsCte :array of TForm): IControllerProdutos;
@@ -168,9 +179,11 @@ end;
 
 procedure TControllerProdutos.OnClickConsulta(Sender: TObject);
 begin
+  Screen.Cursor := crHourGlass;
   FControllerConsultas.OnClickConsulta(Sender);
   if not FindRegister then
     FControllerPesquisaNaoEncontrada.Iniciar;
+  Screen.Cursor := crDefault;
 end;
 
 procedure TControllerProdutos.ResetComponentsItens;
@@ -192,10 +205,38 @@ end;
 
 procedure TControllerProdutos.SetEvents;
 begin
+  FTimer := TTimer.Create(nil);
+  FTimer.OnTimer := OnTimerLoading;
+  FTimer.Enabled := False;
+  FTimer.Interval := 1800;
   with TCmpEditTexto(FCmpEditTexto) do
   begin
     edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
   end;
+end;
+
+procedure TControllerProdutos.SetFindResults;
+var
+  iIdx :Integer;
+begin
+  FTimer.Interval := 1000;
+  FTimer.Enabled := False;
+
+  SetLength(aCmpItensCadProd,15);
+  for iIdx := Low(aCmpItensCadProd) to High(aCmpItensCadProd) do
+  begin
+    if not Assigned(aCmpItensCadProd[iIdx]) then
+    begin
+      aCmpItensCadProd[iIdx] := TCmpBarraItemCadastroProdutos.Create(nil);
+      with TCmpBarraItemCadastroProdutos(aCmpItensCadProd[iIdx]) do
+      begin
+        lblCodigo.Caption := 'PR - '+FormatFloat('000000',High(aCmpItensCadProd) - iIdx);
+        lblDesc.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
+      end;
+    end;
+  end;
+  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadProd);
+  FCmpControlGrid.Show;
 end;
 
 procedure TControllerProdutos.SetItensProdutos;
