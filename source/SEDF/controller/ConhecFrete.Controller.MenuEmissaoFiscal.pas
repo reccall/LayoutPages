@@ -159,6 +159,13 @@ begin
   begin
     FMenuEmissaoFiscal := aFormsCte[Ord(tpMenuEmissaoFiscal)];
   end;
+
+  with  TCmpTLabelTitulo(FCmpTituloOpcao) do
+  begin
+    lblTitulo.Cursor := crDefault;
+    lblTitulo.OnClick := nil;
+  end;
+
   with TFormMenuEmissaoFiscal(FMenuEmissaoFiscal) do
   begin
     pnlCte.OnClick       := OnClickInicioCte;

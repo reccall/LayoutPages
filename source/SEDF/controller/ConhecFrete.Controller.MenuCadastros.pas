@@ -9,6 +9,7 @@ uses
   ,Winapi.Windows
   ,System.SysUtils
   ,Vcl.ExtCtrls
+  ,Vcl.Controls
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -32,6 +33,7 @@ type
     FCmpFormGrid :TForm;
     FSetOpcaoItemMenuCad :TPanel;
 
+    procedure OnClickLabelTitulo(Sender :TObject);
     procedure OnClickCadMarcas(Sender :TObject);
     procedure OnClickCadProdutos(Sender :TObject);
     procedure OnClickCadServicos(Sender :TObject);
@@ -228,10 +230,12 @@ begin
     FController.SetItemActive(pnlCadastros);
     with TFormMenuCadastros(FMenuCadastros) do
     begin
+      lblTitulo.Cursor := crHandPoint;
+      lblTitulo.OnClick := OnClickLabelTitulo;
       case pFormMenu of
         tpCadastroMarcas:           lblTitulo.Caption := pnlMarcas.Caption;
         tpCadastroProdutos:         lblTitulo.Caption := pnlProdutos.Caption;
-        tpCadastroClientes:         lblTitulo.Caption := pnlClientes.Caption ;
+        tpCadastroClientes:         lblTitulo.Caption := pnlClientes.Caption;
         tpCadastroServicos:         lblTitulo.Caption := pnlServicos.Caption;
         tpCadastroFornecedores:     lblTitulo.Caption := pnlFornec.Caption;
         tpCadastroTransportadoras:  lblTitulo.Caption := pnlTransp.Caption;
@@ -320,6 +324,15 @@ begin
     Exit;
   IniciarInformacoesFormMenu(Sender, tpCadastroUnidadesDeMedida);
   IniciarFormCadastros(tpCadastroUnidadesDeMedida);
+end;
+
+procedure TControllerMenuCadastros.OnClickLabelTitulo(Sender: TObject);
+var
+  pActiveForm :TpForms;
+begin
+  pActiveForm := GetActiveForm;
+  IniciarInformacoesFormMenu(Sender, pActiveForm);
+  IniciarFormCadastros(pActiveForm);
 end;
 
 procedure TControllerMenuCadastros.OnFormMouseLeave(Sender: TObject);

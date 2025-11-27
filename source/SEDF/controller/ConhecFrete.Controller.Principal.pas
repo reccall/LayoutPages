@@ -6,6 +6,7 @@ uses
    Classes
   ,Windows
   ,Vcl.Forms
+  ,Vcl.Controls
   ,Vcl.ExtCtrls
   ,Vcl.Graphics
   ,System.SysUtils;
@@ -62,8 +63,7 @@ uses
    ,ConhecFrete.View.Componentes.TopLogo
    ,ConhecFrete.View.Componentes.CardInfoUserCte
    ,LayoutPages.View.Componentes.TLabelTitulo
-   ,LayoutPages.View.Componentes.MenuImage
-   ,LayoutPages.View.Componentes.BotoesBarraOpcoes;
+   ,LayoutPages.View.Componentes.MenuImage;
 
 { ControllerPrincipal }
 
@@ -117,11 +117,11 @@ end;
 
 constructor TControllerPrincipal.Create(pFormOwner: TForm);
 var
-  SetTyperForms:TpForms;
+  SetTypeForms:TpForms;
 begin
   FFormOwner := pFormOwner;
-  SetTyperForms := High(TpForms);
-  SetLength(aFormsCte, Ord(SetTyperForms));
+  SetTypeForms := High(TpForms);
+  SetLength(aFormsCte, Ord(SetTypeForms));
 
   FCmpMenuImg       := TCmpMenuImage.Create(nil);
   FCmpCardInfoUser  := TCmpCardInfoUserCte.Create(nil);
@@ -155,18 +155,23 @@ end;
 procedure TControllerPrincipal.DestruirForms;
 var
   iIdx :Integer;
+  SetTypeForms:TpForms;
 begin
   TFormCteBackground(FFormOwner).Close;
+  SetTypeForms := High(TpForms);
 
-  if Assigned(aFormsCte[Ord(tpFormLoadingCSS)]) then
-  begin
-    aFormsCte[Ord(tpFormLoadingCSS)].Close;
-    aFormsCte[Ord(tpFormLoadingCSS)].Free;
-    aFormsCte[Ord(tpFormLoadingCSS)] := nil;
-  end;
-  for iIdx := Low(aFormsCte) to High(aFormsCte) do
+  for iIdx := 0 to Ord(SetTypeForms)  do
   begin
     case TpForms(Ord(iIdx)) of
+      tpFormLoadingCSS:
+      begin
+        if Assigned(aFormsCte[Ord(tpFormLoadingCSS)]) then
+        begin
+          aFormsCte[Ord(tpFormLoadingCSS)].Close;
+          aFormsCte[Ord(tpFormLoadingCSS)].Free;
+          aFormsCte[Ord(tpFormLoadingCSS)] := nil;
+        end;
+      end;
 
       tpMenuPrincipal:
       begin
@@ -292,9 +297,11 @@ end;
 
 procedure TControllerPrincipal.Iniciar;
 begin
-  TCmpTLabelTitulo(FCmpTituloOpcao).lblTitulo.Caption := 'SEDF - Início';
-  with TCmpCardInfoUserCte(FCmpCardInfoUser) do
+  with TCmpCardInfoUserCte(FCmpCardInfoUser), TCmpTLabelTitulo(FCmpTituloOpcao) do
   begin
+    lblTitulo.Cursor  := crDefault;
+    lblTitulo.Caption := 'SEDF - Início';
+    lblTitulo.OnClick := nil;
     lblUserName.Caption := 'KAMAYURI NUNES-SAAD';
     pnlUser.OnClick := OnClickCardUserInfo;
   end;

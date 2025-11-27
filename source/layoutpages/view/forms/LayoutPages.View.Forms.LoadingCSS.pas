@@ -32,12 +32,15 @@ type
 
 implementation
 
+uses
+  ConhecFrete.Model.Types.Constantes;
+
 {$R *.dfm}
 
 procedure TFormLoadCSS.FormCreate(Sender: TObject);
 begin
   inherited;
-  WebBrowser1.Navigate('C:\Users\luiz.candido\Desktop\D\Git\LayoutPages\source\web\index.html');
+  WebBrowser1.Navigate('C:\loadingpages\index.html');
 end;
 
 end.

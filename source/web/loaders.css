@@ -983,7 +983,7 @@
     -webkit-animation: ball-spin-fade-loader 1s -0.12s infinite linear;
             animation: ball-spin-fade-loader 1s -0.12s infinite linear; }
   .ball-spin-fade-loader > div {
-    background-color: #fff;
+    background-color: #a3a3a3;
     width: 15px;
     height: 15px;
     border-radius: 100%;
@@ -1656,9 +1656,9 @@
     width: 0px;
     height: 0px;
     border-right: 25px solid transparent;
-    border-top: 25px solid #fff;
-    border-left: 25px solid #fff;
-    border-bottom: 25px solid #fff;
+    border-top: 25px solid #a3a3a3; 
+    border-left: 25px solid #a3a3a3;
+    border-bottom: 25px solid #a3a3a3;
     border-radius: 25px;
     -webkit-animation: rotate_pacman_half_up 0.5s 0s infinite;
             animation: rotate_pacman_half_up 0.5s 0s infinite;
@@ -1668,9 +1668,9 @@
     width: 0px;
     height: 0px;
     border-right: 25px solid transparent;
-    border-top: 25px solid #fff;
-    border-left: 25px solid #fff;
-    border-bottom: 25px solid #fff;
+    border-top: 25px solid #a3a3a3;
+    border-left: 25px solid #a3a3a3;
+    border-bottom: 25px solid #a3a3a3;
     border-radius: 25px;
     -webkit-animation: rotate_pacman_half_down 0.5s 0s infinite;
             animation: rotate_pacman_half_down 0.5s 0s infinite;

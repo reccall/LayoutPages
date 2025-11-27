@@ -108,6 +108,7 @@ end;
 destructor TControllerUnidadesDeMedida.Destroy;
 begin
   inherited;
+  FreeAndNil(FTimer);
   FControllerFormGrid := nil;
   FControllerConsultas := nil;
   FControllerPesquisaNaoEncontrada := nil;
