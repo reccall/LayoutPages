@@ -85,7 +85,6 @@ implementation
 uses
    ConhecFrete.Forms.Cte.Cadastros
   ,ConhecFrete.Forms.Cte.Principal
-  ,LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TEditTexto
@@ -104,7 +103,6 @@ begin
   FTpOwnerCadastro := tpFDefault;
 
   aFormsCte[Ord(tpCmpEditTexto)]         := TCmpEditTexto.Create(nil);
-  aFormsCte[Ord(tpFormLoadingCSS)]       := TFormLoadCSS.Create(nil);
   aFormsCte[Ord(tpCmpControlGrid)]       := TCmpGridControl.Create(nil);
   aFormsCte[Ord(tpCmpCabCadastros)]      := TCmpCabCadastros.Create(nil);
   aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
@@ -164,8 +162,8 @@ begin
   end;
   with TFormCteCadastros(FFormCadastros) do
   begin
-    TFormLoadCSS(FFormLoadingCSS).Parent := pnlMain;
-    TFormLoadCSS(FFormLoadingCSS).Show;
+    FFormLoadingCSS.Parent := pnlMain;
+    FFormLoadingCSS.Show;
     FTimer.Enabled := True;
   end;
   FCmpCabCadastro.Show;
@@ -380,25 +378,28 @@ begin
   inherited;
   with TCmpFormGrid(FCmpFormGrid) do
   begin
-    if Msg.message = WM_MOUSEWHEEL then
-    begin
-      FPosition := scrlbxCmpMain.VertScrollBar.Position;
-      Msg.message := WM_KEYDOWN;
-      Msg.lParam := 0;
-      i := HiWord(Msg.wParam) ;
-      if i > 0 then
-      begin
-        Msg.wParam := VK_UP;
-        Dec(FPosition,20);
-      end
-      else
-      begin
-        Msg.wParam := VK_DOWN;
-        Inc(FPosition,20);
-      end;
-      Handled := False;
+    case Msg.message of
 
-      scrlbxCmpMain.VertScrollBar.Position := FPosition;
+      WM_MOUSEWHEEL:
+      begin
+        FPosition := scrlbxCmpMain.VertScrollBar.Position;
+        Msg.message := WM_KEYDOWN;
+        Msg.lParam := 0;
+        i := HiWord(Msg.wParam) ;
+        if i > 0 then
+        begin
+          Msg.wParam := VK_UP;
+          Dec(FPosition,20);
+        end
+        else
+        begin
+          Msg.wParam := VK_DOWN;
+          Inc(FPosition,20);
+        end;
+        Handled := False;
+
+        scrlbxCmpMain.VertScrollBar.Position := FPosition;
+      end;
     end;
   end;
 end;

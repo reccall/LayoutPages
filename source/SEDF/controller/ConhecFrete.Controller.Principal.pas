@@ -52,14 +52,15 @@ implementation
 
 uses
     ConhecFrete.Model.Types.Constantes
-   ,ConhecFrete.Forms.Cte.OpcoesInicio
-   ,ConhecFrete.Forms.Cte.Background
-   ,ConhecFrete.Forms.Cte.MenuCadastros
-   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
-   ,ConhecFrete.Forms.Cte.Principal
-   ,ConhecFrete.Forms.Cte.MenuPrincipal
-   ,ConhecFrete.Forms.Cte.MenuItensImagens
    ,ConhecFrete.Forms.Cte.Cadastros
+   ,ConhecFrete.Forms.Cte.Principal
+   ,ConhecFrete.Forms.Cte.Background
+   ,ConhecFrete.Forms.Cte.OpcoesInicio
+   ,ConhecFrete.Forms.Cte.MenuPrincipal
+   ,ConhecFrete.Forms.Cte.MenuCadastros
+   ,ConhecFrete.Forms.Cte.MenuItensImagens
+   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
+   ,LayoutPages.View.Forms.LoadingCSS
    ,ConhecFrete.View.Componentes.TopLogo
    ,ConhecFrete.View.Componentes.CardInfoUserCte
    ,LayoutPages.View.Componentes.TLabelTitulo
@@ -134,6 +135,8 @@ begin
 
   FMenuPrincipal := TFormMenuPrincipal.Create(aFormsCte);
   aFormsCte[Ord(tpMenuPrincipal)] := FMenuPrincipal;
+
+  aFormsCte[Ord(tpFormLoadingCSS)] := TFormLoadCSS.Create(nil);
 
   FCmpTopLogo := TCmpTopLogo.Create(nil);
 

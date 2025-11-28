@@ -86,13 +86,13 @@ begin
     begin
       if Showing then
       begin
-        FController.ResetComponentsItens;
-        FController.SetClearPesquisa;
         if not Assigned(FCmpFormGrid) then
         begin
           FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
         end;
         FCmpFormGrid.Close;
+        FController.ResetComponentsItens;
+        FController.SetClearPesquisa;
       end;
     end;
   end;
@@ -127,6 +127,7 @@ end;
 constructor TControllerMenuCadastros.Create(pArrayFormsCte :array of TForm);
 begin
   FCmpTitulo         := pArrayFormsCte[Ord(tpCmpTitulo)];
+  FCmpFormGrid       := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FMenuCadastros     := pArrayFormsCte[Ord(tpMenuCadastros)];
   FMenuItensImagens  := pArrayFormsCte[Ord(tpMenuItensImagens)];
 
