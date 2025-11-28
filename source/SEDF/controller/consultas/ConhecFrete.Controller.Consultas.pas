@@ -19,6 +19,7 @@ type
     FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
     FFormCadastros :TForm;
+    FCmpControlGrid :TForm;
     FCmpCabCadastro :TForm;
     FPanelConsultaPesq :TForm;
 
@@ -49,6 +50,7 @@ begin
   FCmpFormGrid    := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto   := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FFormCadastros  := pArrayFormsCte[Ord(tpCteCadastros)];
+  FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FCmpCabCadastro := pArrayFormsCte[Ord(tpCmpCabCadastros)];
 end;
 
@@ -91,6 +93,7 @@ begin
     TCmpEditTexto(FCmpEditTexto).Close;
     FPanelConsultaPesq.Parent := pnlRegiaoPesq;
     FPanelConsultaPesq.Show;
+    FCmpControlGrid.Close;
     FCmpFormGrid.Close;
   end;
 end;

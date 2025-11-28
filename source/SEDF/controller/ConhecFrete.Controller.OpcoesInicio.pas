@@ -9,17 +9,7 @@ uses
   ,Vcl.ExtCtrls
   ,Vcl.Graphics
   ,System.SysUtils
-  ,ConhecFrete.Forms.Cte.OpcoesItens
-  ,ConhecFrete.Forms.Cte.Motorista
-  ,ConhecFrete.Forms.Cte.Tomador
-  ,ConhecFrete.Forms.Cte.Parametros
-  ,ConhecFrete.Forms.Cte.RegiaoDadosCte
-  ,ConhecFrete.Forms.Cte.Cliente.DadosCte
-  ,ConhecFrete.Forms.Cte.DadosPedagioSeguro
-  ,ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte
-  ,ConhecFrete.Forms.Cte.Simplificado.DadosCte
-  ,ConhecFrete.Model.Types.Constantes
-  ,ConhecFrete.View.Componentes.OpcoesGerarCte;
+  ,ConhecFrete.Model.Types.Constantes;
 
 type
   IControllerOpcoesInicio = interface
@@ -36,18 +26,18 @@ type
     FCmpTituloOpcao :TForm;
 
     FOpcaoCteAtive :TpOpcaoCte;
-    FOpcoesCteItens :TFormOpcoesItensCte;
-    FBotoesBarraCte :TCmpOpcoesGerarCte;
+    FOpcoesCteItens :TForm;
+    FBotoesBarraCte :TForm;
 
-    FDadosCteRegiao :TfrmRegiaoDadosCte;
-    FDadosCteCliente :TfrmClienteDadosCte;
-    FDadosCteSimplificado :TfrmSimplificadoDadosCte;
-    FDadosCteUFGlobalizado :TfrmUFGlobalizadoDadosCte;
+    FDadosCteRegiao :TForm;
+    FDadosCteCliente :TForm;
+    FDadosCteSimplificado :TForm;
+    FDadosCteUFGlobalizado :TForm;
 
-    FCteTomador :TfrmTomador;
-    FCteMotorista :TfrmCteMotorista;
-    FCteParametros :TfrmCteParametros;
-    FCteSeguroPedagio :TfrmDadosPedagioSeguro;
+    FCteTomador :TForm;
+    FCteMotorista :TForm;
+    FCteParametros :TForm;
+    FCteSeguroPedagio :TForm;
 
     procedure OnClickCteCliente(Sender :TObject);
     procedure OnClickCteRegiao(Sender :TObject);
@@ -82,7 +72,17 @@ uses
   ,ConhecFrete.Forms.Cte.MenuPrincipal
   ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
   ,LayoutPages.View.Componentes.TLabelTitulo
-  ,ConhecFrete.Forms.Cte.OpcoesInicio;
+  ,ConhecFrete.Forms.Cte.OpcoesInicio
+  ,ConhecFrete.Forms.Cte.OpcoesItens
+  ,ConhecFrete.Forms.Cte.Motorista
+  ,ConhecFrete.Forms.Cte.Tomador
+  ,ConhecFrete.Forms.Cte.Parametros
+  ,ConhecFrete.Forms.Cte.RegiaoDadosCte
+  ,ConhecFrete.Forms.Cte.Cliente.DadosCte
+  ,ConhecFrete.Forms.Cte.DadosPedagioSeguro
+  ,ConhecFrete.Forms.Cte.UFGlobalizado.DadosCte
+  ,ConhecFrete.Forms.Cte.Simplificado.DadosCte
+  ,ConhecFrete.View.Componentes.OpcoesGerarCte;
 
 { ControllerPrincipal }
 
@@ -127,14 +127,14 @@ end;
 
 procedure TControllerOpcoesCte.DestruirForms;
 begin
-  FCteTomador.FController.DestroyComponents;
-  FCteMotorista.FController.DestroyComponents;
-  FCteParametros.FController.DestroyComponents;
-  FDadosCteRegiao.FController.DestroyComponents;
-  FDadosCteCliente.FController.DestroyComponents;
-  FCteSeguroPedagio.FController.DestroyComponents;
-  FDadosCteSimplificado.FController.DestroyComponents;
-  FDadosCteUFGlobalizado.FController.DestroyComponents;
+  TfrmTomador(FCteTomador).FController.DestroyComponents;
+  TfrmCteMotorista(FCteMotorista).FController.DestroyComponents;
+  TfrmCteParametros(FCteParametros).FController.DestroyComponents;
+  TfrmRegiaoDadosCte(FDadosCteRegiao).FController.DestroyComponents;
+  TfrmClienteDadosCte(FDadosCteCliente).FController.DestroyComponents;
+  TfrmDadosPedagioSeguro(FCteSeguroPedagio).FController.DestroyComponents;
+  TfrmSimplificadoDadosCte(FDadosCteSimplificado).FController.DestroyComponents;
+  TfrmUFGlobalizadoDadosCte(FDadosCteUFGlobalizado).FController.DestroyComponents;
 
   FreeAndNil(FCteTomador);
   FreeAndNil(FCteMotorista);
@@ -150,16 +150,16 @@ end;
 
 procedure TControllerOpcoesCte.Iniciar;
 begin
-  with FOpcoesCteItens do
+  with TFormOpcoesItensCte(FOpcoesCteItens) do
   begin
     pnlTomador.OnClick        := OnClickTomadorCte;
     pnlDadosCte.OnClick       := OnClickDadosCte;
     pnlMotorista.OnClick      := OnClickMotoristaCte;
     pnlParametrosCte.OnClick  := OnClickParamsGeraisCte;
     pnlDadosSeguroCte.OnClick := OnClickDadosSeguroCte;
-    FBotoesBarraCte.Parent := pnlBotoes;
-    FBotoesBarraCte.pnlInicio.OnClick := OnClickInicioCte;
-    FBotoesBarraCte.Show;
+    TCmpOpcoesGerarCte(FBotoesBarraCte).Parent := pnlBotoes;
+    TCmpOpcoesGerarCte(FBotoesBarraCte).pnlInicio.OnClick := OnClickInicioCte;
+    TCmpOpcoesGerarCte(FBotoesBarraCte).Show;
   end;
 
   with TfrmCtePrincipal(FFormOwner) do
@@ -206,7 +206,7 @@ begin
   begin
     Close;
   end;
-  FOpcoesCteItens.pnlTomadorG.Visible := pTipoCte in [tpCteCliente, tpCteSimplificado];
+  TFormOpcoesItensCte(FOpcoesCteItens).pnlTomadorG.Visible := pTipoCte in [tpCteCliente, tpCteSimplificado];
 
   with TCmpTLabelTitulo(FCmpTituloOpcao) do
   begin
@@ -226,7 +226,7 @@ begin
     FOpcoesCteItens.Parent := pnlMain;
     FOpcoesCteItens.Show;
   end;
-  OnClickDadosCte(FOpcoesCteItens.pnlDadosCte);
+  OnClickDadosCte(TFormOpcoesItensCte(FOpcoesCteItens).pnlDadosCte);
 end;
 
 class function TControllerOpcoesCte.New(pArrayFormsCte :array of TForm) :IControllerOpcoesInicio;
@@ -303,7 +303,7 @@ begin
   FCteMotorista.Close;
   FCteParametros.Close;
   FCteSeguroPedagio.Close;
-  with FOpcoesCteItens do
+  with TFormOpcoesItensCte(FOpcoesCteItens) do
   begin
     FController.SetItemActive(pnlDadosCte);
 
@@ -369,7 +369,7 @@ begin
   if FCteSeguroPedagio.Showing then
     Exit;
 
-  with FOpcoesCteItens do
+  with TFormOpcoesItensCte(FOpcoesCteItens) do
   begin
     FController.SetItemActive(pnlDadosSeguroCte);
 
@@ -393,7 +393,7 @@ begin
   if FCteMotorista.Showing then
     Exit;
 
-  with FOpcoesCteItens do
+  with TFormOpcoesItensCte(FOpcoesCteItens) do
   begin
     FController.SetItemActive(pnlMotorista);
 
@@ -417,7 +417,7 @@ begin
    if FCteParametros.Showing then
     Exit;
 
-  with FOpcoesCteItens do
+  with TFormOpcoesItensCte(FOpcoesCteItens) do
   begin
     FController.SetItemActive(pnlParametrosCte);
 
@@ -441,7 +441,7 @@ begin
   if FCteTomador.Showing then
     Exit;
 
-  with FOpcoesCteItens do
+  with TFormOpcoesItensCte(FOpcoesCteItens) do
   begin
     FController.SetItemActive(pnlTomador);
 

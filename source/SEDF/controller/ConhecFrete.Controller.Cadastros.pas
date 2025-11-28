@@ -130,6 +130,7 @@ begin
   SetVariaveisArray;
   with TFormCteCadastros(FFormCadastros) do
   begin
+    FCmpControlGrid.Close;
     if not FCmpCabCadastro.Showing then
     begin
       FCmpCabCadastro.Parent := pnlCadTop;
@@ -167,7 +168,6 @@ begin
     TFormLoadCSS(FFormLoadingCSS).Show;
     FTimer.Enabled := True;
   end;
-  FCmpControlGrid.Show;
   FCmpCabCadastro.Show;
   FCmpEditTexto.Show;
   Screen.Cursor := crDefault;
@@ -181,6 +181,7 @@ begin
     FTimer.Enabled := False;
 
     SetArrayItens;
+    FCmpControlGrid.Show;
     FCmpControlGrid.SetFocus;
   end;
 end;

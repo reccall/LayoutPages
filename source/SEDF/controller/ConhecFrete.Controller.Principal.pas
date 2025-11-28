@@ -148,7 +148,6 @@ end;
 
 destructor TControllerPrincipal.Destroy;
 begin
-  FreeAndNil(TFormCteBackground(FFormOwner).FController);
   inherited;
 end;
 
