@@ -61,7 +61,6 @@ type
     procedure SetClearPesquisa;
     procedure SetVariaveisArray;
     procedure DestroyComponents;
-    procedure SetInterfacesEvents;
     procedure ResetComponentsItens;
     procedure SetStartEvents;
 
@@ -124,7 +123,6 @@ procedure TControllerCadastros.Iniciar;
 begin
   Screen.Cursor := crHourGlass;
   SetInterfaces;
-  SetInterfacesEvents;
   SetVariaveisArray;
   with TFormCteCadastros(FFormCadastros) do
   begin
@@ -318,19 +316,6 @@ begin
       if not Assigned(FControllerUnidadesDeMedida) then
         FControllerUnidadesDeMedida := TControllerUnidadesDeMedida.New(aFormsCte);
     end;
-  end;
-end;
-
-procedure TControllerCadastros.SetInterfacesEvents;
-begin
-  case FTpOwnerCadastro of
-    tpCadastroMarcas:           FControllerMarcas.SetEvents;
-    tpCadastroClientes:         FControllerClientes.SetEvents;
-    tpCadastroProdutos:         FControllerProdutos.SetEvents;
-    tpCadastroServicos:         FControllerServicos.SetEvents;
-    tpCadastroFornecedores:     FControllerFornecedores.SetEvents;
-    tpCadastroTransportadoras:  FControllerTranportadoras.SetEvents;
-    tpCadastroUnidadesDeMedida: FControllerUnidadesDeMedida.SetEvents;
   end;
 end;
 

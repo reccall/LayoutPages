@@ -20,13 +20,13 @@ type
   TpMenuCte  = (tpDadosCte, tpTomador, tpMotorista, tpDadosSegPedagio, tpDefinirRegra, tpParamsCte);
   TpOpcaoCte = (tpCteCliente, tpCteRegiao, tpCteSimplificado, tpCteUFGlobalizado, tpSituCarregamento);
 
-  TpForms = (tpOwner, tpFormLoadingCSS, tpMenuPrincipal, tpMenuEmissaoFiscal, tpMenuCadastros, tpCmpTitulo,
-             tpCertificadoDig, tpRelatorios, tpTutorial, tpFormCte, tpFormOpcoesItensCte,
-             tpBarraBotoes, tpMenuItensImagens, tpCteCadastros, tpCadastroProdutos, tpCadastroClientes,
-             tpCadastroFornecedores, tpCadastroTransportadoras, tpCadastroMarcas,
-             tpCadastroServicos, tpCadastroUnidadesDeMedida, tpCmpTituloDescSimples,
-             tpCmpFormGrid, tpCmpControlGrid, tpCmpCabCadastros, tpCmpEditTexto,
-             tpFormPesqNaoEncontrada, tpFDefault);
+  TpForms = (tpOwner, tpFormLoadingCSS, tpCmpFormGrid, tpCadastroMarcas, tpCadastroProdutos,
+             tpCadastroClientes, tpCadastroFornecedores, tpCadastroTransportadoras,
+             tpCteCadastros, tpCadastroServicos, tpCadastroUnidadesDeMedida,
+             tpCmpControlGrid, tpMenuPrincipal, tpMenuEmissaoFiscal, tpMenuCadastros,
+             tpCmpTitulo, tpCertificadoDig, tpRelatorios, tpTutorial, tpFormCte,
+             tpFormOpcoesItensCte, tpBarraBotoes, tpMenuItensImagens, tpCmpTituloDescSimples,
+             tpCmpCabCadastros, tpCmpEditTexto, tpFormPesqNaoEncontrada, tpFDefault);
 
 const
   aImageNames :array[0..4] of String = ('ImgCadastros','ImgEmissaoFiscal','ImgCertDigital','ImgRelatorios','ImgTutorial');

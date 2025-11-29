@@ -13,7 +13,7 @@ type
   ['{6D37E6C5-F4F7-402D-8D9B-A23BD19797D2}']
     procedure Iniciar;
     function SetActiveForm(pParam :TpForms) :IControllerFormGrid;
-    procedure SetItensGrid(pCmpTitulo :TForm; pCmpItensFormGrid :array of TForm);
+    procedure SetItensGrid(pCmpTitulo :TForm; out pCmpItensFormGrid :array of TForm);
   end;
 
   TControllerFormGrid = class(TInterfacedObject, IControllerFormGrid)
@@ -23,7 +23,7 @@ type
     FActiveForm :TpForms;
 
     procedure Iniciar;
-    procedure SetItensGrid(pCmpTitulo :TForm; pCmpItensFormGrid :array of TForm);
+    procedure SetItensGrid(pCmpTitulo :TForm; out pCmpItensFormGrid :array of TForm);
     function SetActiveForm(pParam :TpForms) :IControllerFormGrid;
   public
     class function New(pArrayFormsCte :array of TForm) :IControllerFormGrid overload;
@@ -70,7 +70,7 @@ begin
   FActiveForm := pParam;
 end;
 
-procedure TControllerFormGrid.SetItensGrid(pCmpTitulo :TForm; pCmpItensFormGrid :array of TForm);
+procedure TControllerFormGrid.SetItensGrid(pCmpTitulo :TForm; out pCmpItensFormGrid :array of TForm);
 var
   iIdx :Integer;
 begin
