@@ -97,7 +97,7 @@ end;
 
 procedure TControllerMarcas.DestroyComponents;
 begin
-  FCmpTitulo.Close;
+  ResetComponentsItens;
 end;
 
 procedure TControllerMarcas.edtPesquisaKeyDown(Sender: TObject;
@@ -110,6 +110,7 @@ end;
 
 function TControllerMarcas.FindRegister: Boolean;
 begin
+  Application.ProcessMessages;
   TCmpFormGrid(FCmpFormGrid).Close;
   FControllerConsultas.ResetComponentsItens(aCmpItensCadMarcas);
   aCmpItensCadMarcas := nil;
@@ -175,6 +176,7 @@ end;
 
 procedure TControllerMarcas.ResetComponentsItens;
 begin
+  FCmpTitulo.Close;
   FControllerConsultas.ResetComponentsItens(aCmpItensCadMarcas);
   aCmpItensCadMarcas := nil;
 end;

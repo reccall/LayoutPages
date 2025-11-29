@@ -137,9 +137,9 @@ begin
     end;
     TCmpEditTexto(FCmpEditTexto).Close;
     FPanelConsultaPesq.Parent := pnlRegiaoPesq;
-    FPanelConsultaPesq.Show;
     FCmpControlGrid.Close;
     FCmpFormGrid.Close;
+    FPanelConsultaPesq.Show;
   end;
 end;
 
