@@ -6,10 +6,11 @@ uses
    Forms
   ,Math
   ,Graphics
-  ,Winapi.Windows
-  ,System.SysUtils
   ,Vcl.ExtCtrls
   ,Vcl.Controls
+  ,Vcl.StdCtrls
+  ,Winapi.Windows
+  ,System.SysUtils
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -358,16 +359,28 @@ end;
 procedure TControllerMenuCadastros.SetOpcaoMenuItemCad(pPanel: TPanel);
 begin
   FSetOpcaoItemMenuCad := pPanel;
-
   with TFormMenuCadastros(FMenuCadastros) do
   begin
-    pnlMarcas.Color     := IfThen(FSetOpcaoItemMenuCad = pnlMarcas,TColor($FAE6E6), clWhite);
-    pnlFornec.Color     := IfThen(FSetOpcaoItemMenuCad = pnlFornec,TColor($FAE6E6), clWhite);
-    pnlTransp.Color     := IfThen(FSetOpcaoItemMenuCad = pnlTransp,TColor($FAE6E6), clWhite);
-    pnlProdutos.Color   := IfThen(FSetOpcaoItemMenuCad = pnlProdutos,TColor($FAE6E6), clWhite);
-    pnlServicos.Color   := IfThen(FSetOpcaoItemMenuCad = pnlServicos,TColor($FAE6E6), clWhite);
-    pnlClientes.Color   := IfThen(FSetOpcaoItemMenuCad = pnlClientes,TColor($FAE6E6), clWhite);
-    pnlUnidMedida.Color := IfThen(FSetOpcaoItemMenuCad = pnlUnidMedida,TColor($FAE6E6), clWhite);
+    if FSetOpcaoItemMenuCad.Name <> 'lblTitulo' then
+    begin
+      pnlMarcas.Color     := IfThen(FSetOpcaoItemMenuCad = pnlMarcas,TColor($FAE6E6), clWhite);
+      pnlFornec.Color     := IfThen(FSetOpcaoItemMenuCad = pnlFornec,TColor($FAE6E6), clWhite);
+      pnlTransp.Color     := IfThen(FSetOpcaoItemMenuCad = pnlTransp,TColor($FAE6E6), clWhite);
+      pnlProdutos.Color   := IfThen(FSetOpcaoItemMenuCad = pnlProdutos,TColor($FAE6E6), clWhite);
+      pnlServicos.Color   := IfThen(FSetOpcaoItemMenuCad = pnlServicos,TColor($FAE6E6), clWhite);
+      pnlClientes.Color   := IfThen(FSetOpcaoItemMenuCad = pnlClientes,TColor($FAE6E6), clWhite);
+      pnlUnidMedida.Color := IfThen(FSetOpcaoItemMenuCad = pnlUnidMedida,TColor($FAE6E6), clWhite);
+    end
+    else
+    begin
+      pnlMarcas.Color     := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Marcas',TColor($FAE6E6), clWhite);
+      pnlProdutos.Color   := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Produtos',TColor($FAE6E6), clWhite);
+      pnlServicos.Color   := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Serviços',TColor($FAE6E6), clWhite);
+      pnlClientes.Color   := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Clientes',TColor($FAE6E6), clWhite);
+      pnlFornec.Color     := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Fornecedores',TColor($FAE6E6), clWhite);
+      pnlTransp.Color     := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Transportadoras',TColor($FAE6E6), clWhite);
+      pnlUnidMedida.Color := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Unidades de Medida',TColor($FAE6E6), clWhite);
+    end;
   end;
 end;
 
