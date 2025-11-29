@@ -99,7 +99,7 @@ begin
     with TFormMenuCadastros(FMenuCadasros) do
     begin
       if pResetItemMenu then
-        FController.SetOpcaoMenuItemCad(pnlRightNFe);
+        FController.ResetOpcaoMenuItemCad;
       Close;
     end;
   end;

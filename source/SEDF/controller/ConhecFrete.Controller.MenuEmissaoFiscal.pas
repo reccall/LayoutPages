@@ -211,7 +211,7 @@ begin
   begin
     with TFormMenuCadastros(FMenuCadastros) do
     begin
-      FController.SetOpcaoMenuItemCad(TPanel(pSender));
+      FController.ResetOpcaoMenuItemCad;
     end;
   end;
 

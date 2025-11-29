@@ -18,7 +18,7 @@ type
   ['{8866F3F1-E545-4534-B300-02BC02893DF8}']
     procedure Iniciar;
     procedure CloseFormsMenuCadastros;
-    procedure SetOpcaoMenuItemCad(pPanel :TPanel);
+    procedure ResetOpcaoMenuItemCad;
   end;
 
   TControllerMenuCadastros = class(TInterfacedObject, IControllerMenuCadastros)
@@ -32,7 +32,6 @@ type
     FormOpcoesItensCte :TForm;
     FFormCteCadastro :TForm;
     FCmpFormGrid :TForm;
-    FSetOpcaoItemMenuCad :TPanel;
 
     procedure OnClickLabelTitulo(Sender :TObject);
     procedure OnClickCadMarcas(Sender :TObject);
@@ -46,7 +45,7 @@ type
     procedure OnMouseLeaveItemN(Sender :TObject); overload;
     procedure OnFormMouseLeave(Sender :TObject);
     procedure CloseFormsMenuCadastros;
-    procedure SetOpcaoMenuItemCad(pPanel :TPanel);
+    procedure ResetOpcaoMenuItemCad;
 
     function GetFormMenuEmissaoFiscal :TForm;
 
@@ -217,7 +216,7 @@ end;
 
 procedure TControllerMenuCadastros.IniciarInformacoesFormMenu(pSender: TObject; pFormMenu: TpForms);
 begin
-  SetOpcaoMenuItemCad(TPanel(pSender));
+  OnMouseLeaveItemN(pSender);
   with TFormMenuItensImagens(FMenuItensImagens) do
   begin
     FController.SetActiveImage(ImgCadastros);
@@ -227,7 +226,7 @@ begin
     FMenuPrincipal := aFormsCte[Ord(tpMenuPrincipal)];
   end;
 
-  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo)do
+  with TFormMenuPrincipal(FMenuPrincipal), TCmpTLabelTitulo(FCmpTitulo) do
   begin
     FController.SetItemActive(pnlCadastros);
     with TFormMenuCadastros(FMenuCadastros) do
@@ -352,34 +351,31 @@ end;
 
 procedure TControllerMenuCadastros.OnMouseLeaveItemN(Sender: TObject);
 begin
-  if FSetOpcaoItemMenuCad <> TPanel(Sender) then
-    TPanel(Sender).Color := clWhite;
+  with TFormMenuCadastros(FMenuCadastros), TCmpTLabelTitulo(FCmpTitulo) do
+  begin
+    pnlMarcas.Color     := IfThen(lblTitulo.Caption = 'Marcas',TColor($FAE6E6), clWhite);
+    pnlProdutos.Color   := IfThen(lblTitulo.Caption = 'Produtos',TColor($FAE6E6), clWhite);
+    pnlServicos.Color   := IfThen(lblTitulo.Caption = 'Serviços',TColor($FAE6E6), clWhite);
+    pnlClientes.Color   := IfThen(lblTitulo.Caption = 'Clientes',TColor($FAE6E6), clWhite);
+    pnlFornec.Color     := IfThen(lblTitulo.Caption = 'Fornecedores',TColor($FAE6E6), clWhite);
+    pnlTransp.Color     := IfThen(lblTitulo.Caption = 'Transportadoras',TColor($FAE6E6), clWhite);
+    pnlUnidMedida.Color := IfThen(lblTitulo.Caption = 'Unidades de Medida',TColor($FAE6E6), clWhite);
+  end;
 end;
 
-procedure TControllerMenuCadastros.SetOpcaoMenuItemCad(pPanel: TPanel);
+procedure TControllerMenuCadastros.ResetOpcaoMenuItemCad;
+var
+  iIdx :Integer;
 begin
-  FSetOpcaoItemMenuCad := pPanel;
   with TFormMenuCadastros(FMenuCadastros) do
   begin
-    if FSetOpcaoItemMenuCad.Name <> 'lblTitulo' then
+    for iIdx := 0 to ComponentCount-1 do
     begin
-      pnlMarcas.Color     := IfThen(FSetOpcaoItemMenuCad = pnlMarcas,TColor($FAE6E6), clWhite);
-      pnlFornec.Color     := IfThen(FSetOpcaoItemMenuCad = pnlFornec,TColor($FAE6E6), clWhite);
-      pnlTransp.Color     := IfThen(FSetOpcaoItemMenuCad = pnlTransp,TColor($FAE6E6), clWhite);
-      pnlProdutos.Color   := IfThen(FSetOpcaoItemMenuCad = pnlProdutos,TColor($FAE6E6), clWhite);
-      pnlServicos.Color   := IfThen(FSetOpcaoItemMenuCad = pnlServicos,TColor($FAE6E6), clWhite);
-      pnlClientes.Color   := IfThen(FSetOpcaoItemMenuCad = pnlClientes,TColor($FAE6E6), clWhite);
-      pnlUnidMedida.Color := IfThen(FSetOpcaoItemMenuCad = pnlUnidMedida,TColor($FAE6E6), clWhite);
-    end
-    else
-    begin
-      pnlMarcas.Color     := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Marcas',TColor($FAE6E6), clWhite);
-      pnlProdutos.Color   := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Produtos',TColor($FAE6E6), clWhite);
-      pnlServicos.Color   := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Serviços',TColor($FAE6E6), clWhite);
-      pnlClientes.Color   := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Clientes',TColor($FAE6E6), clWhite);
-      pnlFornec.Color     := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Fornecedores',TColor($FAE6E6), clWhite);
-      pnlTransp.Color     := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Transportadoras',TColor($FAE6E6), clWhite);
-      pnlUnidMedida.Color := IfThen(TLabel(FSetOpcaoItemMenuCad).Caption = 'Unidades de Medida',TColor($FAE6E6), clWhite);
+      if (Components[iIdx] is TPanel) then
+      begin
+        if TPanel(Components[iIdx]).Caption <>  EmptyStr then
+          TPanel(Components[iIdx]).Color := clWhite;
+      end;
     end;
   end;
 end;
