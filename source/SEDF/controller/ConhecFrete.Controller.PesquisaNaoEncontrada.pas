@@ -62,10 +62,9 @@ destructor TControllerPesquisaNaoEncontrada.Destroy;
 begin
   inherited;
   FreeAndNil(FTimer);
-  with TFormPesquisaNaoEncontrada(FFormNaoEncontrado) do
-  begin
-    Close;
-  end;
+  FFormNaoEncontrado.Close;
+  FFormNaoEncontrado := nil;
+  aFormsCte[Ord(tpFormPesqNaoEncontrada)] := nil;
 end;
 
 procedure TControllerPesquisaNaoEncontrada.DestroyComponents;
