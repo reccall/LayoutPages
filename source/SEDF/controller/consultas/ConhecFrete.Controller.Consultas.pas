@@ -81,13 +81,14 @@ end;
 
 constructor TControllerConsultas.Create(pArrayFormsCte: array of TForm);
 begin
-  FCmpFormGrid     := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto    := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid  := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FCmpCabCadastro  := pArrayFormsCte[Ord(tpCmpCabCadastros)];
   FormCteCadastros := pArrayFormsCte[Ord(tpCteCadastros)];
   FControllerFormGrid := TControllerFormGrid.New(pArrayFormsCte);
   FControllerPesquisaNaoEncontrada := TControllerPesquisaNaoEncontrada.New(pArrayFormsCte);
+
+  FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
 end;
 
 destructor TControllerConsultas.Destroy;

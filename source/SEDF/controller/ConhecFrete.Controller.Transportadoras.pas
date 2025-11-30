@@ -75,7 +75,6 @@ uses
 constructor TControllerTransportadoras.Create(pArrayFormsCte :array of TForm);
 begin
   FCmpTitulo              := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
-  FCmpFormGrid            := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto           := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid         := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas    := TControllerConsultas.New(pArrayFormsCte);
@@ -187,7 +186,9 @@ begin
   FTimer := TTimer.Create(nil);
   FTimer.OnTimer := OnTimerLoading;
   FTimer.Enabled := False;
-  FTimer.Interval := 1800;
+  FTimer.Interval := 500;
+
+  FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
 end;
 
 procedure TControllerTransportadoras.SetFindResults;

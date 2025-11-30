@@ -75,7 +75,6 @@ uses
 constructor TControllerFornecedores.Create(pArrayFormsCte :array of TForm);
 begin
   FCmpTitulo           := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
-  FCmpFormGrid         := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto        := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid      := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
@@ -126,7 +125,8 @@ end;
 
 procedure TControllerFornecedores.OnTimerLoading(Sender: TObject);
 begin
-  SetFindResults;
+  FControllerConsultas.SetParamsFormGrid(FCmpTitulo, aCmpItensCadFornecedores).SetFindResults;
+  FTimer.Enabled := False;
 end;
 
 class function TControllerFornecedores.New(pArrayFormsCte :array of TForm): IControllerFornecedores;
@@ -186,7 +186,9 @@ begin
   FTimer := TTimer.Create(nil);
   FTimer.OnTimer := OnTimerLoading;
   FTimer.Enabled := False;
-  FTimer.Interval := 1800;
+  FTimer.Interval := 500;
+
+  FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
 end;
 
 procedure TControllerFornecedores.SetFindResults;

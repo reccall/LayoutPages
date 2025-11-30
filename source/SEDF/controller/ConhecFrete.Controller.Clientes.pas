@@ -76,7 +76,6 @@ uses
 constructor TControllerClientes.Create(pArrayFormsCte :array of TForm);
 begin
   FCmpTitulo       := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
-  FCmpFormGrid     := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto    := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FCmpControlGrid  := pArrayFormsCte[Ord(tpCmpControlGrid)];
   FFormCadClientes := pArrayFormsCte[Ord(tpCteCadastros)];
@@ -188,7 +187,9 @@ begin
   FTimer := TTimer.Create(nil);
   FTimer.OnTimer := OnTimerLoading;
   FTimer.Enabled := False;
-  FTimer.Interval := 1800;
+  FTimer.Interval := 500;
+
+  FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
 end;
 
 procedure TControllerClientes.SetFindResults;

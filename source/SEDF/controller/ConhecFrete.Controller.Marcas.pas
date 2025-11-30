@@ -78,7 +78,6 @@ uses
 constructor TControllerMarcas.Create(pArrayFormsCte :array of TForm);
 begin
   FCmpTitulo     := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
-  FCmpFormGrid   := pArrayFormsCte[Ord(tpCmpFormGrid)];
   FCmpEditTexto  := pArrayFormsCte[Ord(tpCmpEditTexto)];
   FFormCadMarcas := pArrayFormsCte[Ord(tpCteCadastros)];
   FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
@@ -189,7 +188,9 @@ begin
   FTimer := TTimer.Create(nil);
   FTimer.OnTimer := OnTimerLoading;
   FTimer.Enabled := False;
-  FTimer.Interval := 1800;
+  FTimer.Interval := 500;
+
+  FCmpFormGrid := aFormsCte[Ord(tpCmpFormGrid)];
 end;
 
 procedure TControllerMarcas.SetFindResults;
