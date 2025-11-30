@@ -10,9 +10,7 @@ uses
   ,System.SysUtils
   ,Vcl.Controls
   ,Vcl.ExtCtrls
-  ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
-  ,ConhecFrete.Controller.PesquisaNaoEncontrada
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -72,8 +70,7 @@ uses
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Forms.CadastroPrincipal
   ,LayoutPages.View.Componentes.TEditTexto
-  ,LayoutPages.View.Componentes.ControlGrid
-  ,LayoutPages.View.Componentes.TLabelTitulo;
+  ,LayoutPages.View.Componentes.ControlGrid;
 
 { TControllerProdutos }
 
@@ -117,8 +114,8 @@ begin
   Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
   if Result then
   begin
-    SetFindResults;
     FControllerConsultas.AbrirFormCarregando;
+    SetFindResults;
     FTimer.Enabled := True;
   end;
 end;

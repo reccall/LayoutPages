@@ -55,7 +55,7 @@ begin
   FTimer := TTimer.Create(nil);
   FTimer.OnTimer := OnTimerLoading;
   FTimer.Enabled := False;
-  FTimer.Interval := 1800;
+  FTimer.Interval := 1000;
 end;
 
 destructor TControllerPesquisaNaoEncontrada.Destroy;
@@ -88,7 +88,7 @@ end;
 
 procedure TControllerPesquisaNaoEncontrada.LoadFormNaoEncontrado;
 begin
-  FTimer.Interval := 1000;
+  FTimer.Interval := 500;
   FTimer.Enabled := False;
   TFormLoadCSS(FFormLoadingCSS).Close;
   with TFormPesquisaNaoEncontrada(FFormNaoEncontrado),

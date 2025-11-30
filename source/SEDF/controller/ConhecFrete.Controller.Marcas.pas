@@ -10,9 +10,7 @@ uses
   ,Vcl.ExtCtrls
   ,System.Classes
   ,System.SysUtils
-  ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
-  ,ConhecFrete.Controller.PesquisaNaoEncontrada
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -117,8 +115,8 @@ begin
   Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
   if Result then
   begin
-    SetFindResults;
     FControllerConsultas.AbrirFormCarregando;
+    SetFindResults;
     FTimer.Enabled := True;
   end;
 end;

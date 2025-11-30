@@ -10,9 +10,7 @@ uses
   ,System.SysUtils
   ,Vcl.Controls
   ,Vcl.ExtCtrls
-  ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
-  ,ConhecFrete.Controller.PesquisaNaoEncontrada
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -35,14 +33,11 @@ type
     FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
-    FFormLoadingCSS :TForm;
     FFormCadUnidadesDeMedida :TForm;
 
     FTimer :TTimer;
 
-    FControllerFormGrid :IControllerFormGrid;
     FControllerConsultas :IControllerConsultas;
-    FControllerPesquisaNaoEncontrada :IControllerPesquisaNaoEncontrada;
 
     aCmpItensCadUnidadesDeMedida :array of TForm;
     procedure SetEvents;
@@ -50,7 +45,6 @@ type
     procedure DestroyComponents;
     procedure ResetComponentsItens;
     procedure SetItensUnidadesDeMedida;
-    procedure AbrirFormCarregando;
     procedure SetFindResults;
 
     procedure OnTimerLoading(Sender :TObject);
@@ -71,7 +65,6 @@ implementation
 uses
    ConhecFrete.Forms.Cte.Cadastros
   ,ConhecFrete.Forms.Cte.Principal
-  ,LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TEditTexto
@@ -80,28 +73,14 @@ uses
 
 { TControllerUnidadesDeMedida }
 
-procedure TControllerUnidadesDeMedida.AbrirFormCarregando;
-begin
-  FTimer.Enabled := True;
-  if not Assigned(FFormLoadingCSS) then
-   FFormLoadingCSS := aFormsCte[Ord(tpFormLoadingCSS)];
-
-  with TFormCteCadastros(FFormCadUnidadesDeMedida) do
-  begin
-    TFormLoadCSS(FFormLoadingCSS).Parent := pnlMain;
-    TFormLoadCSS(FFormLoadingCSS).Show;
-  end;
-end;
-
 constructor TControllerUnidadesDeMedida.Create(pArrayFormsCte :array of TForm);
 begin
+  FCmpTitulo               := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid             := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpEditTexto            := pArrayFormsCte[Ord(tpCmpEditTexto)];
+  FCmpControlGrid          := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  FControllerConsultas     := TControllerConsultas.New(pArrayFormsCte);
   FFormCadUnidadesDeMedida := pArrayFormsCte[Ord(tpCteCadastros)];
-  FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
-  FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
-  FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
-  FControllerFormGrid := TControllerFormGrid.New(pArrayFormsCte);
-  FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
-  FControllerPesquisaNaoEncontrada := TControllerPesquisaNaoEncontrada.New(pArrayFormsCte);
   SetEvents;
 end;
 
@@ -109,9 +88,7 @@ destructor TControllerUnidadesDeMedida.Destroy;
 begin
   inherited;
   FreeAndNil(FTimer);
-  FControllerFormGrid := nil;
   FControllerConsultas := nil;
-  FControllerPesquisaNaoEncontrada := nil;
 end;
 
 procedure TControllerUnidadesDeMedida.DestroyComponents;
@@ -130,11 +107,16 @@ end;
 
 function TControllerUnidadesDeMedida.FindRegister: Boolean;
 begin
+  Application.ProcessMessages;
+  TCmpFormGrid(FCmpFormGrid).Close;
+  FControllerConsultas.ResetComponentsItens(aCmpItensCadUnidadesDeMedida);
+  aCmpItensCadUnidadesDeMedida := nil;
   Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
   if Result then
   begin
-    ResetComponentsItens;
-    AbrirFormCarregando;
+    FControllerConsultas.AbrirFormCarregando;
+    SetFindResults;
+    FTimer.Enabled := True;
   end;
 end;
 
@@ -146,7 +128,8 @@ end;
 
 procedure TControllerUnidadesDeMedida.OnTimerLoading(Sender: TObject);
 begin
-  SetFindResults;
+  FControllerConsultas.SetParamsFormGrid(FCmpTitulo, aCmpItensCadUnidadesDeMedida).SetFindResults;
+  FTimer.Enabled := False;
 end;
 
 class function TControllerUnidadesDeMedida.New(pArrayFormsCte :array of TForm): IControllerUnidadesDeMedida;
@@ -185,18 +168,14 @@ begin
   Screen.Cursor := crHourGlass;
   FControllerConsultas.OnClickConsulta(Sender);
   if not FindRegister then
-    FControllerPesquisaNaoEncontrada.Iniciar;
+    FControllerConsultas.SetNotFoundResults;
   Screen.Cursor := crDefault;
 end;
 
 procedure TControllerUnidadesDeMedida.ResetComponentsItens;
-var
-  iIdx :Integer;
 begin
-  for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
-  begin
-    FreeAndNil(aCmpItensCadUnidadesDeMedida[iIdx]);
-  end;
+  FCmpTitulo.Close;
+  FControllerConsultas.ResetComponentsItens(aCmpItensCadUnidadesDeMedida);
   aCmpItensCadUnidadesDeMedida := nil;
 end;
 
@@ -211,18 +190,12 @@ begin
   FTimer.OnTimer := OnTimerLoading;
   FTimer.Enabled := False;
   FTimer.Interval := 1800;
-  with TCmpEditTexto(FCmpEditTexto) do
-  begin
-    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
-  end;
 end;
 
 procedure TControllerUnidadesDeMedida.SetFindResults;
 var
   iIdx :Integer;
 begin
-  FTimer.Interval := 1000;
-  FTimer.Enabled := False;
   SetLength(aCmpItensCadUnidadesDeMedida,15);
   for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
   begin
@@ -237,14 +210,16 @@ begin
       end;
     end;
   end;
-  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadUnidadesDeMedida);
-  FCmpControlGrid.Show;
 end;
 
 procedure TControllerUnidadesDeMedida.SetItensUnidadesDeMedida;
 var
   iIdx :Integer;
 begin
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
   SetLength(aCmpItensCadUnidadesDeMedida,20);
   for iIdx := Low(aCmpItensCadUnidadesDeMedida) to High(aCmpItensCadUnidadesDeMedida) do
   begin
@@ -258,7 +233,7 @@ begin
       end;
     end;
   end;
-  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadUnidadesDeMedida);
+  FControllerConsultas.SetParamsFormGrid(FCmpTitulo, aCmpItensCadUnidadesDeMedida).SetFindResults;
 end;
 
 end.

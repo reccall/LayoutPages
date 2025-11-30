@@ -10,9 +10,7 @@ uses
   ,System.SysUtils
   ,Vcl.Controls
   ,Vcl.ExtCtrls
-  ,ConhecFrete.Controller.FormGrid
   ,ConhecFrete.Controller.Consultas
-  ,ConhecFrete.Controller.PesquisaNaoEncontrada
   ,ConhecFrete.Model.Types.Constantes;
 
 type
@@ -31,16 +29,14 @@ type
   TControllerTransportadoras = class(TInterfacedObject, IControllerTransportadoras)
   private
     FCmpTitulo :TForm;
+    FCmpFormGrid :TForm;
     FCmpEditTexto :TForm;
     FCmpControlGrid :TForm;
-    FFormLoadingCSS :TForm;
     FFormCadTransportadoras :TForm;
 
     FTimer :TTimer;
 
-    FControllerFormGrid :IControllerFormGrid;
     FControllerConsultas :IControllerConsultas;
-    FControllerPesquisaNaoEncontrada :IControllerPesquisaNaoEncontrada;
 
     aCmpItensCadTransportadoras :array of TForm;
     procedure SetEvents;
@@ -48,7 +44,6 @@ type
     procedure DestroyComponents;
     procedure ResetComponentsItens;
     procedure SetItensTransportadoras;
-    procedure AbrirFormCarregando;
     procedure SetFindResults;
 
     procedure OnTimerLoading(Sender :TObject);
@@ -69,7 +64,6 @@ implementation
 uses
    ConhecFrete.Forms.Cte.Cadastros
   ,ConhecFrete.Forms.Cte.Principal
-  ,LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Componentes.FormGrid
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.ControlGrid
@@ -78,28 +72,14 @@ uses
 
 { TControllerTransportadoras }
 
-procedure TControllerTransportadoras.AbrirFormCarregando;
-begin
-  FTimer.Enabled := True;
-  if not Assigned(FFormLoadingCSS) then
-   FFormLoadingCSS := aFormsCte[Ord(tpFormLoadingCSS)];
-
-  with TFormCteCadastros(FFormCadTransportadoras) do
-  begin
-    TFormLoadCSS(FFormLoadingCSS).Parent := pnlMain;
-    TFormLoadCSS(FFormLoadingCSS).Show;
-  end;
-end;
-
 constructor TControllerTransportadoras.Create(pArrayFormsCte :array of TForm);
 begin
+  FCmpTitulo              := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
+  FCmpFormGrid            := pArrayFormsCte[Ord(tpCmpFormGrid)];
+  FCmpEditTexto           := pArrayFormsCte[Ord(tpCmpEditTexto)];
+  FCmpControlGrid         := pArrayFormsCte[Ord(tpCmpControlGrid)];
+  FControllerConsultas    := TControllerConsultas.New(pArrayFormsCte);
   FFormCadTransportadoras := pArrayFormsCte[Ord(tpCteCadastros)];
-  FCmpTitulo := pArrayFormsCte[Ord(tpCmpTituloDescSimples)];
-  FCmpEditTexto := pArrayFormsCte[Ord(tpCmpEditTexto)];
-  FCmpControlGrid := pArrayFormsCte[Ord(tpCmpControlGrid)];
-  FControllerFormGrid := TControllerFormGrid.New(pArrayFormsCte);
-  FControllerConsultas := TControllerConsultas.New(pArrayFormsCte);
-  FControllerPesquisaNaoEncontrada := TControllerPesquisaNaoEncontrada.New(pArrayFormsCte);
   SetEvents;
 end;
 
@@ -107,9 +87,7 @@ destructor TControllerTransportadoras.Destroy;
 begin
   inherited;
   FreeAndNil(FTimer);
-  FControllerFormGrid := nil;
   FControllerConsultas := nil;
-  FControllerPesquisaNaoEncontrada := nil;
 end;
 
 procedure TControllerTransportadoras.DestroyComponents;
@@ -128,11 +106,16 @@ end;
 
 function TControllerTransportadoras.FindRegister: Boolean;
 begin
-   Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
+  Application.ProcessMessages;
+  TCmpFormGrid(FCmpFormGrid).Close;
+  FControllerConsultas.ResetComponentsItens(aCmpItensCadTransportadoras);
+  aCmpItensCadTransportadoras := nil;
+  Result := UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text) = 'MASTER';
   if Result then
   begin
-    ResetComponentsItens;
-    AbrirFormCarregando;
+    FControllerConsultas.AbrirFormCarregando;
+    SetFindResults;
+    FTimer.Enabled := True;
   end;
 end;
 
@@ -143,7 +126,8 @@ end;
 
 procedure TControllerTransportadoras.OnTimerLoading(Sender: TObject);
 begin
-  SetFindResults;
+  FControllerConsultas.SetParamsFormGrid(FCmpTitulo, aCmpItensCadTransportadoras).SetFindResults;
+  FTimer.Enabled := False;
 end;
 
 class function TControllerTransportadoras.New(pArrayFormsCte :array of TForm): IControllerTransportadoras;
@@ -182,18 +166,14 @@ begin
   Screen.Cursor := crHourGlass;
   FControllerConsultas.OnClickConsulta(Sender);
   if not FindRegister then
-    FControllerPesquisaNaoEncontrada.Iniciar;
+    FControllerConsultas.SetNotFoundResults;
   Screen.Cursor := crDefault;
 end;
 
 procedure TControllerTransportadoras.ResetComponentsItens;
-var
-  iIdx :Integer;
 begin
-  for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
-  begin
-    FreeAndNil(aCmpItensCadTransportadoras[iIdx]);
-  end;
+  FCmpTitulo.Close;
+  FControllerConsultas.ResetComponentsItens(aCmpItensCadTransportadoras);
   aCmpItensCadTransportadoras := nil;
 end;
 
@@ -208,18 +188,12 @@ begin
   FTimer.OnTimer := OnTimerLoading;
   FTimer.Enabled := False;
   FTimer.Interval := 1800;
-  with TCmpEditTexto(FCmpEditTexto) do
-  begin
-    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
-  end;
 end;
 
 procedure TControllerTransportadoras.SetFindResults;
 var
   iIdx :Integer;
 begin
-  FTimer.Interval := 1000;
-  FTimer.Enabled := False;
   SetLength(aCmpItensCadTransportadoras,15);
   for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
   begin
@@ -234,14 +208,16 @@ begin
       end;
     end;
   end;
-  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadTransportadoras);
-  FCmpControlGrid.Show;
 end;
 
 procedure TControllerTransportadoras.SetItensTransportadoras;
 var
   iIdx :Integer;
 begin
+  with TCmpEditTexto(FCmpEditTexto) do
+  begin
+    edtPesquisa.OnKeyDown := edtPesquisaKeyDown;
+  end;
   SetLength(aCmpItensCadTransportadoras,20);
   for iIdx := Low(aCmpItensCadTransportadoras) to High(aCmpItensCadTransportadoras) do
   begin
@@ -255,7 +231,7 @@ begin
       end;
     end;
   end;
-  FControllerFormGrid.SetItensGrid(FCmpTitulo, aCmpItensCadTransportadoras);
+  FControllerConsultas.SetParamsFormGrid(FCmpTitulo, aCmpItensCadTransportadoras).SetFindResults;
 end;
 
 end.
