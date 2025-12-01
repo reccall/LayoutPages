@@ -41,7 +41,7 @@ type
   public
     { Public declarations }
     FController :IControllerMenuItensImagens;
-    constructor Create(pArrayForms :array of TForm);
+    constructor Create(pArrayForms :array of TForm);  reintroduce;
   end;
 
 implementation

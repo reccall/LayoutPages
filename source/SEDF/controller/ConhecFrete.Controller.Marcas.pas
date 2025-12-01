@@ -32,7 +32,6 @@ type
     FCmpEditTexto :TForm;
     FFormCadMarcas :TForm;
     FCmpControlGrid :TForm;
-    FFormLoadingCSS :TForm;
 
     FTimer :TTimer;
 

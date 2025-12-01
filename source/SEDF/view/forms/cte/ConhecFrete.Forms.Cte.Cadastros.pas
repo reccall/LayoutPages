@@ -27,7 +27,7 @@ type
   public
     { Public declarations }
     FController :IControllerCadastros;
-    constructor Create(pArrayFormsCte :array of TForm); overload;
+    constructor Create(pArrayFormsCte :array of TForm); reintroduce;
   end;
 
 implementation

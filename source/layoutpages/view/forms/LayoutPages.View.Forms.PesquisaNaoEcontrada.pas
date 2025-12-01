@@ -27,7 +27,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    constructor Create(pArrayFormsCte :array of TForm);
+    constructor Create(pArrayFormsCte :array of TForm); reintroduce;
   end;
 
 implementation

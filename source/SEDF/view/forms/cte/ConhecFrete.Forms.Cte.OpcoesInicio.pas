@@ -40,7 +40,7 @@ type
   public
     { Public declarations }
     FController :TControllerOpcoesCte;
-    constructor Create(pArrayForms :array of TForm);
+    constructor Create(pArrayForms :array of TForm); reintroduce;
 
   end;
 

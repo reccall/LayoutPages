@@ -85,7 +85,7 @@ constructor TControllerFormGrid.Create(pArrayFormsCte: array of TForm);
 begin
   if not Assigned(aFormsCte[Ord(tpCmpFormGrid)]) then
   begin
-    aFormsCte[Ord(tpCmpFormGrid)] := TCmpFormGrid.Create(aFormsCte);
+    aFormsCte[Ord(tpCmpFormGrid)] := TCmpFormGrid.Create(pArrayFormsCte);
     with TCmpFormGrid(aFormsCte[Ord(tpCmpFormGrid)]) do
     begin
       ApplicationEvents1.OnMessage := ApplicationEvents1Message;

@@ -34,7 +34,6 @@ type
 
   TControllerCadastros = class(TInterfacedObject, IControllerCadastros)
   private
-    FPosition :Integer;
     FTpOwnerCadastro :TpForms;
 
     FFormCte :TForm;
@@ -98,7 +97,6 @@ begin
   FTpOwnerCadastro := tpFDefault;
 
   aFormsCte[Ord(tpCmpEditTexto)]         := TCmpEditTexto.Create(nil);
-  aFormsCte[Ord(tpCmpControlGrid)]       := TCmpGridControl.Create(nil);
   aFormsCte[Ord(tpCmpCabCadastros)]      := TCmpCabCadastros.Create(nil);
   aFormsCte[Ord(tpCmpTituloDescSimples)] := TCmpTituloDescSimples.Create(nil);
 
@@ -135,7 +133,6 @@ begin
 
       with TCmpFormGrid(FCmpFormGrid), TCmpGridControl(FCmpControlGrid) do
       begin
-        chkControl.Checked := False;
         chkControl.OnClick := OnClickCheckBox;
         scrlbxCmpMain.Realign;
       end;
@@ -149,8 +146,9 @@ begin
     MakeRounded(pnlRegiaoPesq,20);
     MakeRounded(pnlCmpGridTop,10);
   end;
-  with TFormCteCadastros(FFormCadastros) do
+  with TFormCteCadastros(FFormCadastros), TCmpGridControl(FCmpControlGrid) do
   begin
+    chkControl.Checked := False;
     FFormLoadingCSS.Parent := pnlMain;
     FFormLoadingCSS.Show;
     FTimer.Enabled := True;
@@ -188,7 +186,6 @@ end;
 
 procedure TControllerCadastros.OnClickConsulta(Sender: TObject);
 begin
-  Screen.Cursor := crHourGlass;
   case FTpOwnerCadastro of
     tpCadastroMarcas:           FControllerMarcas.OnClickConsulta(Sender);
     tpCadastroProdutos:         FControllerProdutos.OnClickConsulta(Sender);
@@ -198,7 +195,6 @@ begin
     tpCadastroTransportadoras:  FControllerTranportadoras.OnClickConsulta(Sender);
     tpCadastroUnidadesDeMedida: FControllerUnidadesDeMedida.OnClickConsulta(Sender);
   end;
-  Screen.Cursor := crDefault;
 end;
 
 procedure TControllerCadastros.OnClickInserirRegistro(Sender: TObject);

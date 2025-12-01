@@ -40,7 +40,7 @@ type
     FControl :Integer;
     FController :IControllerMenuCadastros;
 
-    constructor Create(pArrayForms :array of TForm);
+    constructor Create(pArrayForms :array of TForm); reintroduce;
     { Public declarations }
   end;
 
