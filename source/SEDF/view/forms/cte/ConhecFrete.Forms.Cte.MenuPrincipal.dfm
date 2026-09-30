@@ -1,19 +1,20 @@
 inherited FormMenuPrincipal: TFormMenuPrincipal
   Align = alClient
   Caption = 'FormMenuPrincipal'
-  ClientHeight = 242
+  ClientHeight = 256
   ClientWidth = 126
   ExplicitWidth = 126
-  ExplicitHeight = 242
+  ExplicitHeight = 256
   PixelsPerInch = 96
   TextHeight = 16
   object pnlBackMenu: TPanel
     Left = 0
     Top = 0
     Width = 126
-    Height = 242
+    Height = 256
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 242
     object pnlBackCad: TPanel
       Left = 2
       Top = 4
@@ -22,7 +23,7 @@ inherited FormMenuPrincipal: TFormMenuPrincipal
       Cursor = crHandPoint
       BevelOuter = bvNone
       Caption = 'pnlBackCad'
-      Color = clGradientActiveCaption
+      Color = 50319311
       ParentBackground = False
       TabOrder = 0
       object pnlCadastros: TPanel
@@ -51,7 +52,7 @@ inherited FormMenuPrincipal: TFormMenuPrincipal
       Height = 41
       Cursor = crHandPoint
       BevelOuter = bvNone
-      Color = clGradientActiveCaption
+      Color = 50319311
       ParentBackground = False
       TabOrder = 1
       object pnlEmissor: TPanel
@@ -80,7 +81,7 @@ inherited FormMenuPrincipal: TFormMenuPrincipal
       Height = 41
       Cursor = crHandPoint
       BevelOuter = bvNone
-      Color = clGradientActiveCaption
+      Color = 50319311
       ParentBackground = False
       TabOrder = 2
       object pnlCertificadoDig: TPanel
@@ -109,7 +110,7 @@ inherited FormMenuPrincipal: TFormMenuPrincipal
       Height = 41
       Cursor = crHandPoint
       BevelOuter = bvNone
-      Color = clGradientActiveCaption
+      Color = 50319311
       ParentBackground = False
       TabOrder = 3
       object pnlRelatorios: TPanel
@@ -138,7 +139,7 @@ inherited FormMenuPrincipal: TFormMenuPrincipal
       Height = 41
       Cursor = crHandPoint
       BevelOuter = bvNone
-      Color = clGradientActiveCaption
+      Color = 50319311
       ParentBackground = False
       TabOrder = 4
       object pnlTutorial: TPanel

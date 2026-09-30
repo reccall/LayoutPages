@@ -59,6 +59,7 @@ implementation
 uses
    LayoutPages.View.Forms.LoadingCSS
   ,LayoutPages.View.Forms.PesquisaNaoEcontrada
+  ,LayoutPages.View.Componentes.ControlGrid
   ,LayoutPages.View.Componentes.TEditTexto
   ,LayoutPages.View.Componentes.PanelConsultaPesq
   ,LayoutPages.View.Componentes.CabecalhoCadastroPrincipal
@@ -122,14 +123,23 @@ begin
 
   FPanelConsultaPesq := TCmpPanelConsultaPesq.Create(nil);
 
-  with TCmpCabCadastros(FCmpCabCadastro), TCmpPanelConsultaPesq(FPanelConsultaPesq) do
+  with TCmpGridControl(FCmpControlGrid),
+       TCmpCabCadastros(FCmpCabCadastro),
+       TCmpPanelConsultaPesq(FPanelConsultaPesq) do
   begin
+    chkControl.Checked := False;
     Image1.OnClick := OnClickClearPesquisa;
     pnlPesquisa.Caption := TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text;
 
     case Length(UpperCase(TCmpEditTexto(FCmpEditTexto).edtPesquisa.Text)) of
-        0..5: FPanelConsultaPesq.Width := 100;
-       6..10: FPanelConsultaPesq.Width := 170;
+           0: FPanelConsultaPesq.Width := 50;
+           1: FPanelConsultaPesq.Width := 55;
+           2: FPanelConsultaPesq.Width := 70;
+           3: FPanelConsultaPesq.Width := 87;
+           4: FPanelConsultaPesq.Width := 104;
+           5: FPanelConsultaPesq.Width := 120;
+           6: FPanelConsultaPesq.Width := 137;
+       7..10: FPanelConsultaPesq.Width := 170;
       11..20: FPanelConsultaPesq.Width := 270;
       21..27: FPanelConsultaPesq.Width := 400;
       28..35: FPanelConsultaPesq.Width := 450;
@@ -185,6 +195,7 @@ function TControllerConsultas.SetParamsFormGrid(pCmpTitulo: TForm;
 var
   iIdx :Integer;
 begin
+  //Application.ProcessMessages;
   Result := Self;
   FCmpTitulo := pCmpTitulo;
   SetLength(aItensConsulta, Length(pArrayItensConsulta));

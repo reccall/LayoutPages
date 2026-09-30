@@ -252,9 +252,6 @@
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Parametros.pas">
             <Form>frmCteParametros</Form>
         </DCCReference>
-        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.SubContratacao.pas">
-            <Form>frmCteSimplificadoSubContratacao</Form>
-        </DCCReference>
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Tomador.pas">
             <Form>frmTomador</Form>
         </DCCReference>
@@ -285,6 +282,11 @@
         <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Cadastros.pas">
             <Form>FormCteCadastros</Form>
         </DCCReference>
+        <DCCReference Include="source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CardsInicio.pas">
+            <Form>FormCardsIncio</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="source\SEDF\controller\ConhecFrete.Controller.CardsInicio.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -313,27 +315,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployClass Name="DependencyModule">
-                    <Platform Name="Win32">
-                        <Operation>0</Operation>
-                        <Extensions>.dll;.bpl</Extensions>
-                    </Platform>
+                <DeployClass Name="ProjectiOSDeviceResourceRules">
                     <Platform Name="iOSDevice64">
                         <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="iOSSimulator">
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXResource">
@@ -687,12 +674,27 @@
                         <Operation>1</Operation>
                     </Platform>
                 </DeployClass>
-                <DeployClass Name="ProjectiOSDeviceResourceRules">
+                <DeployClass Name="DependencyModule">
+                    <Platform Name="Win32">
+                        <Operation>0</Operation>
+                        <Extensions>.dll;.bpl</Extensions>
+                    </Platform>
                     <Platform Name="iOSDevice64">
                         <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="OSX32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="iOSDevice32">
                         <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
+                    </Platform>
+                    <Platform Name="iOSSimulator">
+                        <Operation>1</Operation>
+                        <Extensions>.dylib</Extensions>
                     </Platform>
                 </DeployClass>
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>

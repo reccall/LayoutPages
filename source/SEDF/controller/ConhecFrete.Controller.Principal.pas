@@ -9,7 +9,8 @@ uses
   ,Vcl.Controls
   ,Vcl.ExtCtrls
   ,Vcl.Graphics
-  ,System.SysUtils;
+  ,System.SysUtils
+  ,ConhecFrete.Controller.CardsInicio;
 
 type
   IControllerPrincipal = interface
@@ -21,17 +22,23 @@ type
   private
     FWidthMenuImg :Integer;
     FFormOwner: TForm;
-    FMenuCadasros: TForm;
+    FCmpMenuImg :TForm;
     FCmpTopLogo: TForm;
-    FMenuEmissaoFiscal: TForm;
+    FFormLoadCSS :TForm;
+    FMenuCadasros: TForm;
     FCtePrincipal :TForm;
     FMenuPrincipal :TForm;
-    FCmpMenuImg :TForm;
-    FMenuItensImagens :TForm;
     FCmpTituloOpcao :TForm;
     FCmpCardInfoUser :TForm;
+    FFormCardsInicio: TForm;
+    FMenuItensImagens :TForm;
+    FMenuEmissaoFiscal: TForm;
+
     FImageDefault :TImage;
 
+    FControllerCardsInicio :IControllerCardsInicio;
+
+    procedure OnClickIniciar(Sender :TObject);
     procedure OnClickCardUserInfo(Sender :TObject);
     procedure OnClickLogoImage(Sender :TObject);
     procedure OnClickMenuImage(Sender :TObject);
@@ -39,9 +46,11 @@ type
     procedure CloseForms;
     procedure CloseMenus(pResetItemMenu :Boolean);
     procedure SetActiveDefaultImage;
-  public
+
     procedure Iniciar;
     procedure DestruirForms;
+  public
+
 
   class function New(pFormOwner :TForm) :IControllerPrincipal; overload;
     constructor Create(pFormOwner :TForm); overload;
@@ -54,15 +63,16 @@ uses
     ConhecFrete.Model.Types.Constantes
    ,ConhecFrete.Forms.Cte.Cadastros
    ,ConhecFrete.Forms.Cte.Principal
+   ,ConhecFrete.Forms.Cte.CardsInicio
    ,ConhecFrete.Forms.Cte.Background
    ,ConhecFrete.Forms.Cte.OpcoesInicio
    ,ConhecFrete.Forms.Cte.MenuPrincipal
    ,ConhecFrete.Forms.Cte.MenuCadastros
    ,ConhecFrete.Forms.Cte.MenuItensImagens
    ,ConhecFrete.Forms.Cte.MenuEmissaoFiscal
-   ,LayoutPages.View.Forms.LoadingCSS
    ,ConhecFrete.View.Componentes.TopLogo
    ,ConhecFrete.View.Componentes.CardInfoUserCte
+   ,LayoutPages.View.Forms.LoadingCSS
    ,LayoutPages.View.Componentes.TLabelTitulo
    ,LayoutPages.View.Componentes.MenuImage;
 
@@ -133,12 +143,18 @@ begin
   FCtePrincipal := TfrmCtePrincipal.Create(nil);
   aFormsCte[Ord(tpOwner)] := FCtePrincipal;
 
+  FFormCardsInicio := TFormCardsInicio.Create(nil);
+  aFormsCte[Ord(tpCteCardsInicio)] := FFormCardsInicio;
+
   FMenuPrincipal := TFormMenuPrincipal.Create(aFormsCte);
   aFormsCte[Ord(tpMenuPrincipal)] := FMenuPrincipal;
 
   aFormsCte[Ord(tpFormLoadingCSS)] := TFormLoadCSS.Create(nil);
+  FFormLoadCSS := aFormsCte[Ord(tpFormLoadingCSS)];
 
   FCmpTopLogo := TCmpTopLogo.Create(nil);
+
+  FControllerCardsInicio := TControllerCardsInicio.New(aFormsCte);
 
   with TfrmCtePrincipal(FCtePrincipal) do
   begin
@@ -151,7 +167,7 @@ end;
 
 destructor TControllerPrincipal.Destroy;
 begin
-  inherited;
+  inherited Destroy;
 end;
 
 procedure TControllerPrincipal.DestruirForms;
@@ -165,6 +181,18 @@ begin
   for iIdx := 0 to Ord(SetTypeForms)  do
   begin
     case TpForms(Ord(iIdx)) of
+
+      tpCteCardsInicio:
+      begin
+        if Assigned(aFormsCte[Ord(tpCteCardsInicio)]) then
+        begin
+          aFormsCte[Ord(tpCteCardsInicio)].Close;
+          aFormsCte[Ord(tpCteCardsInicio)].Free;
+          aFormsCte[Ord(tpCteCardsInicio)] := nil;
+          FFormCardsInicio := nil;
+        end;
+      end;
+
       tpFormLoadingCSS:
       begin
         if Assigned(aFormsCte[Ord(tpFormLoadingCSS)]) then
@@ -301,9 +329,9 @@ procedure TControllerPrincipal.Iniciar;
 begin
   with TCmpCardInfoUserCte(FCmpCardInfoUser), TCmpTLabelTitulo(FCmpTituloOpcao) do
   begin
-    lblTitulo.Cursor  := crDefault;
+    lblTitulo.Cursor  := crHandPoint;
     lblTitulo.Caption := 'SEDF - Início';
-    lblTitulo.OnClick := nil;
+    lblTitulo.OnClick := OnClickIniciar;
     lblUserName.Caption := 'KAMAYURI NUNES-SAAD';
     pnlUser.OnClick := OnClickCardUserInfo;
   end;
@@ -316,11 +344,13 @@ begin
 
   with TfrmCtePrincipal(FCtePrincipal) do
   begin
+    FFormCardsInicio.Parent := pnlMain;
     with TCmpMenuImage(FCmpMenuImg) do
     begin
       ImageMenu.OnClick := OnClickMenuImage;
       FCmpMenuImg.Parent := pnlTopMenu;
     end;
+
     TCmpTopLogo(FCmpTopLogo).Image1.OnClick := OnClickLogoImage;
     TFormMenuPrincipal(FMenuPrincipal).Parent := pnlMenu;
     CloseForms;
@@ -340,6 +370,7 @@ begin
   FCmpMenuImg.Show;
   FCmpCardInfoUser.Show;
   FCmpTituloOpcao.Show;
+  FControllerCardsInicio.IniciarNFe;
 end;
 
 class function TControllerPrincipal.New(pFormOwner: TForm): IControllerPrincipal;
@@ -350,6 +381,11 @@ end;
 procedure TControllerPrincipal.OnClickCardUserInfo(Sender: TObject);
 begin
   DestruirForms;
+end;
+
+procedure TControllerPrincipal.OnClickIniciar(Sender: TObject);
+begin
+  Iniciar;
 end;
 
 procedure TControllerPrincipal.OnClickLogoImage(Sender: TObject);

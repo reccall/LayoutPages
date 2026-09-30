@@ -708,8 +708,8 @@ begin
       pOraQuery.ParamByName('NUMTRANSVENDAFIM').AsFloat := pParamsCte.NumTransVendaFim;
     end;
 
-    //if (pParamsCte.CmpCFOP.Text <> EmptyStr) then
-      //pOraQuery.SQL.Add('   AND NVL(PCNFSAID.CODFISCALNF, 0) NOT IN (' + pParamsCte.CmpCFOP.GetSelecionados(1,',') + ')');
+    if (pParamsCte.CmpCFOP.Text <> EmptyStr) then
+      pOraQuery.SQL.Add('   AND NVL(PCNFSAID.CODFISCALNF, 0) NOT IN (' + pParamsCte.CmpCFOP.GetSelecionados(1,',') + ')');
 
     pOraQuery.SQL.Add('ORDER BY CODFILIAL,NUMNOTA,NUMCAR ');
   finally

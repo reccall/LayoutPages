@@ -23,10 +23,11 @@ type
   TpForms = (tpOwner, tpFormLoadingCSS, tpCmpFormGrid, tpCadastroMarcas, tpCadastroProdutos,
              tpCadastroClientes, tpCadastroFornecedores, tpCadastroTransportadoras,
              tpCteCadastros, tpCadastroServicos, tpCadastroUnidadesDeMedida,
-             tpCmpControlGrid, tpMenuPrincipal, tpMenuEmissaoFiscal, tpMenuCadastros,
-             tpCmpTitulo, tpCertificadoDig, tpRelatorios, tpTutorial, tpFormCte,
-             tpFormOpcoesItensCte, tpBarraBotoes, tpMenuItensImagens, tpCmpTituloDescSimples,
-             tpCmpCabCadastros, tpCmpEditTexto, tpFormPesqNaoEncontrada, tpFDefault);
+             tpCteCardsInicio, tpCmpControlGrid, tpMenuPrincipal, tpMenuEmissaoFiscal,
+             tpMenuCadastros, tpCmpTitulo, tpCertificadoDig, tpRelatorios, tpTutorial,
+             tpFormCte, tpFormOpcoesItensCte, tpBarraBotoes, tpMenuItensImagens,
+             tpCmpTituloDescSimples, tpCmpCabCadastros, tpCmpEditTexto,
+             tpFormPesqNaoEncontrada, tpFDefault);
 
 const
   aImageNames :array[0..4] of String = ('ImgCadastros','ImgEmissaoFiscal','ImgCertDigital','ImgRelatorios','ImgTutorial');

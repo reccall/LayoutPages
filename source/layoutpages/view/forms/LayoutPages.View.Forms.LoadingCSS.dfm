@@ -1,8 +1,10 @@
 inherited FormLoadCSS: TFormLoadCSS
+  Left = 300
+  Top = 80
   VertScrollBar.Visible = False
-  Align = alClient
   ClientHeight = 220
   ClientWidth = 567
+  Position = poDesigned
   OnCreate = FormCreate
   ExplicitWidth = 567
   ExplicitHeight = 220

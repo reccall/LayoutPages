@@ -85,7 +85,6 @@ uses
   ConhecFrete.Forms.Cte.Motorista in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Motorista.pas' {frmCteMotorista},
   ConhecFrete.Forms.Cte.OpcoesInicio in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.OpcoesInicio.pas' {frmCteOpcoesInicio},
   ConhecFrete.Forms.Cte.Parametros in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Parametros.pas' {frmCteParametros},
-  ConhecFrete.Forms.Cte.SubContratacao in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.SubContratacao.pas' {frmCteSimplificadoSubContratacao},
   ConhecFrete.Forms.Cte.Tomador in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Tomador.pas' {frmTomador},
   ConhecFrete.Forms.Cte.Simplificado.DadosCte in 'source\SEDF\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.DadosCte.pas' {frmSimplificadoDadosCte},
   ConhecFrete.Forms.Cte.Simplificado.InfoRegrasCteSimplificado in 'source\SEDF\view\forms\cte\simplificado\ConhecFrete.Forms.Cte.Simplificado.InfoRegrasCteSimplificado.pas' {frmCteSimplificadoInfoRegras},
@@ -95,7 +94,9 @@ uses
   ConhecFrete.Forms.Cte.MenuEmissaoFiscal in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuEmissaoFiscal.pas' {FormMenuEmissaoFiscal},
   ConhecFrete.Forms.Cte.MenuCadastros in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuCadastros.pas' {FormMenuCadastros},
   ConhecFrete.Forms.Cte.MenuItensImagens in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.MenuItensImagens.pas' {FormMenuItensImagens},
-  ConhecFrete.Forms.Cte.Cadastros in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Cadastros.pas' {FormCteCadastros};
+  ConhecFrete.Forms.Cte.Cadastros in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.Cadastros.pas' {FormCteCadastros},
+  ConhecFrete.Forms.Cte.CardsInicio in 'source\SEDF\view\forms\cte\ConhecFrete.Forms.Cte.CardsInicio.pas' {FormCardsIncio},
+  ConhecFrete.Controller.CardsInicio in 'source\SEDF\controller\ConhecFrete.Controller.CardsInicio.pas';
 
 {$R *.res}
 

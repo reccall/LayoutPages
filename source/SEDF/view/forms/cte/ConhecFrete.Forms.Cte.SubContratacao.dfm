@@ -107,7 +107,6 @@ object frmCteSimplificadoSubContratacao: TfrmCteSimplificadoSubContratacao
       Style.Color = clWindow
       Style.LookAndFeel.Kind = lfOffice11
       Style.LookAndFeel.NativeStyle = False
-      Style.StyleController = dmInterfaces.edtStyleNativeWindows
       Style.TextColor = clWindowText
       StyleDisabled.LookAndFeel.Kind = lfOffice11
       StyleDisabled.LookAndFeel.NativeStyle = False
@@ -170,7 +169,6 @@ object frmCteSimplificadoSubContratacao: TfrmCteSimplificadoSubContratacao
       PropPesquisar.IndiceBotao = 1
       PropPesquisar.TipoEntrada = tpString
       PropPesquisar.RotinaCadastro = 0
-      Pesquisar = dmInterfaces.psqFornecedor
       MultiSelecao = False
       CorCodigo = clWindow
       CorDescricao = clInactiveCaption
@@ -189,7 +187,6 @@ object frmCteSimplificadoSubContratacao: TfrmCteSimplificadoSubContratacao
       Style.Color = clWindow
       Style.LookAndFeel.Kind = lfOffice11
       Style.LookAndFeel.NativeStyle = False
-      Style.StyleController = dmInterfaces.edtStyleNativeWindows
       Style.TextColor = clWindowText
       StyleDisabled.LookAndFeel.Kind = lfOffice11
       StyleDisabled.LookAndFeel.NativeStyle = False
@@ -252,7 +249,6 @@ object frmCteSimplificadoSubContratacao: TfrmCteSimplificadoSubContratacao
       PropPesquisar.IndiceBotao = 1
       PropPesquisar.TipoEntrada = tpString
       PropPesquisar.RotinaCadastro = 0
-      Pesquisar = dmInterfaces.psqCliente
       MultiSelecao = False
       CorCodigo = clWindow
       CorDescricao = clInactiveCaption
